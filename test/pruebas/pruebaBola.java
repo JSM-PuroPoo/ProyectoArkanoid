@@ -30,7 +30,7 @@ public class pruebaBola extends javax.swing.JFrame {
         this.setUndecorated(true);
         initComponents();
         pJuego.setBounds(this.getBounds());
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 1; i++) {
             pJuego.agregar(
                     new PanelHilo(
                             new Pelota(
@@ -40,7 +40,7 @@ public class pruebaBola extends javax.swing.JFrame {
                                     2,
                                     2,
                                     this),
-                            1000 - i * 10)
+                            10000)
             );
         }
 

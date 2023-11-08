@@ -13,28 +13,29 @@ import java.awt.*;
  * @author nalis
  */
 public class Crono extends javax.swing.JFrame {
+
     CronometroP Cronometro;
     Font Digit;
+
     /**
      * Creates new form Crono
      */
     public Crono() {
         initComponents();
-            try{
-               InputStream is = new BufferedInputStream( new FileInputStream("fonts/DSDIGIT.TTF"));;
-                // load a custom font in your project folder
-                Digit = Font.createFont(Font.TRUETYPE_FONT, is);			
-            }
-            catch(IOException | FontFormatException e){
-                e.printStackTrace();
-            }
-            this.setSize(280, 300);
-            this.setResizable(false);
-            this.setLocationRelativeTo(null);
-            crono.setFont(Digit.deriveFont(Font.PLAIN, 24));
-            SavedCrono.setFont(Digit.deriveFont(Font.PLAIN, 24));
-            this.Cronometro = new CronometroP(crono);
-            this.Cronometro.time = new Timer(10, Cronometro.accion);
+        try {
+            InputStream is = new BufferedInputStream(new FileInputStream("fonts/DSDIGIT.TTF"));;
+            // load a custom font in your project folder
+            Digit = Font.createFont(Font.TRUETYPE_FONT, is);
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
+        this.setSize(280, 300);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        crono.setFont(Digit.deriveFont(Font.PLAIN, 24));
+        SavedCrono.setFont(Digit.deriveFont(Font.PLAIN, 24));
+        this.Cronometro = new CronometroP(crono);
+        this.Cronometro.time = new Timer(10, Cronometro.accion);
     }
 
     /**
@@ -131,20 +132,28 @@ public class Crono extends javax.swing.JFrame {
     private void StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartActionPerformed
         // TODO add your handling code here:
         this.Cronometro.time.start();
+        this.Start.setEnabled(false);
     }//GEN-LAST:event_StartActionPerformed
 
     private void StopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StopActionPerformed
         // TODO add your handling code here:
-        this.Cronometro.time.stop();
-        this.Cronometro = new CronometroP(Cronometro.hour, Cronometro.min, Cronometro.seg, Cronometro.miliseg, SavedCrono);
-        this.Cronometro.TimeTags();
+        if (!this.Cronometro.pause) {
+            this.Cronometro.time.stop();
+            this.Cronometro = new CronometroP(Cronometro.hour, Cronometro.min, Cronometro.seg, Cronometro.miliseg, SavedCrono);
+            this.Cronometro.TimeTags();
+            this.Cronometro.pause = true;
+
+        }
     }//GEN-LAST:event_StopActionPerformed
 
     private void ResumeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResumeActionPerformed
         // TODO add your handling code here:
-        this.Cronometro = new CronometroP(Cronometro.hour, Cronometro.min, Cronometro.seg, Cronometro.miliseg, crono);
-        this.Cronometro.time = new Timer(10, Cronometro.accion);
-        this.Cronometro.time.start();
+        if (this.Cronometro.pause) {
+            this.Cronometro = new CronometroP(Cronometro.hour, Cronometro.min, Cronometro.seg, Cronometro.miliseg, crono);
+            this.Cronometro.time = new Timer(10, Cronometro.accion);
+            this.Cronometro.time.start();
+            this.Cronometro.pause = false;
+        }
     }//GEN-LAST:event_ResumeActionPerformed
 
     /**
@@ -173,7 +182,7 @@ public class Crono extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Crono.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

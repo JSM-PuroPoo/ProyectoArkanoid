@@ -13,12 +13,13 @@ import javax.swing.*;
  * @author nalis
  */
 public class CronometroP{
-    Timer time;
+    public Timer time;
+    public boolean pause;
     protected int miliseg;
     protected int seg;
     protected int min;
     protected int hour;
-    JLabel label; 
+    public JLabel label; 
 
     public CronometroP(JLabel label) {
         this.label = label;
@@ -26,6 +27,7 @@ public class CronometroP{
         this.seg = 0;
         this.min = 0;
         this.hour = 0;
+        this.pause = false;
     }
 
     public CronometroP(int hour, int min, int seg, int miliseg, JLabel label) {
@@ -34,6 +36,7 @@ public class CronometroP{
         this.min = min;
         this.hour = hour;
         this.label = label;
+        this.pause = false;
     }
     
     ActionListener accion = new ActionListener(){
