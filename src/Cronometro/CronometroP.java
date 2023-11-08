@@ -1,0 +1,61 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package Cronometro;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*;
+
+/**
+ *
+ * @author nalis
+ */
+public class CronometroP{
+    Timer time;
+    protected int miliseg;
+    protected int seg;
+    protected int min;
+    protected int hour;
+    JLabel label; 
+
+    public CronometroP(JLabel label) {
+        this.label = label;
+        this.miliseg = 0;
+        this.seg = 0;
+        this.min = 0;
+        this.hour = 0;
+    }
+
+    public CronometroP(int hour, int min, int seg, int miliseg, JLabel label) {
+        this.miliseg = miliseg;
+        this.seg = seg;
+        this.min = min;
+        this.hour = hour;
+        this.label = label;
+    }
+    
+    ActionListener accion = new ActionListener(){
+        @Override
+        public void actionPerformed(ActionEvent e) {
+           miliseg++;
+           if(miliseg == 100){
+               seg++;
+               miliseg = 0;
+           }if(seg == 60){
+               min++;
+               seg = 0;
+           }if(min == 60){
+               hour++;
+               min = 0;
+           }
+           TimeTags();
+        }        
+    };
+    
+    void TimeTags(){
+        String accurateTime = (hour <= 9? "0":"")+hour+":"+(min <= 9? "0":"")+min+":"+(seg <= 9? "0":"")+seg+":"+(miliseg <= 9? "0":"")+miliseg;
+        this.label.setText(accurateTime);
+    }
+}
