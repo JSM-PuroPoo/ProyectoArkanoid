@@ -1,5 +1,7 @@
-package interfaz;
+package interfaz.paneles;
 
+import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -45,6 +47,11 @@ public class PanelIMG extends JPanel {
         if (image != null) {
             g.drawImage(image, 0, 0, (ImageObserver) this);
         }
+
+    }
+
+    public BufferedImage getImage() {
+        return image;
     }
 
     public void scaleImage(int width, int height) {
@@ -58,4 +65,5 @@ public class PanelIMG extends JPanel {
             repaint();
         }
     }
+
 }

@@ -1,8 +1,12 @@
 package componentes;
 
 import java.awt.Color;
+import java.awt.Container;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 /**
  * @author Juan Felipe Eraso Navarro 0222220038
@@ -11,20 +15,25 @@ import java.awt.Point;
  */
 public abstract class Componente {
 
+    protected BufferedImage image;
     protected Color color;
-    protected Point punto;
-    protected int ancho;
-    protected int alto;
+    protected Rectangle r;
     protected int vX;
     protected int vY;
+    protected Container contenedor;
 
-    public Componente(Color color, Point punto, int ancho, int alto, int vX, int vY) {
+    public Componente(Color color, Rectangle r, int vX, int vY) {
         this.color = color;
-        this.punto = punto;
-        this.ancho = ancho;
-        this.alto = alto;
+        this.r = r;
         this.vX = vX;
         this.vY = vY;
+    }
+
+    public Componente(Rectangle r, int vX, int vY, Container contenedor) {
+        this.r = r;
+        this.vX = vX;
+        this.vY = vY;
+        this.contenedor = contenedor;
     }
 
     public Color getColor() {
@@ -35,28 +44,12 @@ public abstract class Componente {
         this.color = color;
     }
 
-    public Point getPunto() {
-        return punto;
+    public Rectangle getR() {
+        return r;
     }
 
-    public void setPunto(Point punto) {
-        this.punto = punto;
-    }
-
-    public int getAncho() {
-        return ancho;
-    }
-
-    public void setAncho(int ancho) {
-        this.ancho = ancho;
-    }
-
-    public int getAlto() {
-        return alto;
-    }
-
-    public void setAlto(int alto) {
-        this.alto = alto;
+    public void setR(Rectangle r) {
+        this.r = r;
     }
 
     public int getvX() {
@@ -74,22 +67,25 @@ public abstract class Componente {
     public void setvY(int vY) {
         this.vY = vY;
     }
-    
-    public abstract void paint(Graphics2D g);
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Componente{");
-        sb.append("color=").append(color);
-        sb.append(", punto=").append(punto);
-        sb.append(", ancho=").append(ancho);
-        sb.append(", alto=").append(alto);
-        sb.append(", vX=").append(vX);
-        sb.append(", vY=").append(vY);
-        sb.append('}');
-        return sb.toString();
+    public BufferedImage getImage() {
+        return image;
     }
-    
-    
+
+    public void setImage(BufferedImage image) {
+        this.image = image;
+    }
+
+    public Container getContenedor() {
+        return contenedor;
+    }
+
+    public void setContenedor(Container contenedor) {
+        this.contenedor = contenedor;
+    }
+
+    public abstract void paint(Graphics g);
+
+    public abstract void mover();
+
 }
