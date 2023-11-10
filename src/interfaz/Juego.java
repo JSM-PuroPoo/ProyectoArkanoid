@@ -4,8 +4,17 @@
  */
 package interfaz;
 
+import componente.Bloque;
+import componente.PanelComponente;
+import componente.Raqueta;
 import interfaz.paneles.PanelIMG;
-
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.JPanel;
+import javax.swing.Timer;
 
 /**
  *
@@ -39,6 +48,33 @@ public class Juego extends javax.swing.JFrame {
         marco.setImage("recursos/marcojuego.png");
         fondo.add(marco);
         fondo.add(game);
+        game.setLayout(null);
+        marco.setLayout(null);
+        //game.setBounds(30, 30, 110, 30);
+        Raqueta r = new Raqueta(30, 525, 110, 30, game);
+        game.add(r);
+
+        this.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                int keyCode = e.getKeyCode();
+
+                switch (keyCode) {
+                    case 39:
+                        r.moverDerecha();
+                        break;
+                    case 37:
+                        r.moverIzquierda();
+                        break;
+                    case 68:
+                        r.moverDerecha();
+                        break;
+                    case 65:
+                        r.moverIzquierda();
+                        break;
+                }
+            }
+        });
 
     }
 
@@ -79,16 +115,24 @@ public class Juego extends javax.swing.JFrame {
                 if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Juego.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Juego.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Juego.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Juego.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Juego.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Juego.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Juego.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Juego.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>

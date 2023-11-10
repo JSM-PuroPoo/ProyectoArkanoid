@@ -2,13 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Cronometro;
+package Game;
+
+import Cronometro.CronometroP;
 
 /**
  *
  * @author nalis
  */
 public class User {
+
     private String name;
     private int ranking;
     private int score;
@@ -35,8 +38,17 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
-    
-    public void calcularRanking(){
-        
+
+    public int getRanking() {
+        return ranking;
     }
+
+    public void setRanking(int ranking) {
+        this.ranking = ranking;
+    }
+
+    public void calcularRanking() {
+
+    }
+
 }

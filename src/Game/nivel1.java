@@ -2,16 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package componentes;
+package Game;
 
-import java.awt.Rectangle;
+import componente.Bloque;
+import componente.Pelota;
+import javax.swing.JPanel;
 
 /**
  *
  * @author Juan Felipe
  */
-public class CuadranteColision extends Thread {
-    Componente componentes[];
-    int id;
+public class nivel1 extends JPanel {
     
 }

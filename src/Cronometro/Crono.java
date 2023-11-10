@@ -33,6 +33,7 @@ public class Crono extends javax.swing.JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         crono.setFont(Digit.deriveFont(Font.PLAIN, 24));
+        //crono.setForeground(Color.red);
         SavedCrono.setFont(Digit.deriveFont(Font.PLAIN, 24));
         this.Cronometro = new CronometroP(crono);
         this.Cronometro.time = new Timer(10, Cronometro.accion);

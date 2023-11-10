@@ -12,14 +12,15 @@ import javax.swing.*;
  *
  * @author nalis
  */
-public class CronometroP{
+public class CronometroP {
+
     public Timer time;
     public boolean pause;
     protected int miliseg;
     protected int seg;
     protected int min;
     protected int hour;
-    public JLabel label; 
+    public JLabel label;
 
     public CronometroP(JLabel label) {
         this.label = label;
@@ -38,27 +39,35 @@ public class CronometroP{
         this.label = label;
         this.pause = false;
     }
-    
-    ActionListener accion = new ActionListener(){
+
+    ActionListener accion = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-           miliseg++;
-           if(miliseg == 100){
-               seg++;
-               miliseg = 0;
-           }if(seg == 60){
-               min++;
-               seg = 0;
-           }if(min == 60){
-               hour++;
-               min = 0;
-           }
-           TimeTags();
-        }        
+            miliseg++;
+            if (miliseg == 100) {
+                seg++;
+                miliseg = 0;
+            }
+            if (seg == 60) {
+                min++;
+                seg = 0;
+            }
+            if (min == 60) {
+                hour++;
+                min = 0;
+            }
+            TimeTags();
+        }
     };
-    
-    void TimeTags(){
-        String accurateTime = (hour <= 9? "0":"")+hour+":"+(min <= 9? "0":"")+min+":"+(seg <= 9? "0":"")+seg+":"+(miliseg <= 9? "0":"")+miliseg;
+
+    void TimeTags() {
+        String accurateTime = (hour <= 9 ? "0" : "") + hour + ":" + (min <= 9 ? "0" : "") + min + ":" + (seg <= 9 ? "0" : "") + seg + ":" + (miliseg <= 9 ? "0" : "") + miliseg;
         this.label.setText(accurateTime);
     }
+
+    @Override
+    public String toString() {
+        return (hour <= 9 ? "0" : "") + hour + ":" + (min <= 9 ? "0" : "") + min + ":" + (seg <= 9 ? "0" : "") + seg + ":" + (miliseg <= 9 ? "0" : "") + miliseg;
+    }
+
 }
