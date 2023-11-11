@@ -4,8 +4,10 @@
  */
 package interfaz;
 
+import animaciones.Movimiento;
 import componente.Bloque;
 import componente.PanelComponente;
+import componente.Pelota;
 import componente.Raqueta;
 import interfaz.paneles.PanelIMG;
 import java.awt.Color;
@@ -40,8 +42,7 @@ public class Juego extends javax.swing.JFrame {
         fondo.setImage("recursos/fondo3.jpg");
         this.getContentPane().add(fondo);
         game.setOpaque(false);
-        game.setBounds(30, 30, 836, 615);
-        game.scaleImage(840, 615);
+        game.setBounds(30, 30, 856, 615);
         game.setImage("recursos/fondopartidasolido.png");
         marco.setBounds(0, 0, 1200, 675);
         marco.setOpaque(false);
@@ -50,10 +51,34 @@ public class Juego extends javax.swing.JFrame {
         fondo.add(game);
         game.setLayout(null);
         marco.setLayout(null);
-        //game.setBounds(30, 30, 110, 30);
-        Raqueta r = new Raqueta(30, 525, 110, 30, game);
+        game.setOpaque(false);
+        Raqueta r = new Raqueta(game);
+        r.actualizarEstado(2);
         game.add(r);
 
+        Bloque bloque1 = new Bloque(-1, 8 + 30 * 0, 8, 30, 24, 0, 0, game);
+        game.add(bloque1);
+
+        Bloque bloque2 = new Bloque(1, 8 + 30 * 1, 8, 30, 24, 0, 0, game);
+        game.add(bloque2);
+
+        Bloque bloque3 = new Bloque(2, 8 + 30 * 2, 8, 30, 24, 0, 0, game);
+        game.add(bloque3);
+
+        Bloque bloque4 = new Bloque(3, 8 + 30 * 3, 8, 30, 24, 0, 0, game);
+        game.add(bloque4);
+
+        Bloque bloque5 = new Bloque(4, 8 + 30 * 4, 8, 30, 24, 0, 0, game);
+        game.add(bloque5);
+
+        Bloque bloque6 = new Bloque(true, 8 + 30 * 5, 8, 30, 24, 0, 0, game);
+        game.add(bloque6);
+
+        Pelota pelota = new Pelota(100, 400, 25, 25, 10, 10, game);
+        game.add(pelota);
+        pelota.setR(r);
+        pelota.setSpeed(30);
+        new Thread(pelota).start();
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
