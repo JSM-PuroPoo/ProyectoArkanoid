@@ -4,12 +4,11 @@
  */
 package componente;
 
-import java.awt.Graphics2D;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 //raqueta normal 110, 30
 
 public class Raqueta extends PanelComponente {
@@ -17,7 +16,7 @@ public class Raqueta extends PanelComponente {
     private int estado;
 
     public Raqueta(JPanel contenedor) {
-        super(30, 525, 110, 30, 25, 0, contenedor);
+        super(30, 555, 110, 15, 25, 0, contenedor);
         this.estado = 1;
         this.setImage("recursos/raqueta1.png");
 
@@ -25,14 +24,15 @@ public class Raqueta extends PanelComponente {
 
     public void actualizarEstado(int estado) {
         if (this.estado != estado) {
+            this.estado = estado;
             switch (estado) {
                 case 0:
                     this.setImage("recursos/raqueta0.png");
-                    this.setBounds(getX(), getY(), 60, 30);
+                    this.setBounds(getX(), getY(), 60, 15);
                     break;
                 case 1:
                     this.setImage("recursos/raqueta1.png");
-                    this.setBounds(getX(), getY(), 110, 30);
+                    this.setBounds(getX(), getY(), 110, 15);
                     break;
                 case 2:
                     this.setImage("recursos/raqueta2.png");
@@ -43,103 +43,70 @@ public class Raqueta extends PanelComponente {
     }
 
     public void colision(Pelota pelota) {
-        switch (estado) {
-            case 0:
-                tipoColision0(pelota);
-                break;
-            case 1:
-                tipoColision1(pelota);
-                break;
-            case 2:
-                tipoColision2(pelota);
-                break;
+        Rectangle rIzquierdo = new Rectangle(getX(), getY(), 1, getHeight());
+        Rectangle rDerecho = new Rectangle(getX() + getWidth() - 1, getY(), 1, getHeight());
+        Rectangle rAbajo = new Rectangle(getX(), getY() + getHeight() - 1, getWidth(), 1);
+
+        if (pelota.getBounds().intersects(rIzquierdo)) {
+            pelota.setvX(-pelota.getvX());
+            pelota.setLocation(pelota.getX() - 26, pelota.getY());
+        } else if (pelota.getBounds().intersects(rDerecho)) {
+            pelota.setvX(-pelota.getvX());
+            pelota.setLocation(pelota.getX() + 26, pelota.getY());
+        } else if (pelota.getBounds().intersects(rAbajo)) {
+            pelota.setLocation(pelota.getX(), pelota.getY() + 25);
+            pelota.setvY(-pelota.getvY());
+        } else {
+            switch (estado) {
+                case 0:
+                    tipoColision0(pelota);
+                    break;
+                case 1:
+                    tipoColision1(pelota);
+                    break;
+                case 2:
+                    System.out.println(pelota.getvX());
+                    tipoColision2(pelota);
+                    break;
+            }
+            pelota.setLocation(pelota.getX(), pelota.getY() - 25);
+            pelota.setvY(-pelota.getvY());
         }
-        pelota.setvY(-pelota.getvY());
+
+    }
+
+    public void tipoColision(Pelota pelota, int cellWidth, double[] velocidades) {
+        Rectangle r;
+        int i;
+        int numCells = velocidades.length;
+        for (i = 0; i < numCells; i++) {
+            r = new Rectangle(getX() + cellWidth * i, getY() - 2, cellWidth, 1);
+            if (pelota.getBounds().intersects(r)) {
+                break;
+            }
+        }
+        if (i < numCells) {
+            if (pelota.getvX() < 0) {
+                pelota.setvX(-15 * velocidades[i]);
+            } else {
+                pelota.setvX(15 * velocidades[i]);
+            }
+        }
     }
 
     public void tipoColision0(Pelota pelota) {
-        Rectangle r;
-        int i;
-        for (i = 0; i < 3; i++) {
-            r = new Rectangle(getX() + 20 * i, getY(), 20, 30);
-            if (pelota.getBounds().intersects(r)) {
-                break;
-            }
-        }
-        switch (i) {
-            case 0:
-                pelota.setvX(15 * -1.1);
-                if (pelota.getBounds().intersects(new Rectangle(this.getX(), this.getY(), 1, this.getHeight()))) {
-                    pelota.setvY(-pelota.getvY());
-                }
-                break;
-            case 1:
-                pelota.setvX(15);
-                break;
-            case 2:
-                pelota.setvX(15 * 1.1);
-                break;
-        }
+        double[] velocidades = {1.05, 1, 1.05};
+        tipoColision(pelota, 20, velocidades);
     }
 
     public void tipoColision1(Pelota pelota) {
-        Rectangle r;
-        int i;
-        for (i = 0; i < 5; i++) {
-            r = new Rectangle(getX() + 22 * i, getY(), 22, 30);
-            if (pelota.getBounds().intersects(r)) {
-                break;
-            }
-        }
-        switch (i) {
-            case 0:
-                pelota.setvX(15 * -1.3);
-                break;
-            case 1:
-                pelota.setvX(15 * -1.1);
-                break;
-            case 2:
-                pelota.setvX(15);
-                break;
-            case 3:
-                pelota.setvX(15 * 1.1);
-                break;
-            case 4:
-                pelota.setvX(15 * 1.3);
-        }
+        double[] velocidades = {1.1, 1.05, 1, 1.05, 1.1};
+        tipoColision(pelota, 22, velocidades);
     }
 
     public void tipoColision2(Pelota pelota) {
-        Rectangle r;
-        int i;
-        for (i = 0; i < 7; i++) {
-            r = new Rectangle(getX() + 23 * i, getY(), 23, 30);
-            if (pelota.getBounds().intersects(r)) {
-                break;
-            }
-        }
-        switch (i) {
-            case 0:
-                pelota.setvX(15 * -1.5);
-                break;
-            case 1:
-                pelota.setvX(15 * -1.3);
-                break;
-            case 2:
-                pelota.setvX(15 * -1.1);
-                break;
-            case 3:
-                pelota.setvX(15);
-                break;
-            case 4:
-                pelota.setvX(15 * 1.1);
-                break;
-            case 5:
-                pelota.setvX(15 * 1.3);
-            case 6:
-                pelota.setvX(15 * 1.5);
-                break;
-        }
+        double[] velocidades = {1.15, 1.1, 1.05, 1, 1.05, 1.1, 1.15};
+        tipoColision(pelota, 23, velocidades);
     }
 
     public void moverIzquierda() {

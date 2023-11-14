@@ -4,19 +4,14 @@
  */
 package interfaz;
 
-import animaciones.Movimiento;
 import componente.Bloque;
-import componente.PanelComponente;
+
 import componente.Pelota;
 import componente.Raqueta;
 import interfaz.paneles.PanelIMG;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import javax.swing.JPanel;
-import javax.swing.Timer;
 
 /**
  *
@@ -53,7 +48,6 @@ public class Juego extends javax.swing.JFrame {
         marco.setLayout(null);
         game.setOpaque(false);
         Raqueta r = new Raqueta(game);
-        r.actualizarEstado(2);
         game.add(r);
 
         Bloque bloque1 = new Bloque(-1, 8 + 30 * 0, 8, 30, 24, 0, 0, game);
@@ -74,29 +68,32 @@ public class Juego extends javax.swing.JFrame {
         Bloque bloque6 = new Bloque(true, 8 + 30 * 5, 8, 30, 24, 0, 0, game);
         game.add(bloque6);
 
-        Pelota pelota = new Pelota(100, 400, 25, 25, 10, 10, game);
+        Pelota pelota = new Pelota(0, 520, 25, 25, 10, 10, game);
         game.add(pelota);
         pelota.setR(r);
-        pelota.setSpeed(30);
+        pelota.setSpeed(60);
+        r.actualizarEstado(2);
         new Thread(pelota).start();
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 int keyCode = e.getKeyCode();
 
-                switch (keyCode) {
-                    case 39:
-                        r.moverDerecha();
-                        break;
-                    case 37:
-                        r.moverIzquierda();
-                        break;
-                    case 68:
-                        r.moverDerecha();
-                        break;
-                    case 65:
-                        r.moverIzquierda();
-                        break;
+                if (!pelota.colisionRaqueta(r)) {
+                    switch (keyCode) {
+                        case 39:
+                            r.moverDerecha();
+                            break;
+                        case 37:
+                            r.moverIzquierda();
+                            break;
+                        case 68:
+                            r.moverDerecha();
+                            break;
+                        case 65:
+                            r.moverIzquierda();
+                            break;
+                    }
                 }
             }
         });

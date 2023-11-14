@@ -74,16 +74,25 @@ public class PanelComponente extends PanelIMG {
     }
 
     public void mover() {
+        int nuevaX = (int) (getX() + vX);
+        int nuevaY = (int) (getY() + vY);
+
         if (contenedor != null) {
-            if (getX() + vX < 0 || getX() + vX > contenedor.getWidth() - getWidth()) {
+            int maxX = contenedor.getWidth() - getWidth() - 8; // Resta 8 para considerar los bordes
+            int maxY = contenedor.getHeight() - getHeight() - 8; // Resta 8 para considerar los bordes
+
+            if (nuevaX < 8 || nuevaX > maxX) { // Verifica los bordes izquierdo y derecho
                 vX = -vX;
+                nuevaX = Math.min(Math.max(nuevaX, 8), maxX); // Limita la posición dentro de los bordes
             }
 
-            if (getY() + vY < 0 || getY() + vY > contenedor.getHeight() - getHeight()) {
+            if (nuevaY < 8 || nuevaY > maxY) { // Verifica los bordes superior e inferior
                 vY = -vY;
+                nuevaY = Math.min(Math.max(nuevaY, 8), maxY); // Limita la posición dentro de los bordes
             }
         }
-        setLocation((int)(getX() + vX), (int)(getY() + vY));
+
+        setLocation(nuevaX, nuevaY);
     }
 
     @Override
