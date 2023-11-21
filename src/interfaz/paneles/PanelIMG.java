@@ -23,7 +23,7 @@ public class PanelIMG extends JPanel {
 
     public PanelIMG() {
     }
-
+    
     public PanelIMG(String imagePath) {
         try {
             image = ImageIO.read(new File(imagePath));
@@ -49,11 +49,9 @@ public class PanelIMG extends JPanel {
         }
 
     }
-
     public BufferedImage getImage() {
         return image;
     }
-
     public void scaleImage(int width, int height) {
         if (image != null) {
             Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
@@ -65,5 +63,4 @@ public class PanelIMG extends JPanel {
             repaint();
         }
     }
-
 }

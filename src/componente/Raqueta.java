@@ -16,7 +16,7 @@ public class Raqueta extends PanelComponente {
     private int estado;
 
     public Raqueta(JPanel contenedor) {
-        super(30, 555, 110, 15, 25, 0, contenedor);
+        super(365, 555, 110, 30, 22, 0, contenedor);
         this.estado = 1;
         this.setImage("recursos/raqueta1.png");
 
@@ -28,11 +28,11 @@ public class Raqueta extends PanelComponente {
             switch (estado) {
                 case 0:
                     this.setImage("recursos/raqueta0.png");
-                    this.setBounds(getX(), getY(), 60, 15);
+                    this.setBounds(getX(), getY(), 60, 30);
                     break;
                 case 1:
                     this.setImage("recursos/raqueta1.png");
-                    this.setBounds(getX(), getY(), 110, 15);
+                    this.setBounds(getX(), getY(), 110, 30);
                     break;
                 case 2:
                     this.setImage("recursos/raqueta2.png");

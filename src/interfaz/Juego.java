@@ -27,6 +27,11 @@ public class Juego extends javax.swing.JFrame {
     PanelIMG marco = new PanelIMG();
 
     public Juego() {
+        /*
+        contenedor.setResizable(false);
+        contenedor.setLocationRelativeTo(null);
+        contenedor.getContentPane().add(fondo);
+        */
         this.setUndecorated(true);
         initComponents();
         this.setTitle("ArkanoidGame");
@@ -68,11 +73,10 @@ public class Juego extends javax.swing.JFrame {
         Bloque bloque6 = new Bloque(true, 8 + 30 * 5, 8, 30, 24, 0, 0, game);
         game.add(bloque6);
 
-        Pelota pelota = new Pelota(0, 520, 25, 25, 10, 10, game);
+        Pelota pelota = new Pelota(365, 525, 25, 25, 10, 10, game);
         game.add(pelota);
         pelota.setR(r);
-        pelota.setSpeed(60);
-        r.actualizarEstado(2);
+        pelota.setSpeed(50);
         new Thread(pelota).start();
         this.addKeyListener(new KeyAdapter() {
             @Override

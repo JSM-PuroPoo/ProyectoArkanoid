@@ -78,17 +78,17 @@ public class PanelComponente extends PanelIMG {
         int nuevaY = (int) (getY() + vY);
 
         if (contenedor != null) {
-            int maxX = contenedor.getWidth() - getWidth() - 8; // Resta 8 para considerar los bordes
-            int maxY = contenedor.getHeight() - getHeight() - 8; // Resta 8 para considerar los bordes
+            int maxX = contenedor.getWidth() - getWidth() - 8; 
+            int maxY = contenedor.getHeight() - getHeight() - 8; 
 
-            if (nuevaX < 8 || nuevaX > maxX) { // Verifica los bordes izquierdo y derecho
+            if (nuevaX < 8 || nuevaX > maxX) { 
                 vX = -vX;
-                nuevaX = Math.min(Math.max(nuevaX, 8), maxX); // Limita la posición dentro de los bordes
+                nuevaX = Math.min(Math.max(nuevaX, 8), maxX); 
             }
 
-            if (nuevaY < 8 || nuevaY > maxY) { // Verifica los bordes superior e inferior
+            if (nuevaY < 8 || nuevaY > maxY) { 
                 vY = -vY;
-                nuevaY = Math.min(Math.max(nuevaY, 8), maxY); // Limita la posición dentro de los bordes
+                nuevaY = Math.min(Math.max(nuevaY, 8), maxY);
             }
         }
 

@@ -7,29 +7,59 @@ package Game;
 import componente.Bloque;
 import componente.PanelComponente;
 import componente.Pelota;
+import componente.Raqueta;
 import interfaz.paneles.PanelIMG;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.Comparator;
-import javax.swing.JPanel;
 
 public class PanelJuego extends PanelIMG {
 
     private Bloque bloques[];
     private Pelota pelotas[];
+    private Raqueta raqueta;
+    private PanelIMG game;
+    private PanelIMG marco;
     public int contPelotas;
     public int contBloques;
+    public String rutaFondo;
+    public String rutaFJuego;
+    public String rutaMarco;
 
-    public PanelJuego(Bloque bloques[]) {
+    public PanelJuego(Bloque bloques[], String rutaFondo, String rutaFJuego, String rutaMarco) {
         this.bloques = bloques;
         pelotas = new Pelota[50];
         contPelotas = 0;
         contBloques = bloques.length;
+        this.rutaFondo = rutaFondo;
+        this.rutaFJuego = rutaFJuego;
+        this.rutaMarco = rutaMarco;
+        this.setImage(rutaFondo);
+        game = new PanelIMG(rutaFJuego);
+        this.setLayout(null);
+        marco = new PanelIMG(rutaMarco);
+        this.setOpaque(false);
+        marco.setBounds(0, 0, 1200, 675);
+        marco.setOpaque(false);
+        marco.setLayout(null);
+        this.setBounds(0, 0, 1200, 675);
+        this.add(marco);
+        this.add(game);
+        game.setOpaque(false);
+        game.setBounds(30, 30, 856, 615);
+        game.setLayout(null);
+        game.setOpaque(false);
+        raqueta = new Raqueta(game);
+        game.add(raqueta);
+
     }
 
     public void agregarPelota(Pelota pelota) {
         if (contPelotas < 50) {
+            new Thread(pelota).start();
+            pelota.setR(raqueta);
             pelotas[contPelotas++] = pelota;
         }
     }
@@ -45,7 +75,7 @@ public class PanelJuego extends PanelIMG {
         }
     }
 
-    public void eliminarBloque(Bloque bloque) {
+    /*public void eliminarBloque(Bloque bloque) {
         for (int i = 0; i < contBloques; i++) {
             if (bloques[i].equals(bloque)) {
                 bloques[i] = null;
@@ -54,8 +84,7 @@ public class PanelJuego extends PanelIMG {
                 break;
             }
         }
-    }
-
+    }*/
     public Bloque[] getBloques() {
         return bloques;
     }
@@ -84,11 +113,29 @@ public class PanelJuego extends PanelIMG {
         Arrays.sort(array, customComparator);
     }
 
+    public PanelIMG getGame() {
+        return game;
+    }
+
+    public void setGame(PanelIMG game) {
+        this.game = game;
+    }
+
+    public PanelIMG getMarco() {
+        return marco;
+    }
+
+    public void setMarco(PanelIMG marco) {
+        this.marco = marco;
+    }
+
     @Override
-    public void paintComponent(Graphics graphics) {
+    public void paintComponents(Graphics graphics) {
         super.paintComponent(graphics);
         for (Bloque obj : bloques) {
+            game.add(obj);
             obj.paint(graphics);
         }
+        game.paint(graphics);
     }
 }
