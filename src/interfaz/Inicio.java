@@ -3,13 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package interfaz;
-
+ import interfaz.paneles.PanelIMG;
 /**
  *
  * @author Juan Felipe
  */
 public class Inicio extends javax.swing.JFrame {
-
+    PanelIMG inicioFondo = new PanelIMG();
+    PanelIMG inicioMarco = new PanelIMG();
+    PanelIMG howtoplay = new PanelIMG();
+    PanelIMG tableInicio = new PanelIMG();
     /**
      * Creates new form Inicio
      */
@@ -18,6 +21,27 @@ public class Inicio extends javax.swing.JFrame {
         this.setTitle("ArkanoidGame");
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        inicioFondo.setLayout(null);
+        inicioFondo.setImage("recursos/inicioimg.jpg");
+        inicioFondo.setBounds(0, 0, 1200, 675);
+        this.getContentPane().add(inicioFondo);
+        inicioMarco.setBounds(0, 0, 1200, 675);
+        inicioMarco.setOpaque(false);
+        inicioMarco.setImage("recursos/marco0.png");
+        inicioMarco.setLayout(null);
+        inicioFondo.add(inicioMarco);
+        howtoplay.setLayout(null);
+        howtoplay.setImage("recursos/slide1howtoplay.png");
+        howtoplay.setBounds(470, 100, 650, 475);
+        howtoplay.setOpaque(false);
+        inicioFondo.add(howtoplay);       
+        tableInicio.setLayout(null);
+        tableInicio.setImage("recursos/tableinicio.png");
+        tableInicio.setBounds(30, 30, 388, 615);
+        tableInicio.setOpaque(false);
+        inicioFondo.add(tableInicio);
+ 
+        
     }
 
     /**
