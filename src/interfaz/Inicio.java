@@ -40,6 +40,7 @@ public class Inicio extends javax.swing.JFrame {
         tableInicio.setBounds(30, 30, 388, 615);
         tableInicio.setOpaque(false);
         inicioFondo.add(tableInicio);
+        //kk
  
         
     }
