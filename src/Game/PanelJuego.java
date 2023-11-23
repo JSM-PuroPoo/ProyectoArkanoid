@@ -28,6 +28,10 @@ public class PanelJuego extends PanelIMG {
     public String rutaFJuego;
     public String rutaMarco;
 
+    public static final int NORMAL = 40;
+    public static final int SLOW = 50;
+    public static final int FAST = 30;
+
     public PanelJuego(Bloque bloques[], String rutaFondo, String rutaFJuego, String rutaMarco) {
         this.bloques = bloques;
         pelotas = new Pelota[50];
@@ -59,7 +63,10 @@ public class PanelJuego extends PanelIMG {
     public void agregarPelota(Pelota pelota) {
         if (contPelotas < 50) {
             new Thread(pelota).start();
+            game.add(pelota);
+            pelota.setSpeed(SLOW);
             pelota.setR(raqueta);
+            pelota.setPanelJuego(this);
             pelotas[contPelotas++] = pelota;
         }
     }
@@ -75,7 +82,11 @@ public class PanelJuego extends PanelIMG {
         }
     }
 
-    /*public void eliminarBloque(Bloque bloque) {
+    public Raqueta getRaqueta() {
+        return raqueta;
+    }
+
+    public void eliminarBloque(Bloque bloque) {
         for (int i = 0; i < contBloques; i++) {
             if (bloques[i].equals(bloque)) {
                 bloques[i] = null;
@@ -84,7 +95,8 @@ public class PanelJuego extends PanelIMG {
                 break;
             }
         }
-    }*/
+    }
+
     public Bloque[] getBloques() {
         return bloques;
     }
@@ -138,4 +150,5 @@ public class PanelJuego extends PanelIMG {
         }
         game.paint(graphics);
     }
+
 }

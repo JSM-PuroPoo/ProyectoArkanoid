@@ -42,6 +42,14 @@ public class PanelComponente extends PanelIMG {
     public void setContenedor(JPanel contenedor) {
         this.contenedor = contenedor;
     }
+    
+    public void setX(int x){
+        this.setBounds(x, getY(), getWidth(), getHeight());
+    }
+    
+    public void setY(int y){
+        this.setBounds(getX(), y, getWidth(), getHeight());
+    }
 
     @Override
     public boolean equals(Object obj) {

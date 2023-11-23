@@ -4,6 +4,7 @@
  */
 package componente;
 
+import Game.PanelJuego;
 import java.awt.Rectangle;
 import javax.swing.JPanel;
 
@@ -11,6 +12,7 @@ public class Pelota extends PanelComponente implements Runnable {
 
     private int speed;
     private Raqueta r;
+    private PanelJuego panelJuego;
 
     public Pelota(int x, int y, int width, int height, int vX, int vY, JPanel contenedor) {
         super(x, y, width, height, vX, vY, contenedor);
@@ -18,23 +20,12 @@ public class Pelota extends PanelComponente implements Runnable {
     }
 
     public boolean colisionBloque(Bloque bloque) {
-        Rectangle pelotaBounds = this.getBounds();
-        Rectangle bloqueBounds = bloque.getBounds();
-        if (pelotaBounds.intersects(bloqueBounds)) {
-            int ladoColision = 0;
-            if (pelotaBounds.intersects(new Rectangle(bloqueBounds.x, bloqueBounds.y, 1, bloqueBounds.height))) {
-                ladoColision = 1;
-            } else if (pelotaBounds.intersects(new Rectangle(bloqueBounds.x + bloqueBounds.width - 1, bloqueBounds.y, 1, bloqueBounds.height))) {
-                ladoColision = 2;
-            }
+        Rectangle rIzquierdo = new Rectangle(bloque.getX(), bloque.getY(), 1, bloque.getHeight());
+        Rectangle rDerecho = new Rectangle(bloque.getX() + bloque.getWidth() - 1, bloque.getY(), 1, bloque.getHeight());
+        Rectangle rAbajo = new Rectangle(bloque.getX(), bloque.getY() + bloque.getHeight() - 1, bloque.getWidth(), 1);
 
-            if (ladoColision == 1 || ladoColision == 2) {
-                setvX(-getvX());
-            } else {
-                setvY(-getvY());
-            }
-            bloque.colision();
-            if (bloque.getVida() == 0) {
+        if (bloque.getBounds().intersects(getBounds())) {
+            if (bloque.colision()) {
                 bloque = null;
             }
             return true;
@@ -63,10 +54,26 @@ public class Pelota extends PanelComponente implements Runnable {
         this.r = r;
     }
 
+    public PanelJuego getPanelJuego() {
+        return panelJuego;
+    }
+
+    public void setPanelJuego(PanelJuego panelJuego) {
+        this.panelJuego = panelJuego;
+    }
+
     public void mover() {
         super.mover();
         if (colisionRaqueta(r)) {
             r.colision(this);
+        }
+    }
+
+    public void colisionJuego() {
+        for (Bloque obj : panelJuego.getBloques()) {
+            if (colisionBloque(obj)) {
+                break;
+            }
         }
     }
 
@@ -75,6 +82,7 @@ public class Pelota extends PanelComponente implements Runnable {
         while (true) {
             this.mover();
             this.repaint();
+            this.colisionJuego();
             try {
                 Thread.sleep(speed);
             } catch (InterruptedException e) {

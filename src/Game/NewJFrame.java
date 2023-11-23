@@ -8,6 +8,8 @@ import componente.Bloque;
 import componente.Pelota;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 
 /**
@@ -37,14 +39,58 @@ public class NewJFrame extends javax.swing.JFrame {
             new Bloque(2, 8 + 30 * 2, 8, 30, 24, 0, 0, pj),
             new Bloque(3, 8 + 30 * 3, 8, 30, 24, 0, 0, pj),
             new Bloque(4, 8 + 30 * 4, 8, 30, 24, 0, 0, pj),
-            new Bloque(true, 8 + 30 * 5, 8, 30, 24, 0, 0, pj)
+            new Bloque(true, 8 + 30 * 5, 8, 30, 24, 0, 0, pj),
+            new Bloque(-1, 8 + 30 * 6, 8, 30, 24, 0, 0, pj),
+            new Bloque(1, 8 + 30 * 7, 8, 30, 24, 0, 0, pj),
+            new Bloque(2, 8 + 30 * 8, 8, 30, 24, 0, 0, pj),
+            new Bloque(3, 8 + 30 * 9, 8, 30, 24, 0, 0, pj),
+            new Bloque(4, 8 + 30 * 10, 8, 30, 24, 0, 0, pj),
+            new Bloque(true, 8 + 30 * 11, 8, 30, 24, 0, 0, pj),
+            new Bloque(-1, 8 + 30 * 12, 8, 30, 24, 0, 0, pj),
+            new Bloque(1, 8 + 30 * 13, 8, 30, 24, 0, 0, pj),
+            new Bloque(2, 8 + 30 * 14, 8, 30, 24, 0, 0, pj),
+            new Bloque(3, 8 + 30 * 15, 8, 30, 24, 0, 0, pj),
+            new Bloque(4, 8 + 30 * 16, 8, 30, 24, 0, 0, pj),
+            new Bloque(true, 8 + 30 * 17, 8, 30, 24, 0, 0, pj),
+            new Bloque(-1, 8 + 30 * 18, 8, 30, 24, 0, 0, pj),
+            new Bloque(1, 8 + 30 * 19, 8, 30, 24, 0, 0, pj),
+            new Bloque(2, 8 + 30 * 20, 8, 30, 24, 0, 0, pj),
+            new Bloque(3, 8 + 30 * 21, 8, 30, 24, 0, 0, pj),
+            new Bloque(4, 8 + 30 * 22, 8, 30, 24, 0, 0, pj),
+            new Bloque(true, 8 + 17 * 23, 8, 30, 24, 0, 0, pj)
         };
         pj = new PanelJuego(bloques, "recursos/fondo3.jpg", "recursos/fondopartidasolido.png", "recursos/marcojuego.png");
         pj.setSize(this.getSize());
         this.add(pj);
         pj.agregarPelota(new Pelota(365, 525, 25, 25, 10, 10, pj.getGame()));
+
+        //pj.agregarPelota(new Pelota(365, 525, 25, 25, 11, 10, pj.getGame()));
+
+        pj.paintComponents(this.getGraphics());
         
-        
+
+        this.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                int keyCode = e.getKeyCode();
+
+                switch (keyCode) {
+                    case 39:
+                        pj.getRaqueta().moverDerecha();
+                        break;
+                    case 37:
+                        pj.getRaqueta().moverIzquierda();
+                        break;
+                    case 68:
+                        pj.getRaqueta().moverDerecha();
+                        break;
+                    case 65:
+                        pj.getRaqueta().moverIzquierda();
+                        break;
+                }
+            }
+
+        });
     }
 
     /**
