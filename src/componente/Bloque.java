@@ -21,7 +21,7 @@ public class Bloque extends PanelComponente {
     public Bloque(boolean especial, int x, int y, int width, int height, int vX, int vY, JPanel contenedor) {
         this(1, x, y, width, height, vX, vY, contenedor);
         this.especial = especial;
-        setImage("recursos/bloqueMorado.png");
+        setImage("recursos/bloqueRosado.png");
     }
 
     public int getVida() {
@@ -32,10 +32,9 @@ public class Bloque extends PanelComponente {
         this.vida = vida;
     }
 
-    public boolean colision() {
+    public void colision() {
         vida--;
         asignarImagen();
-        return vida == 0;
     }
 
     public void asignarImagen() {

@@ -17,6 +17,7 @@ public class Inicio extends javax.swing.JFrame {
      * Creates new form Inicio
      */
     public Inicio() {
+        setUndecorated(true);
         initComponents();
         this.setTitle("ArkanoidGame");
         this.setResizable(false);

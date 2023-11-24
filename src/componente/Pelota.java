@@ -20,20 +20,96 @@ public class Pelota extends PanelComponente implements Runnable {
     }
 
     public boolean colisionBloque(Bloque bloque) {
-        Rectangle rIzquierdo = new Rectangle(bloque.getX(), bloque.getY(), 1, bloque.getHeight());
-        Rectangle rDerecho = new Rectangle(bloque.getX() + bloque.getWidth() - 1, bloque.getY(), 1, bloque.getHeight());
-        Rectangle rAbajo = new Rectangle(bloque.getX(), bloque.getY() + bloque.getHeight() - 1, bloque.getWidth(), 1);
+        Rectangle pelotaBounds = this.getBounds();
+        Rectangle bloqueBounds = bloque.getBounds();
 
-        if (bloque.getBounds().intersects(getBounds())) {
-            if (bloque.colision()) {
-                bloque = null;
+        if (pelotaBounds.intersects(bloqueBounds)) {
+            double centroX = pelotaBounds.getCenterX();
+            double centroY = pelotaBounds.getCenterY();
+
+            double overlapX = Math.min(Math.abs(pelotaBounds.getMaxX() - bloqueBounds.getMinX()), Math.abs(pelotaBounds.getMinX() - bloqueBounds.getMaxX()));
+            double overlapY = Math.min(Math.abs(pelotaBounds.getMaxY() - bloqueBounds.getMinY()), Math.abs(pelotaBounds.getMinY() - bloqueBounds.getMaxY()));
+
+            if (overlapX < overlapY) {
+
+                setvX(-getvX());
+
+                if (centroX < bloqueBounds.getCenterX()) {
+                    setX(bloque.getX() - getWidth());
+                } else {
+                    setX(bloque.getX() + bloque.getWidth());
+                }
+            } else {
+
+                setvY(-getvY());
+
+                if (centroY < bloqueBounds.getCenterY()) {
+                    setY(bloque.getY() - getHeight());
+                } else {
+                    setY(bloque.getY() + bloque.getHeight());
+                }
             }
+
+            bloque.colision();
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
+    /*public boolean colisionBloque(Bloque bloque) {
+        Rectangle pelotaBounds = this.getBounds();
+        Rectangle bloqueBounds = bloque.getBounds();
+
+        if (pelotaBounds.intersects(bloqueBounds)) {
+            double overlapX = Math.min(Math.abs(pelotaBounds.getMaxX() - bloqueBounds.getMinX()), Math.abs(pelotaBounds.getMinX() - bloqueBounds.getMaxX()));
+            double overlapY = Math.min(Math.abs(pelotaBounds.getMaxY() - bloqueBounds.getMinY()), Math.abs(pelotaBounds.getMinY() - bloqueBounds.getMaxY()));
+            double centroX = pelotaBounds.getCenterX();
+            double centroY = pelotaBounds.getCenterY();
+            if (overlapX < overlapY) {
+                setvX(-getvX());
+                setX(centroX < bloqueBounds.getCenterX() ? bloque.getX() - getWidth() : bloque.getX() + bloque.getWidth());
+            } else {
+                setvY(-getvY());
+                setY(centroY < bloqueBounds.getCenterY() ? bloque.getY() - getHeight() : bloque.getY() + bloque.getHeight());
+            }
+
+            bloque.colision();
+            return true;
+        }
+
+        return false;
+    }*/
+
+ /*public boolean colisionBloque(Bloque bloque) {
+        Rectangle pelotaBounds = this.getBounds();
+        Rectangle bloqueBounds = bloque.getBounds();
+        double centroX = pelotaBounds.getCenterX();
+        double centroY = pelotaBounds.getCenterY();
+        if (pelotaBounds.intersects(bloqueBounds)) {
+            double overlapX = Math.min(Math.abs(pelotaBounds.getMaxX() - bloqueBounds.getMinX()), Math.abs(pelotaBounds.getMinX() - bloqueBounds.getMaxX()));
+            double overlapY = Math.min(Math.abs(pelotaBounds.getMaxY() - bloqueBounds.getMinY()), Math.abs(pelotaBounds.getMinY() - bloqueBounds.getMaxY()));
+
+            if (overlapX < overlapY) {
+                setvX(-getvX());
+
+                // Ajustar la posición en función de la ubicación de la colisión en el bloque
+                double adjustmentX = (getWidth() / 2) * (getvX() > 0 ? 1 : -1);
+                setX((int) (centroX < bloqueBounds.getCenterX() ? bloque.getX() - getWidth() + adjustmentX : bloque.getX() + bloque.getWidth() + adjustmentX));
+            } else {
+                setvY(-getvY());
+
+                // Ajustar la posición en función de la ubicación de la colisión en el bloque
+                double adjustmentY = (getHeight() / 2) * (getvY() > 0 ? 1 : -1);
+                setY((int) (centroY < bloqueBounds.getCenterY() ? bloque.getY() - getHeight() + adjustmentY : bloque.getY() + bloque.getHeight() + adjustmentY));
+            }
+
+            bloque.colision();
+            return true;
+        }
+
+        return false;
+    }*/
     public boolean colisionRaqueta(Raqueta raqueta) {
         return this.getBounds().intersects(raqueta.getBounds());
     }
@@ -62,16 +138,22 @@ public class Pelota extends PanelComponente implements Runnable {
         this.panelJuego = panelJuego;
     }
 
+    @Override
     public void mover() {
         super.mover();
         if (colisionRaqueta(r)) {
             r.colision(this);
         }
+        
     }
 
     public void colisionJuego() {
         for (Bloque obj : panelJuego.getBloques()) {
-            if (colisionBloque(obj)) {
+            if (obj != null && colisionBloque(obj)) {
+                if (obj.getVida() == 0) {
+                    panelJuego.eliminarBloque(obj);
+                    obj.setVisible(false);
+                }
                 break;
             }
         }

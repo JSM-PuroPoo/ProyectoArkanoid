@@ -10,8 +10,6 @@ import componente.Pelota;
 import componente.Raqueta;
 import interfaz.paneles.PanelIMG;
 import java.awt.Graphics;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -28,9 +26,9 @@ public class PanelJuego extends PanelIMG {
     public String rutaFJuego;
     public String rutaMarco;
 
-    public static final int NORMAL = 40;
-    public static final int SLOW = 50;
-    public static final int FAST = 30;
+    public static final int NORMAL = 4;
+    public static final int SLOW = 5; //50
+    public static final int FAST = 3;
 
     public PanelJuego(Bloque bloques[], String rutaFondo, String rutaFJuego, String rutaMarco) {
         this.bloques = bloques;
@@ -57,6 +55,8 @@ public class PanelJuego extends PanelIMG {
         game.setOpaque(false);
         raqueta = new Raqueta(game);
         game.add(raqueta);
+        
+        raqueta.actualizarEstado(2);
 
     }
 
@@ -64,7 +64,7 @@ public class PanelJuego extends PanelIMG {
         if (contPelotas < 50) {
             new Thread(pelota).start();
             game.add(pelota);
-            pelota.setSpeed(SLOW);
+            pelota.setSpeed(FAST);
             pelota.setR(raqueta);
             pelota.setPanelJuego(this);
             pelotas[contPelotas++] = pelota;
@@ -87,13 +87,15 @@ public class PanelJuego extends PanelIMG {
     }
 
     public void eliminarBloque(Bloque bloque) {
+
         for (int i = 0; i < contBloques; i++) {
-            if (bloques[i].equals(bloque)) {
+            if (bloques[i]!= null && bloques[i].equals(bloque)) {
                 bloques[i] = null;
                 ordenarArray(bloques);
                 contBloques--;
                 break;
             }
+
         }
     }
 

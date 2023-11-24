@@ -10,6 +10,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 import javax.swing.JPanel;
 
 /**
@@ -33,7 +34,32 @@ public class NewJFrame extends javax.swing.JFrame {
         this.setBounds(0, 0, 1200, 675);
         this.setLocationRelativeTo(null);
         this.setLayout(null);
-        Bloque bloques[] = new Bloque[]{
+        int numRows = 2;  // Número de filas de bloques
+        int numCols = 22;  // Número de columnas de bloques
+        int blockWidth = 30;
+        int blockHeight = 24;
+        int spacing = 8;  //8
+
+        Bloque bloques[] = new Bloque[numRows * numCols];
+
+        for (int row = 0; row < numRows; row++) {
+            for (int col = 0; col < numCols; col++) {
+                int index = row * numCols + col;
+
+                int posX = 8 + (blockWidth + spacing) * col;
+                int posY = 8 + (blockHeight + spacing) * row;
+
+                if (col % 6 == 5) {
+                    bloques[index] = new Bloque(true, posX, posY, blockWidth, blockHeight, 0, 0, pj);
+                } else {
+                    int vida = col % 4 + 1;  // Asignar valores de vida de 1 a 5
+                    bloques[index] = new Bloque(vida, posX, posY, blockWidth, blockHeight, 0, 0, pj);
+                }
+            }
+        }
+
+
+        /*Bloque bloques[] = new Bloque[]{
             new Bloque(-1, 8 + 30 * 0, 8, 30, 24, 0, 0, pj),
             new Bloque(1, 8 + 30 * 1, 8, 30, 24, 0, 0, pj),
             new Bloque(2, 8 + 30 * 2, 8, 30, 24, 0, 0, pj),
@@ -58,16 +84,35 @@ public class NewJFrame extends javax.swing.JFrame {
             new Bloque(3, 8 + 30 * 21, 8, 30, 24, 0, 0, pj),
             new Bloque(4, 8 + 30 * 22, 8, 30, 24, 0, 0, pj),
             new Bloque(true, 8 + 17 * 23, 8, 30, 24, 0, 0, pj)
-        };
-        pj = new PanelJuego(bloques, "recursos/fondo3.jpg", "recursos/fondopartidasolido.png", "recursos/marcojuego.png");
+        };*/
+        pj = new PanelJuego(bloques, "recursos/fondo1.jpg", "recursos/fondopartidasolido.png", "recursos/marco0.png");
         pj.setSize(this.getSize());
         this.add(pj);
-        pj.agregarPelota(new Pelota(365, 525, 25, 25, 10, 10, pj.getGame()));
-
-        //pj.agregarPelota(new Pelota(365, 525, 25, 25, 11, 10, pj.getGame()));
-
-        pj.paintComponents(this.getGraphics());
+        pj.agregarPelota(new Pelota(365, 525, 25, 25, 1, 1, pj.getGame()));
+        pj.agregarPelota(new Pelota(365, 525, 25, 25, 1, 1, pj.getGame()));
+        /*pj.agregarPelota(new Pelota(365, 525, 25, 25, 1, 1, pj.getGame()));
+        pj.agregarPelota(new Pelota(365, 525, 25, 25, 1, 1, pj.getGame()));
+        pj.agregarPelota(new Pelota(365, 525, 25, 25, 1, 1, pj.getGame()));
+        pj.agregarPelota(new Pelota(365, 525, 25, 25, 1, 1, pj.getGame()));
+        pj.agregarPelota(new Pelota(365, 525, 25, 25, 1, 1, pj.getGame()));
+        pj.agregarPelota(new Pelota(365, 525, 25, 25, 1, 1, pj.getGame()));
+        pj.agregarPelota(new Pelota(365, 525, 25, 25, 1, 1, pj.getGame()));
+        pj.agregarPelota(new Pelota(365, 525, 25, 25, 1, 1, pj.getGame()));
+        pj.agregarPelota(new Pelota(365, 525, 25, 25, 1, 1, pj.getGame()));
+        /*pj.agregarPelota(new Pelota(365, 525, 25, 25, 10, -10, pj.getGame()));
+        pj.agregarPelota(new Pelota(365, 525, 25, 25, -10, 10, pj.getGame()));
+        pj.agregarPelota(new Pelota(365, 525, 25, 25, 11, 10, pj.getGame()));
+        pj.agregarPelota(new Pelota(365, 525, 25, 25, 10, -11, pj.getGame()));
+        pj.agregarPelota(new Pelota(365, 525, 25, 25, -11, 10, pj.getGame()));
         
+        pj.agregarPelota(new Pelota(365, 525, 25, 25, 10, 12, pj.getGame()));
+        pj.agregarPelota(new Pelota(365, 525, 25, 25, 10, -12, pj.getGame()));
+        pj.agregarPelota(new Pelota(365, 525, 25, 25, -10, 12, pj.getGame()));
+        pj.agregarPelota(new Pelota(365, 525, 25, 25, 11, 12, pj.getGame()));
+        pj.agregarPelota(new Pelota(365, 525, 25, 25, 10, -12, pj.getGame()));
+        pj.agregarPelota(new Pelota(365, 525, 25, 25, -11, 12, pj.getGame()));
+*/
+        pj.paintComponents(this.getGraphics());
 
         this.addKeyListener(new KeyAdapter() {
             @Override

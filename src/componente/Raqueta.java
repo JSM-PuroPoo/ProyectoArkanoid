@@ -43,8 +43,8 @@ public class Raqueta extends PanelComponente {
     }
 
     public void colision(Pelota pelota) {
-        Rectangle rIzquierdo = new Rectangle(getX(), getY(), 1, getHeight());
-        Rectangle rDerecho = new Rectangle(getX() + getWidth() - 1, getY(), 1, getHeight());
+        Rectangle rIzquierdo = new Rectangle(getX(), getY() + 1 , 1, getHeight() - 2);
+        Rectangle rDerecho = new Rectangle(getX() + getWidth() - 1, getY() + 1, 1, getHeight() - 2);
         Rectangle rAbajo = new Rectangle(getX(), getY() + getHeight() - 1, getWidth(), 1);
 
         if (pelota.getBounds().intersects(rIzquierdo)) {
@@ -54,10 +54,10 @@ public class Raqueta extends PanelComponente {
             pelota.setvX(-pelota.getvX());
             pelota.setLocation(pelota.getX() + 26, pelota.getY());
         } else if (pelota.getBounds().intersects(rAbajo)) {
-            pelota.setLocation(pelota.getX(), pelota.getY() + 25);
             pelota.setvY(-pelota.getvY());
+            pelota.setLocation(pelota.getX(), pelota.getY() + 25);
         } else {
-            switch (estado) {
+           /* switch (estado) {
                 case 0:
                     tipoColision0(pelota);
                     break;
@@ -68,7 +68,7 @@ public class Raqueta extends PanelComponente {
                     System.out.println(pelota.getvX());
                     tipoColision2(pelota);
                     break;
-            }
+            }*/
             pelota.setLocation(pelota.getX(), pelota.getY() - 25);
             pelota.setvY(-pelota.getvY());
         }
