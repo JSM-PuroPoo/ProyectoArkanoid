@@ -10,17 +10,35 @@ public class Bloque extends PanelComponente {
 
     private int vida;
     private boolean especial;
+    private int puntuacion;
 
     public Bloque(int vida, int x, int y, int width, int height, int vX, int vY, JPanel contenedor) {
         super(x, y, width, height, vX, vY, contenedor);
         this.vida = vida;
         this.especial = false;
+        switch(vida){
+            case 1:
+                puntuacion = 10;
+                break;
+            case 2:
+                puntuacion = 20;
+                break;
+            case 3:
+                puntuacion = 30;
+                break;
+            case 4:
+                puntuacion = 40;
+                break;
+            default:
+                puntuacion = 0;
+        }
         asignarImagen();
     }
 
     public Bloque(boolean especial, int x, int y, int width, int height, int vX, int vY, JPanel contenedor) {
         this(1, x, y, width, height, vX, vY, contenedor);
         this.especial = especial;
+        puntuacion = 50;
         setImage("recursos/bloqueRosado.png");
     }
 

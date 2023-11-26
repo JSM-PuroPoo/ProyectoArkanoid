@@ -20,15 +20,6 @@ public class Archivos {
         }
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
     public static void ActualizarArchivo(String ruta, String contenido) {
         try {
             BufferedWriter escritor = new BufferedWriter(new FileWriter(ruta, true)); // El segundo parámetro (true) permite continuar escribiendo en el archivo

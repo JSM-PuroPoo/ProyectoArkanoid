@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Game;
 
 import Cronometro.PanelCronometro;
@@ -10,7 +6,6 @@ import componentes.PanelComponente;
 import componentes.Pelota;
 import componentes.Raqueta;
 import interfaz.paneles.PanelIMG;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -35,9 +30,13 @@ public class PanelJuego extends PanelIMG {
     public JFrame frame;
 
     private JButton pausa = new JButton();
-
+    private PanelIMG pointPanel = new PanelIMG();
     private boolean pausado;
     PanelCronometro cronometro = new PanelCronometro();
+    
+    
+    
+    
     public static final int NORMAL = 8;
     public static final int SLOW = 10;
     public static final int FAST = 6;
@@ -88,19 +87,23 @@ public class PanelJuego extends PanelIMG {
 
         pausa.setBounds(974, 200, 120, 120);
         pausa.setIcon(new ImageIcon("recursos/PauseButtonPressed.png"));
-        pausa.setRolloverIcon(new ImageIcon("recursos/PauseButtonPressed.png"));
-        pausa.setPressedIcon(new ImageIcon("recursos/PauseButtonNormal.png"));
+        pausa.setRolloverIcon(new ImageIcon("recursos/PauseButtonRollover.png"));
         pausa.setBorderPainted(false);
         pausa.setContentAreaFilled(false);
         pausa.setOpaque(false);
         pausa.setLayout(null);
-
         this.add(pausa);
         pausa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pausaActionPerformed(evt);
             }
         });
+        pointPanel.setImage("recursos/pointsLabel.png");
+        pointPanel.setOpaque(false);
+        pointPanel.setBounds(944, 370, 175, 63);
+        pointPanel.setLayout(null);
+        this.add(pointPanel);
+        
         this.frame.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -130,9 +133,13 @@ public class PanelJuego extends PanelIMG {
             pelotas[i].cambiarEstadoPausa();
         }
         if (!pausado) {
+            pausa.setIcon(new ImageIcon("recursos/PlayButtonNormal.png"));
+            pausa.setRolloverIcon(new ImageIcon("recursos/PlayButtonRollover.png"));
             cronometro.getCronometro().time.stop();
             pausado = true;
         } else {
+            pausa.setIcon(new ImageIcon("recursos/PauseButtonPressed.png"));
+            pausa.setRolloverIcon(new ImageIcon("recursos/PauseButtonRollover.png"));
             frame.requestFocus();
             pausado = false;
             cronometro.getCronometro().time.start();
