@@ -16,6 +16,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.Comparator;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -34,10 +35,9 @@ public class PanelJuego extends PanelIMG {
     public JFrame frame;
 
     private JButton pausa = new JButton();
+
     private boolean pausado;
-
     PanelCronometro cronometro = new PanelCronometro();
-
     public static final int NORMAL = 8;
     public static final int SLOW = 10;
     public static final int FAST = 6;
@@ -85,9 +85,17 @@ public class PanelJuego extends PanelIMG {
         this.frame.setLocationRelativeTo(null);
         this.frame.setLayout(null);
         this.frame.add(this);
-        pausa.setBackground(Color.red);
-        pausa.setBounds(1170, 0, 30, 30);
 
+        pausa.setBounds(974, 200, 120, 120);
+        pausa.setIcon(new ImageIcon("recursos/PauseButtonPressed.png"));
+        pausa.setRolloverIcon(new ImageIcon("recursos/PauseButtonPressed.png"));
+        pausa.setPressedIcon(new ImageIcon("recursos/PauseButtonNormal.png"));
+        pausa.setBorderPainted(false);
+        pausa.setContentAreaFilled(false);
+        pausa.setOpaque(false);
+        pausa.setLayout(null);
+
+        this.add(pausa);
         pausa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pausaActionPerformed(evt);
@@ -114,7 +122,6 @@ public class PanelJuego extends PanelIMG {
             }
 
         });
-        marco.add(pausa);
         this.frame.setFocusable(true);
     }
 
@@ -145,7 +152,7 @@ public class PanelJuego extends PanelIMG {
 
     public void eliminarPelota(Pelota pelota) {
         for (int i = 0; i < contPelotas; i++) {
-            if (pelotas[i].equals(pelota)) {
+            if (pelotas[i].equals(pelota) && pelotas[i] != null) {
                 pelotas[i].setVisible(false);
                 pelotas[i].cambiarEstado();
                 pelotas[i] = null;

@@ -1,7 +1,6 @@
 package app;
 
-import Game.PanelJuego;
-import componentes.Pelota;
+import Sonido.Sonido;
 
 /**
  * @author Juan Felipe Eraso Navarro 0222220038
@@ -13,6 +12,6 @@ import componentes.Pelota;
 public class App {
 
     public static void main(String[] args) {
-
+        
     }
 }

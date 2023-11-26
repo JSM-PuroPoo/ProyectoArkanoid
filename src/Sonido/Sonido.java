@@ -21,7 +21,7 @@ public class Sonido {
             clip = AudioSystem.getClip();
             clip.open(audioIS);
         } catch (Exception e) {
-            e.getStackTrace();
+            System.out.println(e);
         }
     }
 
