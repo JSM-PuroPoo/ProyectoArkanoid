@@ -24,6 +24,7 @@ public class PausedGame extends javax.swing.JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         
+        
         panelOscuro.setImage("recursos/paneloscuro.png");
         panelOscuro.setBounds(0,0, 1140, 615);
         panelOscuro.setOpaque(false);
