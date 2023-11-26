@@ -4,10 +4,9 @@
  */
 package interfaz;
 
-import componente.Bloque;
-
-import componente.Pelota;
-import componente.Raqueta;
+import componentes.Bloque;
+import componentes.Pelota;
+import componentes.Raqueta;
 import interfaz.paneles.PanelIMG;
 
 import java.awt.event.KeyAdapter;
@@ -75,7 +74,7 @@ public class Juego extends javax.swing.JFrame {
 
         Pelota pelota = new Pelota(365, 525, 25, 25, 10, 10, game);
         game.add(pelota);
-        pelota.setR(r);
+        //pelota.setR(r);
         pelota.setSpeed(50);
         new Thread(pelota).start();
         this.addKeyListener(new KeyAdapter() {

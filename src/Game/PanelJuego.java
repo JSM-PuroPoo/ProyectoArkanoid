@@ -4,14 +4,20 @@
  */
 package Game;
 
-import componente.Bloque;
-import componente.PanelComponente;
-import componente.Pelota;
-import componente.Raqueta;
+import Cronometro.PanelCronometro;
+import componentes.Bloque;
+import componentes.PanelComponente;
+import componentes.Pelota;
+import componentes.Raqueta;
 import interfaz.paneles.PanelIMG;
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.Comparator;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 
 public class PanelJuego extends PanelIMG {
 
@@ -25,14 +31,22 @@ public class PanelJuego extends PanelIMG {
     public String rutaFondo;
     public String rutaFJuego;
     public String rutaMarco;
+    public JFrame frame;
 
-    public static final int NORMAL = 4;
-    public static final int SLOW = 5; //50
-    public static final int FAST = 3;
+    private JButton pausa = new JButton();
+    private boolean pausado;
 
-    public PanelJuego(Bloque bloques[], String rutaFondo, String rutaFJuego, String rutaMarco) {
+    PanelCronometro cronometro = new PanelCronometro();
+
+    public static final int NORMAL = 8;
+    public static final int SLOW = 10;
+    public static final int FAST = 6;
+
+    public PanelJuego(Bloque bloques[], String rutaFondo, String rutaFJuego, String rutaMarco, JFrame frame) {
         this.bloques = bloques;
+        this.frame = frame;
         pelotas = new Pelota[50];
+        Arrays.sort(bloques, Comparator.comparingInt(Bloque::getX));
         contPelotas = 0;
         contBloques = bloques.length;
         this.rutaFondo = rutaFondo;
@@ -55,17 +69,75 @@ public class PanelJuego extends PanelIMG {
         game.setOpaque(false);
         raqueta = new Raqueta(game);
         game.add(raqueta);
-        
         raqueta.actualizarEstado(2);
 
+        pausado = false;
+
+        this.add(cronometro);
+        cronometro.getCronometro().time.start();
+        cronometro.setLocation(931, 100);
+
+        this.frame.setTitle("ArkanoidGame");
+        this.frame.setResizable(false);
+        this.frame.setLocationRelativeTo(null);
+        this.frame.setResizable(false);
+        this.frame.setBounds(0, 0, 1200, 675);
+        this.frame.setLocationRelativeTo(null);
+        this.frame.setLayout(null);
+        this.frame.add(this);
+        pausa.setBackground(Color.red);
+        pausa.setBounds(1170, 0, 30, 30);
+
+        pausa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pausaActionPerformed(evt);
+            }
+        });
+        this.frame.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                int keyCode = e.getKeyCode();
+                switch (keyCode) {
+                    case 39:
+                        raqueta.moverDerecha();
+                        break;
+                    case 37:
+                        raqueta.moverIzquierda();
+                        break;
+                    case 68:
+                        raqueta.moverDerecha();
+                        break;
+                    case 65:
+                        raqueta.moverIzquierda();
+                        break;
+                }
+            }
+
+        });
+        marco.add(pausa);
+        this.frame.setFocusable(true);
+    }
+
+    private void pausaActionPerformed(java.awt.event.ActionEvent evt) {
+        for (int i = 0; i < contPelotas; i++) {
+            pelotas[i].cambiarEstadoPausa();
+        }
+        if (!pausado) {
+            cronometro.getCronometro().time.stop();
+            pausado = true;
+        } else {
+            frame.requestFocus();
+            pausado = false;
+            cronometro.getCronometro().time.start();
+        }
     }
 
     public void agregarPelota(Pelota pelota) {
         if (contPelotas < 50) {
-            new Thread(pelota).start();
+            pelota.setHilo(new Thread(pelota));
+            pelota.getHilo().start();
             game.add(pelota);
-            pelota.setSpeed(FAST);
-            pelota.setR(raqueta);
+            pelota.setSpeed(SLOW);
             pelota.setPanelJuego(this);
             pelotas[contPelotas++] = pelota;
         }
@@ -74,9 +146,12 @@ public class PanelJuego extends PanelIMG {
     public void eliminarPelota(Pelota pelota) {
         for (int i = 0; i < contPelotas; i++) {
             if (pelotas[i].equals(pelota)) {
+                pelotas[i].setVisible(false);
+                pelotas[i].cambiarEstado();
                 pelotas[i] = null;
                 ordenarArray(pelotas);
                 contPelotas--;
+                repaint();
                 break;
             }
         }
@@ -87,15 +162,13 @@ public class PanelJuego extends PanelIMG {
     }
 
     public void eliminarBloque(Bloque bloque) {
-
         for (int i = 0; i < contBloques; i++) {
-            if (bloques[i]!= null && bloques[i].equals(bloque)) {
+            if (bloques[i] != null && bloques[i].equals(bloque)) {
                 bloques[i] = null;
                 ordenarArray(bloques);
                 contBloques--;
                 break;
             }
-
         }
     }
 
@@ -109,6 +182,14 @@ public class PanelJuego extends PanelIMG {
 
     public int getContPelotas() {
         return contPelotas;
+    }
+
+    public boolean isPausado() {
+        return pausado;
+    }
+
+    public void setPausado(boolean pausado) {
+        this.pausado = pausado;
     }
 
     public void ordenarArray(PanelComponente array[]) {

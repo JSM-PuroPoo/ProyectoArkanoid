@@ -1,7 +1,7 @@
 package app;
 
 import Game.PanelJuego;
-import componente.Pelota;
+import componentes.Pelota;
 
 /**
  * @author Juan Felipe Eraso Navarro 0222220038

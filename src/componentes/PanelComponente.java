@@ -1,4 +1,4 @@
-package componente;
+package componentes;
 
 import interfaz.paneles.PanelIMG;
 import javax.swing.JPanel;
