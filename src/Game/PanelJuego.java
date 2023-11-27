@@ -33,6 +33,10 @@ public class PanelJuego extends PanelIMG {
     private PanelIMG fondoOpaco = new PanelIMG();
     private PanelIMG panelPausa = new PanelIMG();
     private JButton pausa = new JButton();
+    private JButton resumeButton = new JButton();
+    private JButton homeButton = new JButton();
+    private JButton settingsButton = new JButton();
+    private JButton exitButton = new JButton();
     private PanelIMG pointPanel = new PanelIMG();
     private boolean pausado;
     PanelCronometro cronometro = new PanelCronometro();
@@ -116,6 +120,44 @@ public class PanelJuego extends PanelIMG {
         panelPausa.setOpaque(false);
         panelPausa.setLayout(null);
         fondoOpaco.add(panelPausa);
+        
+        resumeButton.setIcon(new ImageIcon("recursos/ResumeButton.png"));
+        resumeButton.setRolloverIcon(new ImageIcon("recursos/ResumeButtonPressed.png"));
+        resumeButton.setBounds(75, 50, 250, 105);
+        resumeButton.setBorderPainted(false);
+        resumeButton.setContentAreaFilled(false);
+        resumeButton.setOpaque(false);
+        resumeButton.setLayout(null);
+        panelPausa.add(resumeButton);
+        
+        homeButton.setIcon(new ImageIcon("recursos/HomeButton.png"));
+        homeButton.setRolloverIcon(new ImageIcon("recursos/HomeButtonPressed.png"));
+        homeButton.setBounds(105, 130, 191, 105);
+        homeButton.setBorderPainted(false);
+        homeButton.setContentAreaFilled(false);
+        homeButton.setOpaque(false);
+        homeButton.setLayout(null);
+        panelPausa.add(homeButton);
+        
+        settingsButton.setIcon(new ImageIcon("recursos/SettingspausePanelButton.png"));
+        settingsButton.setRolloverIcon(new ImageIcon("recursos/settingspausePanelButtonPressed.png"));
+        settingsButton.setBounds(60, 215, 286, 105);
+        settingsButton.setBorderPainted(false);
+        settingsButton.setContentAreaFilled(false);
+        settingsButton.setOpaque(false);
+        settingsButton.setLayout(null);
+        panelPausa.add(settingsButton);
+        
+        
+        exitButton.setIcon(new ImageIcon("recursos/ExitpausePanelButton.png"));
+        exitButton.setRolloverIcon(new ImageIcon("recursos/ExitpausePanelButtonPressed.png"));
+        exitButton.setBounds(115, 300, 168, 105);
+        exitButton.setBorderPainted(false);
+        exitButton.setContentAreaFilled(false);
+        exitButton.setOpaque(false);
+        exitButton.setLayout(null);
+        panelPausa.add(exitButton);
+
 
         puntos.setBounds(925, 430, 350, 126);
         puntos.setText("00000");
@@ -146,7 +188,7 @@ public class PanelJuego extends PanelIMG {
         });
         this.frame.setFocusable(true);
     }
-
+    
     private void pausaActionPerformed(java.awt.event.ActionEvent evt) {
         for (int i = 0; i < contPelotas; i++) {
             pelotas[i].cambiarEstadoPausa();

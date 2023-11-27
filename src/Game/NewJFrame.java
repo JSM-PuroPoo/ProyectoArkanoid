@@ -57,23 +57,7 @@ public class NewJFrame extends javax.swing.JFrame {
         pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
         pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
         pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
-        pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
-        pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
-        pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
-        pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
-        pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
-        pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
-        pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
-        pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
-        pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
-        pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
-        pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
-        pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
-        pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
-        pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
-        pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
-        pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
-        pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
+
     }
 
     @SuppressWarnings("unchecked")
