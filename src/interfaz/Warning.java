@@ -3,18 +3,50 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package interfaz;
-
-/**
- *
- * @author nalis
- */
+ import interfaz.paneles.PanelIMG;
+import java.awt.event.ActionEvent;
+import javax.swing.*;
 public class Warning extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Warning
-     */
+    private  PanelIMG WarningImage = new PanelIMG();
+    private  PanelIMG Paneloscuro = new PanelIMG();
+    private JButton YesButton = new JButton();
+    private JButton NoButton = new JButton();
+    
     public Warning() {
+        setUndecorated(true);
         initComponents();
+        this.setTitle("ArkanoidGame");
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        Paneloscuro.setLayout(null);
+        Paneloscuro.setImage("recursos/paneloscuro.png");
+        Paneloscuro.setBounds(0, 0, 1140, 615);
+        this.getContentPane().add(Paneloscuro);
+        WarningImage.setLayout(null);
+        WarningImage.setImage("recursos/warningPanel1.png");
+        WarningImage.setBounds(0,0, 1140, 615);
+        WarningImage.setOpaque(false);
+        Paneloscuro.add(WarningImage);
+        
+        YesButton.setIcon(new ImageIcon("recursos/yesButton.png"));
+        YesButton.setRolloverIcon(new ImageIcon("recursos/yesButtonPressed.png"));
+        YesButton.setBounds(50, 210, 125, 85);
+        YesButton.setBorderPainted(false);
+        YesButton.setContentAreaFilled(false);
+        YesButton.setOpaque(false);
+        YesButton.setLayout(null);
+        WarningImage.add(YesButton);
+        
+        NoButton.setIcon(new ImageIcon("recursos/noButton.png"));
+        NoButton.setRolloverIcon(new ImageIcon("recursos/noButtonPressed.png"));
+        NoButton.setBounds(230, 210, 125, 85);
+        NoButton.setBorderPainted(false);
+        NoButton.setContentAreaFilled(false);
+        NoButton.setOpaque(false);
+        NoButton.setLayout(null);
+        WarningImage.add(NoButton);
+        
     }
 
     /**
