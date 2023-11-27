@@ -30,14 +30,13 @@ public class PanelJuego extends PanelIMG {
     public JFrame frame;
     private JLabel puntos = new JLabel();
 
+    private PanelIMG fondoOpaco = new PanelIMG();
+    private PanelIMG panelPausa = new PanelIMG();
     private JButton pausa = new JButton();
     private PanelIMG pointPanel = new PanelIMG();
     private boolean pausado;
     PanelCronometro cronometro = new PanelCronometro();
-    
-    
-    
-    
+
     public static final int NORMAL = 8;
     public static final int SLOW = 10;
     public static final int FAST = 6;
@@ -104,13 +103,26 @@ public class PanelJuego extends PanelIMG {
         pointPanel.setBounds(944, 370, 175, 63);
         pointPanel.setLayout(null);
         this.add(pointPanel);
+        fondoOpaco.setImage("recursos/paneloscuro.png");
+        fondoOpaco.setOpaque(false);
+        fondoOpaco.setBounds(30, 30, 1140, 615);
+        fondoOpaco.setLayout(null);
+        fondoOpaco.setVisible(false);
+        this.add(fondoOpaco);
+        this.setComponentZOrder(fondoOpaco, 0);
+
+        panelPausa.setImage("recursos/panelPausa.png");
+        panelPausa.setBounds(370, 82, 400, 448);
+        panelPausa.setOpaque(false);
+        panelPausa.setLayout(null);
+        fondoOpaco.add(panelPausa);
+
         puntos.setBounds(925, 430, 350, 126);
         puntos.setText("00000");
         puntos.setFont(cronometro.getFont().deriveFont(Font.PLAIN, 80));
         puntos.setForeground(Color.white);
         this.add(puntos);
-        
-        
+
         this.frame.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -143,6 +155,7 @@ public class PanelJuego extends PanelIMG {
             pausa.setIcon(new ImageIcon("recursos/PlayButtonNormal.png"));
             pausa.setRolloverIcon(new ImageIcon("recursos/PlayButtonRollover.png"));
             cronometro.getCronometro().time.stop();
+            fondoOpaco.setVisible(true);
             pausado = true;
         } else {
             pausa.setIcon(new ImageIcon("recursos/PauseButtonPressed.png"));
@@ -150,6 +163,7 @@ public class PanelJuego extends PanelIMG {
             frame.requestFocus();
             pausado = false;
             cronometro.getCronometro().time.start();
+            fondoOpaco.setVisible(false);
         }
     }
 
