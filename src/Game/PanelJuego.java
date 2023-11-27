@@ -6,14 +6,14 @@ import componentes.PanelComponente;
 import componentes.Pelota;
 import componentes.Raqueta;
 import interfaz.paneles.PanelIMG;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.Comparator;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.*;
 
 public class PanelJuego extends PanelIMG {
 
@@ -28,6 +28,7 @@ public class PanelJuego extends PanelIMG {
     public String rutaFJuego;
     public String rutaMarco;
     public JFrame frame;
+    private JLabel puntos = new JLabel();
 
     private JButton pausa = new JButton();
     private PanelIMG pointPanel = new PanelIMG();
@@ -103,6 +104,12 @@ public class PanelJuego extends PanelIMG {
         pointPanel.setBounds(944, 370, 175, 63);
         pointPanel.setLayout(null);
         this.add(pointPanel);
+        puntos.setBounds(925, 430, 350, 126);
+        puntos.setText("00000");
+        puntos.setFont(cronometro.getFont().deriveFont(Font.PLAIN, 80));
+        puntos.setForeground(Color.white);
+        this.add(puntos);
+        
         
         this.frame.addKeyListener(new KeyAdapter() {
             @Override

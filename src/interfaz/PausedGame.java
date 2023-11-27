@@ -31,7 +31,7 @@ public class PausedGame extends javax.swing.JFrame {
         panelOscuro.setLayout(null);
         this.add(panelOscuro);
         
-        panelPausa.setImage("recursos/panelPausa1.png");
+        panelPausa.setImage("recursos/panelPausa.png");
         panelPausa.setBounds(370, 82, 400, 448);
         panelPausa.setOpaque(false);
         panelPausa.setLayout(null);
