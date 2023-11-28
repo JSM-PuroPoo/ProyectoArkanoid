@@ -33,9 +33,10 @@ public class Inicio extends javax.swing.JFrame {
     public Inicio() {
      setUndecorated(true);
         initComponents();
-        this.setTitle("ArkanoidGame");
+        this.setTitle("Ocaso Arkanoid");
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        setIconImage(new ImageIcon("recursos/logo.png").getImage());
         inicioFondo.setLayout(null);
         inicioFondo.setImage("recursos/inicioimg.jpg");
         inicioFondo.setBounds(0, 0, 1200, 675);

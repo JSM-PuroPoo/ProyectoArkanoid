@@ -8,6 +8,7 @@ import Sonido.Sonido;
 import componentes.Bloque;
 import componentes.Pelota;
 import java.util.Random;
+import javax.swing.ImageIcon;
 
 /**
  *

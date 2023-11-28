@@ -33,7 +33,7 @@ public class Juego extends javax.swing.JFrame {
         */
         this.setUndecorated(true);
         initComponents();
-        this.setTitle("ArkanoidGame");
+        this.setTitle("Ocaso Arkanoid");
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         fondo.setLayout(null); // Establecer un diseño nulo para el fondo Panel
