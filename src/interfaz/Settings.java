@@ -4,6 +4,8 @@
  */
 package interfaz;
 
+import configuraciones.Configuraciones;
+import configuraciones.Observer;
 import interfaz.paneles.PanelIMG;
 import java.awt.Image;
 import javax.swing.*;
@@ -12,12 +14,13 @@ import javax.swing.*;
  *
  * @author nalis
  */
-public class Settings extends javax.swing.JFrame {
-    
+public class Settings extends javax.swing.JFrame implements Observer {
+
+    private Configuraciones configuraciones;
     PanelIMG settingsPanel = new PanelIMG();
     PanelIMG settingsMarco = new PanelIMG();
     PanelIMG subPanels = new PanelIMG();
-    JButton acceptButton  = new JButton();
+    JButton acceptButton = new JButton();
     JButton cancelButton = new JButton();
     JButton easyButton = new JButton();
     JButton normalButton = new JButton();
@@ -28,8 +31,7 @@ public class Settings extends javax.swing.JFrame {
     JButton VplusButton = new JButton();
     JLabel ballsState = new JLabel();
     JLabel volumeState = new JLabel();
-    
-    
+
     /**
      * Creates new form Settings
      */
@@ -47,36 +49,36 @@ public class Settings extends javax.swing.JFrame {
         settingsMarco.setLayout(null);
         this.getContentPane().add(settingsMarco);
         settingsPanel.setImage("recursos/settingsBackPanel.png");
-        settingsPanel.setBounds(30,30, 1140, 615);
+        settingsPanel.setBounds(30, 30, 1140, 615);
         settingsPanel.setLayout(null);
         settingsPanel.setOpaque(false);
         this.getContentPane().add(settingsPanel);
-        
+
         acceptButton.setIcon(new ImageIcon("recursos/acceptButton.png"));
         acceptButton.setRolloverIcon(new ImageIcon("recursos/acceptButtonPressed.png"));
-        acceptButton.setBounds(600, 520, 220,94);
+        acceptButton.setBounds(600, 520, 220, 94);
         acceptButton.setBorderPainted(false);
         acceptButton.setContentAreaFilled(false);
         acceptButton.setOpaque(false);
         acceptButton.setLayout(null);
         settingsPanel.add(acceptButton);
- 
+
         cancelButton.setIcon(new ImageIcon("recursos/cancelButton.png"));
         cancelButton.setRolloverIcon(new ImageIcon("recursos/cancelButtonPressed.png"));
-        cancelButton.setBounds(320, 522, 218,94);
+        cancelButton.setBounds(320, 522, 218, 94);
         cancelButton.setBorderPainted(false);
         cancelButton.setContentAreaFilled(false);
         cancelButton.setOpaque(false);
         cancelButton.setLayout(null);
-        settingsPanel.add(cancelButton);        
-        
+        settingsPanel.add(cancelButton);
+
         subPanels.setImage("recursos/settingsSubPanels.png");
         subPanels.scaleImage(970, 403);
         subPanels.setBounds(80, 110, 970, 403);
         subPanels.setLayout(null);
         subPanels.setOpaque(false);
         settingsPanel.add(subPanels);
-        
+
     }
 
     /**
@@ -136,6 +138,20 @@ public class Settings extends javax.swing.JFrame {
             }
         });
     }
+
+    @Override
+    public void actualizar(Configuraciones configuraciones) {
+
+    }
+
+    public Configuraciones getConfiguraciones() {
+        return configuraciones;
+    }
+
+    public void setConfiguraciones(Configuraciones configuraciones) {
+        this.configuraciones = configuraciones;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

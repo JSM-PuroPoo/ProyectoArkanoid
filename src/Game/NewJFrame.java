@@ -26,7 +26,7 @@ public class NewJFrame extends javax.swing.JFrame {
         this.setUndecorated(true);
         initComponents();
         Sonido sonido = new Sonido();
-        sonido.cargarSonido("sonidos/inicializacion.wav");
+        sonido.cargarSonido("sonidos/cancionJuego1.wav");
         sonido.reproducir(0);
         sonido.cambiarVolumen(1.0f);
 
