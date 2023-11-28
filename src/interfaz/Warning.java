@@ -16,7 +16,7 @@ public class Warning extends javax.swing.JFrame {
     public Warning() {
         setUndecorated(true);
         initComponents();
-        this.setTitle("ArkanoidGame");
+        this.setTitle("Ocaso Arkanoid");
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setSize(500, 320);

@@ -49,7 +49,9 @@ public class PanelJuego extends PanelIMG {
     public static final int FAST = 6;
 
     public PanelJuego(Bloque bloques[], String rutaFondo, String rutaFJuego, String rutaMarco, JFrame frame) {
+        frame.setTitle("Ocaso Arkanoid");
 
+        frame.setIconImage(new ImageIcon("recursos/logo.png").getImage());
         this.bloques = bloques;
         this.frame = frame;
         pelotas = new Pelota[50];
@@ -84,7 +86,6 @@ public class PanelJuego extends PanelIMG {
         cronometro.getCronometro().time.start();
         cronometro.setLocation(931, 100);
 
-        this.frame.setTitle("ArkanoidGame");
         this.frame.setResizable(false);
         this.frame.setLocationRelativeTo(null);
         this.frame.setResizable(false);

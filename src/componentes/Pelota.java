@@ -23,7 +23,7 @@ public class Pelota extends PanelComponente implements Runnable {
         pausa = false;
     }
 
-    public boolean colisionBloque(Bloque bloque) {
+    public boolean colisionBloque(Bloque bloque) { 
         Rectangle pelotaBounds = this.getBounds();
         Rectangle bloqueBounds = bloque.getBounds();
         if (pelotaBounds.intersects(bloqueBounds)) {
