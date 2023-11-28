@@ -1,6 +1,6 @@
 package app;
 
-import Game.NewJFrame;
+import interfaz.Juego;
 import Sonido.Sonido;
 
 /**
@@ -13,7 +13,7 @@ import Sonido.Sonido;
 public class App {
 
     public static void main(String[] args) {
-        NewJFrame ventana = new NewJFrame();
+        Juego ventana = new Juego();
         ventana.setVisible(true);
     }
 }
