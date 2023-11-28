@@ -17,6 +17,7 @@ import java.util.Comparator;
 import javax.swing.*;
 
 public class PanelJuego extends PanelIMG {
+
     private JButton closeButton = new JButton();
     private JButton minimizeButton = new JButton();
     private Bloque bloques[];
@@ -48,7 +49,7 @@ public class PanelJuego extends PanelIMG {
     public static final int FAST = 6;
 
     public PanelJuego(Bloque bloques[], String rutaFondo, String rutaFJuego, String rutaMarco, JFrame frame) {
-        
+
         this.bloques = bloques;
         this.frame = frame;
         pelotas = new Pelota[50];
@@ -123,7 +124,7 @@ public class PanelJuego extends PanelIMG {
         panelPausa.setOpaque(false);
         panelPausa.setLayout(null);
         fondoOpaco.add(panelPausa);
-        
+
         resumeButton.setIcon(new ImageIcon("recursos/ResumeButton.png"));
         resumeButton.setRolloverIcon(new ImageIcon("recursos/ResumeButtonPressed.png"));
         resumeButton.setBounds(75, 50, 250, 105);
@@ -132,7 +133,7 @@ public class PanelJuego extends PanelIMG {
         resumeButton.setOpaque(false);
         resumeButton.setLayout(null);
         panelPausa.add(resumeButton);
-        
+
         homeButton.setIcon(new ImageIcon("recursos/HomeButton.png"));
         homeButton.setRolloverIcon(new ImageIcon("recursos/HomeButtonPressed.png"));
         homeButton.setBounds(105, 130, 191, 105);
@@ -141,7 +142,7 @@ public class PanelJuego extends PanelIMG {
         homeButton.setOpaque(false);
         homeButton.setLayout(null);
         panelPausa.add(homeButton);
-        
+
         settingsButton.setIcon(new ImageIcon("recursos/SettingspausePanelButton.png"));
         settingsButton.setRolloverIcon(new ImageIcon("recursos/settingspausePanelButtonPressed.png"));
         settingsButton.setBounds(60, 215, 286, 105);
@@ -150,8 +151,7 @@ public class PanelJuego extends PanelIMG {
         settingsButton.setOpaque(false);
         settingsButton.setLayout(null);
         panelPausa.add(settingsButton);
-        
-        
+
         exitButton.setIcon(new ImageIcon("recursos/ExitpausePanelButton.png"));
         exitButton.setRolloverIcon(new ImageIcon("recursos/ExitpausePanelButtonPressed.png"));
         exitButton.setBounds(115, 300, 168, 105);
@@ -160,7 +160,6 @@ public class PanelJuego extends PanelIMG {
         exitButton.setOpaque(false);
         exitButton.setLayout(null);
         panelPausa.add(exitButton);
-
 
         puntos.setBounds(925, 430, 350, 126);
         puntos.setText("00000");
@@ -190,44 +189,44 @@ public class PanelJuego extends PanelIMG {
 
         });
         this.frame.setFocusable(true);
-        
+
         closeButton.setIcon(new ImageIcon("recursos/closeButton.png"));
         closeButton.setRolloverIcon(new ImageIcon("recursos/closeButtonRed.png"));
-        closeButton.setBounds(1173, 3, 24,24);
+        closeButton.setBounds(1173, 3, 24, 24);
         closeButton.setBorderPainted(false);
         closeButton.setContentAreaFilled(false);
         closeButton.setOpaque(false);
         closeButton.setLayout(null);
-        marco.add(closeButton);    
+        marco.add(closeButton);
         closeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeButtonActionPerformed(evt);
             }
-        }); 
-        
+        });
+
         minimizeButton.setIcon(new ImageIcon("recursos/MinimizeButton.png"));
         minimizeButton.setRolloverIcon(new ImageIcon("recursos/MinimizeButtonGray.png"));
-        minimizeButton.setBounds(1135, 3, 24,24);
+        minimizeButton.setBounds(1135, 3, 24, 24);
         minimizeButton.setBorderPainted(false);
         minimizeButton.setContentAreaFilled(false);
         minimizeButton.setOpaque(false);
         minimizeButton.setLayout(null);
-        marco.add(minimizeButton);    
+        marco.add(minimizeButton);
         minimizeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 minimizeButtonActionPerformed(evt, frame);
             }
-        }); 
+        });
     }
-    
-     private void closeButtonActionPerformed(ActionEvent evt) {
+
+    private void closeButtonActionPerformed(ActionEvent evt) {
         System.exit(0);
-    }  
-    
-     private void minimizeButtonActionPerformed(ActionEvent evt, JFrame frame) {
+    }
+
+    private void minimizeButtonActionPerformed(ActionEvent evt, JFrame frame) {
         frame.setExtendedState(1);
-    }       
-      
+    }
+
     private void pausaActionPerformed(java.awt.event.ActionEvent evt) {
         for (int i = 0; i < contPelotas; i++) {
             pelotas[i].cambiarEstadoPausa();

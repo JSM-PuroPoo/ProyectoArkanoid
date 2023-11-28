@@ -48,8 +48,12 @@ public class Sonido {
 
     public void cambiarVolumen(float valor) {
         if (clip != null) {
-            FloatControl controlVolumen = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            controlVolumen.setValue(20.0f * (float) Math.log10(valor));
+            try {
+                FloatControl controlVolumen = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                controlVolumen.setValue(20.0f * (float) Math.log10(valor));
+            } catch (Exception e) {
+                System.out.println("Error al cambiar el volumen: " + e.getMessage());
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ package Game;
 import Sonido.Sonido;
 import componentes.Bloque;
 import componentes.Pelota;
+import java.awt.Image;
 import java.util.Random;
 
 /**
@@ -23,10 +24,11 @@ public class NewJFrame extends javax.swing.JFrame {
     public NewJFrame() {
         this.setUndecorated(true);
         initComponents();
-        /*Sonido sonido = new Sonido();
-        sonido.cargarSonido("sonidos/cancion.wav");
+        Sonido sonido = new Sonido();
+        sonido.cargarSonido("sonidos/inicializacion.wav");
         sonido.reproducir(0);
-        sonido.cambiarVolumen(1.0f);*/
+        sonido.cambiarVolumen(1.0f);
+
         int numRows = 10;  // Número de filas de bloques    10
         int numCols = 22;  // Número de columnas de bloques
         int blockWidth = 30;
