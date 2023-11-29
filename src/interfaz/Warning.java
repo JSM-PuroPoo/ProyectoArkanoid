@@ -21,6 +21,7 @@ public class Warning extends javax.swing.JFrame {
     public Warning() {
         setUndecorated(true);
         initComponents();
+        setIconImage(new ImageIcon("recursos/logo.png").getImage());
         this.setTitle("Ocaso Arkanoid");
         this.setResizable(false);
         this.setLocationRelativeTo(null);
