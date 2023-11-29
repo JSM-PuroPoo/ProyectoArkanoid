@@ -12,7 +12,7 @@ public class Warning extends javax.swing.JFrame {
 
     private PanelIMG WarningImage = new PanelIMG();
     private PanelIMG settingsWarning = new PanelIMG();
-    private PanelIMG closeWarning = new PanelIMG();
+    private PanelIMG warningMessage = new PanelIMG();
     private JButton YesButton = new JButton();
     private JButton NoButton = new JButton();
 
@@ -32,19 +32,12 @@ public class Warning extends javax.swing.JFrame {
         WarningImage.setOpaque(false);
         this.getContentPane().add(WarningImage);
         
-        settingsWarning.setImage("recursos/settingsWarning.png");
-        settingsWarning.setBounds(20,85, 460, 150);
-        settingsWarning.setOpaque(false);
-        settingsWarning.setLayout(null);
-        WarningImage.add(settingsWarning);
-        settingsWarning.setVisible(false);
-        
-        closeWarning.setImage("recursos/closeWarning.png");
-        closeWarning.setBounds(20,85, 460, 150);
-        closeWarning.setOpaque(false);
-        closeWarning.setLayout(null);
-        WarningImage.add(closeWarning);
-        //closeWarning.setVisible(false);
+        warningMessage.setImage("recursos/warningMessage.png");
+        warningMessage.scaleImage(460, 160);
+        warningMessage.setBounds(20,80, 460, 160);
+        warningMessage.setOpaque(false);
+        warningMessage.setLayout(null);
+        WarningImage.add(warningMessage);
 
         YesButton.setIcon(new ImageIcon("recursos/yesButton.png"));
         YesButton.setRolloverIcon(new ImageIcon("recursos/yesButtonPressed.png"));

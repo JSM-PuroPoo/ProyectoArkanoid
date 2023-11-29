@@ -4,14 +4,24 @@
  */
 package interfaz;
 
+import interfaz.paneles.PanelIMG;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 
 /**
  *
  * @author nalis
  */
 public class YouWon extends javax.swing.JFrame {
-
+    private PanelIMG fondoOpaco = new PanelIMG();
+    private PanelIMG marcoW = new PanelIMG();
+    private PanelIMG wonBase = new PanelIMG();
+    private JLabel scoreShow = new JLabel();
+    private JLabel timeShow = new JLabel();
+    private JButton replayButton = new JButton();
+    private JButton  homeButton = new JButton();
+    private JButton exitButton = new JButton();
     /**
      * Creates new form YouWon
      */
@@ -23,7 +33,24 @@ public class YouWon extends javax.swing.JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         
+        marcoW.setBounds(0, 0, 1200, 675);
+        marcoW.setOpaque(false);
+        marcoW.setImage("recursos/marco0.png");
+        marcoW.setLayout(null);
+        this.getContentPane().add(marcoW);
         
+        fondoOpaco.setBounds(30,30, 1140, 615);
+        fondoOpaco.setOpaque(false);
+        fondoOpaco.setImage("recursos/panelOscuro.png");
+        fondoOpaco.setLayout(null);
+        this.getContentPane().add(fondoOpaco);        
+        
+        wonBase.setImage("recursos/youWonBasePanel.png");
+        wonBase.scaleImage(650, 400);
+        wonBase.setBounds(220, 200,650, 400);
+        wonBase.setOpaque(false);
+        wonBase.setLayout(null);
+        fondoOpaco.add(wonBase);
     }
 
     /**
@@ -34,6 +61,7 @@ public class YouWon extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1200, 675));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
