@@ -3,11 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package interfaz;
-
-import configuraciones.Configuraciones;
-import configuraciones.Observer;
-import interfaz.paneles.PanelIMG;
-import java.awt.Image;
+import interfaz.paneles.*;
+import configuraciones.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.io.*;
 import javax.swing.*;
 
 /**
@@ -25,12 +25,17 @@ public class Settings extends javax.swing.JFrame implements Observer {
     JButton easyButton = new JButton();
     JButton normalButton = new JButton();
     JButton hardButton = new JButton();
-    JButton BminusButton = new JButton();
-    JButton BplusButton = new JButton();
-    JButton VminusButton = new JButton();
-    JButton VplusButton = new JButton();
-    JLabel ballsState = new JLabel();
-    JLabel volumeState = new JLabel();
+    JButton minusButton = new JButton();
+    JButton plusButton = new JButton();
+    JButton soundButton = new JButton();
+    JButton musicButton = new JButton();
+    JLabel ballCountL = new JLabel();
+    PanelIMG ballCountPanel = new PanelIMG();
+    
+    private JButton closeButton = new JButton();
+    private JButton minimizeButton = new JButton();
+    
+    Font text;
 
     /**
      * Creates new form Settings
@@ -73,14 +78,135 @@ public class Settings extends javax.swing.JFrame implements Observer {
         settingsPanel.add(cancelButton);
 
         subPanels.setImage("recursos/settingsSubPanels.png");
-        subPanels.scaleImage(970, 403);
         subPanels.setBounds(80, 110, 970, 403);
         subPanels.setLayout(null);
         subPanels.setOpaque(false);
         settingsPanel.add(subPanels);
+        
+        easyButton.setIcon(new ImageIcon("recursos/easyNormalButton.png"));
+        easyButton.setRolloverIcon(new ImageIcon("recursos/easyButtonPressed.png"));
+        easyButton.setBounds(350,3, 117, 117);
+        easyButton.setBorderPainted(false);
+        easyButton.setContentAreaFilled(false);
+        easyButton.setOpaque(false);
+        easyButton.setLayout(null);
+        subPanels.add(easyButton);
+        
+        normalButton.setIcon(new ImageIcon("recursos/normalNormalButton.png"));
+        normalButton.setRolloverIcon(new ImageIcon("recursos/normalButtonPressed.png"));
+        normalButton.setBounds(550,3, 117, 117);
+        normalButton.setBorderPainted(false);
+        normalButton.setContentAreaFilled(false);
+        normalButton.setOpaque(false);
+        normalButton.setLayout(null);
+        subPanels.add(normalButton);
+        
+        hardButton.setIcon(new ImageIcon("recursos/hardNormalButton.png"));
+        hardButton.setRolloverIcon(new ImageIcon("recursos/hardButtonPressed.png"));
+        hardButton.setBounds(750,3, 117, 117);
+        hardButton.setBorderPainted(false);
+        hardButton.setContentAreaFilled(false);
+        hardButton.setOpaque(false);
+        hardButton.setLayout(null);
+        subPanels.add(hardButton);
+        
+        soundButton.setIcon(new ImageIcon("recursos/speakerButton.png"));
+        soundButton.setRolloverIcon(new ImageIcon("recursos/speakerButtonPressed.png"));
+        soundButton.setBounds(320,284, 96, 96);
+        soundButton.setBorderPainted(false);
+        soundButton.setContentAreaFilled(false);
+        soundButton.setOpaque(false);
+        soundButton.setLayout(null);
+        subPanels.add(soundButton);
+        
+        musicButton.setIcon(new ImageIcon("recursos/speakerButton.png"));
+        musicButton.setRolloverIcon(new ImageIcon("recursos/speakerButtonPressed.png"));
+        musicButton.setBounds(760,284, 96, 96);
+        musicButton.setBorderPainted(false);
+        musicButton.setContentAreaFilled(false);
+        musicButton.setOpaque(false);
+        musicButton.setLayout(null);
+        subPanels.add(musicButton);
+        
+        minusButton.setIcon(new ImageIcon("recursos/minusButton.png"));
+        minusButton.setRolloverIcon(new ImageIcon("recursos/minusButtonPressed.png"));
+        minusButton.setBounds(330,160, 64, 64);
+        minusButton.setBorderPainted(false);
+        minusButton.setContentAreaFilled(false);
+        minusButton.setOpaque(false);
+        minusButton.setLayout(null);
+        subPanels.add(minusButton);   
+        
+        plusButton.setIcon(new ImageIcon("recursos/plusButton.png"));
+        plusButton.setRolloverIcon(new ImageIcon("recursos/plusButtonPressed.png"));
+        plusButton.setBounds(780,160, 64, 64);
+        plusButton.setBorderPainted(false);
+        plusButton.setContentAreaFilled(false);
+        plusButton.setOpaque(false);
+        plusButton.setLayout(null);
+        subPanels.add(plusButton); 
+        
+        
+        ballCountPanel.setImage("recursos/BallCountLabel.png");
+        ballCountPanel.setBounds(495,153, 170, 80);
+        ballCountPanel.setLayout(null);
+        ballCountPanel.setOpaque(false);
+        subPanels.add(ballCountPanel);
+        
+        try {
+        InputStream is = new BufferedInputStream(new FileInputStream("fonts/Retronoid.TTF"));;
+            text = Font.createFont(Font.TRUETYPE_FONT, is);
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
+        
+        ballCountL.setBounds(0,0, 170, 80);
+        ballCountL.setFont(text.deriveFont(Font.PLAIN, 55));
+        ballCountL.setHorizontalAlignment(SwingConstants.CENTER);
+        ballCountL.setVerticalAlignment(SwingConstants.CENTER);
+        ballCountL.setForeground(Color.white);
+        ballCountL.setLayout(null);
+        ballCountL.setOpaque(false);
+        ballCountL.setText("1");
+        ballCountPanel.add(ballCountL); 
 
+        closeButton.setIcon(new ImageIcon("recursos/closeButton.png"));
+        closeButton.setRolloverIcon(new ImageIcon("recursos/closeButtonRed.png"));
+        closeButton.setBounds(1173, 3, 24,24);
+        closeButton.setBorderPainted(false);
+        closeButton.setContentAreaFilled(false);
+        closeButton.setOpaque(false);
+        closeButton.setLayout(null);
+        settingsMarco.add(closeButton);    
+        closeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeButtonActionPerformed(evt);
+            }
+        });      
+
+        minimizeButton.setIcon(new ImageIcon("recursos/MinimizeButton.png"));
+        minimizeButton.setRolloverIcon(new ImageIcon("recursos/MinimizeButtonGray.png"));
+        minimizeButton.setBounds(1135, 3, 24,24);
+        minimizeButton.setBorderPainted(false);
+        minimizeButton.setContentAreaFilled(false);
+        minimizeButton.setOpaque(false);
+        minimizeButton.setLayout(null);
+        settingsMarco.add(minimizeButton);    
+        minimizeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                minimizeButtonActionPerformed(evt);
+            }
+        }); 
+        
     }
 
+    private void closeButtonActionPerformed(ActionEvent evt) {
+        System.exit(0);
+    }
+    
+    private void minimizeButtonActionPerformed(ActionEvent evt) {
+        this.setExtendedState(1);
+    }  
     /**
      * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The content of this method is always regenerated by the Form Editor.
      */
