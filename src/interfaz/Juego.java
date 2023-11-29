@@ -8,6 +8,8 @@ import Game.PanelJuego;
 import Sonido.Sonido;
 import componentes.Bloque;
 import componentes.Pelota;
+import configuraciones.Configuraciones;
+import configuraciones.Observer;
 import java.awt.Image;
 import java.util.Random;
 import javax.swing.ImageIcon;
@@ -26,13 +28,8 @@ public class Juego extends javax.swing.JFrame {
     public Juego() {
         this.setUndecorated(true);
         initComponents();
-        Sonido sonido = new Sonido();
-        sonido.cargarSonido("sonidos/cancionJuego1.wav");
-        sonido.reproducir(0);
-        sonido.cambiarVolumen(1.0f);
-
-        int numRows = 10;  // Número de filas de bloques    10
-        int numCols = 22;  // Número de columnas de bloques
+        int numRows = 10;
+        int numCols = 22;
         int blockWidth = 30;
         int blockHeight = 24;
         int spacing = 8;  //8
@@ -48,7 +45,7 @@ public class Juego extends javax.swing.JFrame {
                     bloques[index] = new Bloque(true, posX, posY, blockWidth, blockHeight, 0, 0, pj);
                 } else {
                     if (numeroAleatorio == 5) {
-                        numeroAleatorio -= 2;
+                        numeroAleatorio -= random.nextInt(3) + 1;
                     }
                     bloques[index] = new Bloque(numeroAleatorio, posX, posY, blockWidth, blockHeight, 0, 0, pj);
                 }
@@ -59,9 +56,10 @@ public class Juego extends javax.swing.JFrame {
         pj.setSize(this.getSize());
         pj.paintComponents(this.getGraphics());
         pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
-        pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
-        pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
+        //pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
+        //pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
 
+        pj.reproducirCancion();
     }
 
     @SuppressWarnings("unchecked")
@@ -87,6 +85,7 @@ public class Juego extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -121,6 +120,7 @@ public class Juego extends javax.swing.JFrame {
             }
         });
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

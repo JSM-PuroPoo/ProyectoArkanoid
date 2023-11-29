@@ -56,4 +56,9 @@ public class Sonido {
             }
         }
     }
+
+    public Clip getClip() {
+        return clip;
+    }
+
 }

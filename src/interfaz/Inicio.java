@@ -3,14 +3,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package interfaz;
- import interfaz.paneles.PanelIMG;
+
+import Sonido.Sonido;
+import configuraciones.Configuraciones;
+import configuraciones.Observer;
+import interfaz.paneles.PanelIMG;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.*;
+
 /**
  *
  * @author Juan Felipe
  */
-public class Inicio extends javax.swing.JFrame {
+public class Inicio extends javax.swing.JFrame implements Observer {
+
     private PanelIMG inicioFondo = new PanelIMG();
     private PanelIMG inicioMarco = new PanelIMG();
     private PanelIMG howtoplay = new PanelIMG();
@@ -25,14 +33,25 @@ public class Inicio extends javax.swing.JFrame {
     private JButton closeButton = new JButton();
     private JButton minimizeButton = new JButton();
     private PanelIMG slidehowtoplay = new PanelIMG();
+
+    private Configuraciones configuraciones;
+    private Sonido musica;
+    private Sonido efecto;
     int indice = 1;
     public static final int MAX_INDICE = 3;
+
     /**
      * Creates new form Inicio
      */
     public Inicio() {
-     setUndecorated(true);
+        setUndecorated(true);
         initComponents();
+        MouseAdapter mouse = new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+        };
         this.setTitle("Ocaso Arkanoid");
         this.setResizable(false);
         this.setLocationRelativeTo(null);
@@ -50,10 +69,10 @@ public class Inicio extends javax.swing.JFrame {
         howtoplay.setImage("recursos/basehowtoplay.png");
         howtoplay.setBounds(470, 100, 650, 475);
         howtoplay.setOpaque(false);
-        inicioFondo.add(howtoplay);    
+        inicioFondo.add(howtoplay);
         slidehowtoplay.setLayout(null);
         slidehowtoplay.setImage("recursos/slidehowtoplay1.png");
-        slidehowtoplay.setBounds(125,100, 400, 280);
+        slidehowtoplay.setBounds(125, 100, 400, 280);
         slidehowtoplay.setOpaque(false);
         howtoplay.add(slidehowtoplay);
         tableInicio.setLayout(null);
@@ -61,7 +80,7 @@ public class Inicio extends javax.swing.JFrame {
         tableInicio.setBounds(30, 30, 388, 615);
         tableInicio.setOpaque(false);
         inicioFondo.add(tableInicio);
-        
+
         playButton.setIcon(new ImageIcon("recursos/PlayButton.png"));
         playButton.setRolloverIcon(new ImageIcon("recursos/PlayButtonPressed.png"));
         playButton.setBounds(111, 220, 165, 97);
@@ -70,7 +89,15 @@ public class Inicio extends javax.swing.JFrame {
         playButton.setOpaque(false);
         playButton.setLayout(null);
         tableInicio.add(playButton);
-        
+
+        playButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playButtonnActionPerformed(evt);
+            }
+        });
+
+        playButton.addMouseListener(mouse);
+
         chartsButton.setIcon(new ImageIcon("recursos/ChartsButton.png"));
         chartsButton.setRolloverIcon(new ImageIcon("recursos/ChartsButtonPressed.png"));
         chartsButton.setBounds(110, 300, 165, 68);
@@ -79,7 +106,9 @@ public class Inicio extends javax.swing.JFrame {
         chartsButton.setOpaque(false);
         chartsButton.setLayout(null);
         tableInicio.add(chartsButton);
-        
+
+        chartsButton.addMouseListener(mouse);
+
         settingsButton.setIcon(new ImageIcon("recursos/SettingsButton.png"));
         settingsButton.setRolloverIcon(new ImageIcon("recursos/SettingsButtonPressed.png"));
         settingsButton.setBounds(105, 380, 177, 65);
@@ -88,7 +117,9 @@ public class Inicio extends javax.swing.JFrame {
         settingsButton.setOpaque(false);
         settingsButton.setLayout(null);
         tableInicio.add(settingsButton);
-        
+
+        settingsButton.addMouseListener(mouse);
+
         creditsButton.setIcon(new ImageIcon("recursos/CreditsButton.png"));
         creditsButton.setRolloverIcon(new ImageIcon("recursos/CreditsButtonPressed.png"));
         creditsButton.setBounds(112, 460, 165, 67);
@@ -97,7 +128,9 @@ public class Inicio extends javax.swing.JFrame {
         creditsButton.setOpaque(false);
         creditsButton.setLayout(null);
         tableInicio.add(creditsButton);
-        
+
+        creditsButton.addMouseListener(mouse);
+
         exitButton.setIcon(new ImageIcon("recursos/ExitButton.png"));
         exitButton.setRolloverIcon(new ImageIcon("recursos/ExitButtonPressed.png"));
         exitButton.setBounds(135, 540, 110, 69);
@@ -106,77 +139,87 @@ public class Inicio extends javax.swing.JFrame {
         exitButton.setOpaque(false);
         exitButton.setLayout(null);
         tableInicio.add(exitButton);
-        
-        
+
+        exitButton.addMouseListener(mouse);
+
         leftarrowButton.setIcon(new ImageIcon("recursos/leftarrowButton.png"));
         leftarrowButton.setRolloverIcon(new ImageIcon("recursos/leftarrowButtonPressed.png"));
-        leftarrowButton.setBounds(180, 400, 50,56);
+        leftarrowButton.setBounds(180, 400, 50, 56);
         leftarrowButton.setBorderPainted(false);
         leftarrowButton.setContentAreaFilled(false);
         leftarrowButton.setOpaque(false);
         leftarrowButton.setLayout(null);
         howtoplay.add(leftarrowButton);
-        
+
+        leftarrowButton.addMouseListener(mouse);
+
         rightarrowButton.setIcon(new ImageIcon("recursos/rightarrowButton.png"));
         rightarrowButton.setRolloverIcon(new ImageIcon("recursos/rightarrowButtonPressed.png"));
-        rightarrowButton.setBounds(420, 400, 50,56);
+        rightarrowButton.setBounds(420, 400, 50, 56);
         rightarrowButton.setBorderPainted(false);
         rightarrowButton.setContentAreaFilled(false);
         rightarrowButton.setOpaque(false);
         rightarrowButton.setLayout(null);
         howtoplay.add(rightarrowButton);
-        
-    rightarrowButton.addActionListener(new java.awt.event.ActionListener() {
-    public void actionPerformed(java.awt.event.ActionEvent evt) {
-        rightarrowButtonActionPerformed(evt);
-    }
-    });
-    
+
+        rightarrowButton.addMouseListener(mouse);
+
+        rightarrowButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rightarrowButtonActionPerformed(evt);
+            }
+        });
+
         leftarrowButton.addActionListener(new java.awt.event.ActionListener() {
-    public void actionPerformed(java.awt.event.ActionEvent evt) {
-        leftarrowButtonActionPerformed(evt);
-    }
-    });
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                leftarrowButtonActionPerformed(evt);
+            }
+        });
 
         closeButton.setIcon(new ImageIcon("recursos/closeButton.png"));
         closeButton.setRolloverIcon(new ImageIcon("recursos/closeButtonRed.png"));
-        closeButton.setBounds(1173, 3, 24,24);
+        closeButton.setBounds(1173, 3, 24, 24);
         closeButton.setBorderPainted(false);
         closeButton.setContentAreaFilled(false);
         closeButton.setOpaque(false);
         closeButton.setLayout(null);
-        inicioMarco.add(closeButton);    
+        inicioMarco.add(closeButton);
+
+        closeButton.addMouseListener(mouse);
+
         closeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeButtonActionPerformed(evt);
             }
-        });      
+        });
 
         minimizeButton.setIcon(new ImageIcon("recursos/MinimizeButton.png"));
         minimizeButton.setRolloverIcon(new ImageIcon("recursos/MinimizeButtonGray.png"));
-        minimizeButton.setBounds(1135, 3, 24,24);
+        minimizeButton.setBounds(1135, 3, 24, 24);
         minimizeButton.setBorderPainted(false);
         minimizeButton.setContentAreaFilled(false);
         minimizeButton.setOpaque(false);
         minimizeButton.setLayout(null);
-        inicioMarco.add(minimizeButton);    
+        inicioMarco.add(minimizeButton);
         minimizeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 minimizeButtonActionPerformed(evt);
             }
-        }); 
+        });
+
+        minimizeButton.addMouseListener(mouse);
     }
 
     private void rightarrowButtonActionPerformed(ActionEvent evt) {
-       String ruta = "recursos/slidehowtoplay";
-       indice++; 
-       if (indice > MAX_INDICE) {
-           indice = 1;
-       }
-       ruta += indice + ".png";
-       slidehowtoplay.setImage(ruta);
+        String ruta = "recursos/slidehowtoplay";
+        indice++;
+        if (indice > MAX_INDICE) {
+            indice = 1;
+        }
+        ruta += indice + ".png";
+        slidehowtoplay.setImage(ruta);
     }
-    
+
     private void leftarrowButtonActionPerformed(ActionEvent evt) {
         String ruta = "recursos/slidehowtoplay";
         if (indice == 1) {
@@ -187,15 +230,21 @@ public class Inicio extends javax.swing.JFrame {
         ruta += indice + ".png";
         slidehowtoplay.setImage(ruta);
     }
-    
+
     private void closeButtonActionPerformed(ActionEvent evt) {
         System.exit(0);
     }
-    
-      private void minimizeButtonActionPerformed(ActionEvent evt) {
+
+    private void minimizeButtonActionPerformed(ActionEvent evt) {
         this.setExtendedState(1);
-    }       
-      
+    }
+
+    private void playButtonnActionPerformed(ActionEvent evt) {
+        this.setVisible(false);
+        Juego juego = new Juego();
+        juego.setVisible(true);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The content of this method is always regenerated by the Form Editor.
      */
@@ -252,6 +301,11 @@ public class Inicio extends javax.swing.JFrame {
                 new Inicio().setVisible(true);
             }
         });
+    }
+
+    @Override
+    public void actualizar(Configuraciones configuraciones) {
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

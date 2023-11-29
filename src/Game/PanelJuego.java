@@ -1,6 +1,7 @@
 package Game;
 
 import Cronometro.PanelCronometro;
+import Sonido.Sonido;
 import componentes.Bloque;
 import componentes.PanelComponente;
 import componentes.Pelota;
@@ -14,6 +15,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Random;
 import javax.swing.*;
 
 public class PanelJuego extends PanelIMG {
@@ -47,6 +49,8 @@ public class PanelJuego extends PanelIMG {
     public static final int NORMAL = 8;
     public static final int SLOW = 10;
     public static final int FAST = 6;
+
+    private Sonido cancion = new Sonido();
 
     public PanelJuego(Bloque bloques[], String rutaFondo, String rutaFJuego, String rutaMarco, JFrame frame) {
         frame.setTitle("Ocaso Arkanoid");
@@ -135,6 +139,12 @@ public class PanelJuego extends PanelIMG {
         resumeButton.setLayout(null);
         panelPausa.add(resumeButton);
 
+        resumeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resumeButtonActionPerformed(evt);
+            }
+        });
+
         homeButton.setIcon(new ImageIcon("recursos/HomeButton.png"));
         homeButton.setRolloverIcon(new ImageIcon("recursos/HomeButtonPressed.png"));
         homeButton.setBounds(105, 130, 191, 105);
@@ -220,6 +230,22 @@ public class PanelJuego extends PanelIMG {
         });
     }
 
+    private void resumeButtonActionPerformed(ActionEvent evt) {
+        if (pausado) {
+            pausa.setIcon(new ImageIcon("recursos/PauseButtonPressed.png"));
+            pausa.setRolloverIcon(new ImageIcon("recursos/PauseButtonRollover.png"));
+            frame.requestFocus();
+            pausado = false;
+            cronometro.getCronometro().time.start();
+            fondoOpaco.setVisible(false);
+            for (int i = 0; i < contPelotas; i++) {
+                pelotas[i].cambiarEstadoPausa();
+            }
+            pausa.setEnabled(true);
+            cancion.cambiarEstadoReproduccion();
+        }
+    }
+
     private void closeButtonActionPerformed(ActionEvent evt) {
         System.exit(0);
     }
@@ -229,22 +255,17 @@ public class PanelJuego extends PanelIMG {
     }
 
     private void pausaActionPerformed(java.awt.event.ActionEvent evt) {
-        for (int i = 0; i < contPelotas; i++) {
-            pelotas[i].cambiarEstadoPausa();
-        }
         if (!pausado) {
             pausa.setIcon(new ImageIcon("recursos/PlayButtonNormal.png"));
             pausa.setRolloverIcon(new ImageIcon("recursos/PlayButtonRollover.png"));
             cronometro.getCronometro().time.stop();
             fondoOpaco.setVisible(true);
             pausado = true;
-        } else {
-            pausa.setIcon(new ImageIcon("recursos/PauseButtonPressed.png"));
-            pausa.setRolloverIcon(new ImageIcon("recursos/PauseButtonRollover.png"));
-            frame.requestFocus();
-            pausado = false;
-            cronometro.getCronometro().time.start();
-            fondoOpaco.setVisible(false);
+            for (int i = 0; i < contPelotas; i++) {
+                pelotas[i].cambiarEstadoPausa();
+            }
+            pausa.setEnabled(false);
+            cancion.cambiarEstadoReproduccion();
         }
     }
 
@@ -340,6 +361,14 @@ public class PanelJuego extends PanelIMG {
         this.marco = marco;
     }
 
+    public Sonido getCancion() {
+        return cancion;
+    }
+
+    public void setCancion(Sonido cancion) {
+        this.cancion = cancion;
+    }
+
     @Override
     public void paintComponents(Graphics graphics) {
         super.paintComponent(graphics);
@@ -348,6 +377,14 @@ public class PanelJuego extends PanelIMG {
             obj.paint(graphics);
         }
         game.paint(graphics);
+    }
+
+    public void reproducirCancion() {
+        Random random = new Random();
+        int indiceRandom = random.nextInt(11) + 1;
+        cancion.cargarSonido("sonidos/cancionJuego" + indiceRandom + ".wav");
+        cancion.reproducir(0);
+        cancion.cambiarVolumen(0.1f);
     }
 
 }

@@ -23,7 +23,7 @@ public class Pelota extends PanelComponente implements Runnable {
         pausa = false;
     }
 
-    public boolean colisionBloque(Bloque bloque) { 
+    public boolean colisionBloque(Bloque bloque) {
         Rectangle pelotaBounds = this.getBounds();
         Rectangle bloqueBounds = bloque.getBounds();
         if (pelotaBounds.intersects(bloqueBounds)) {
@@ -119,6 +119,11 @@ public class Pelota extends PanelComponente implements Runnable {
                 this.mover();
                 this.repaint();
                 this.colisionJuego();
+                if (panelJuego.getCancion().getClip() != null) {
+                    if (!panelJuego.getCancion().getClip().isRunning()) {
+                        panelJuego.reproducirCancion();
+                    }
+                }
             }
             try {
                 Thread.sleep(speed);
