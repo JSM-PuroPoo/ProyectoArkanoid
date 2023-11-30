@@ -21,9 +21,10 @@ import javax.swing.SwingConstants;
  *
  * @author nalis
  */
-public class YouWon extends javax.swing.JFrame {
+public class Results extends javax.swing.JFrame {
     private PanelIMG baseResults = new PanelIMG();
     private PanelIMG youWon = new PanelIMG();
+    private PanelIMG youLost = new PanelIMG();
     private JLabel scoreShow = new JLabel();
     private JLabel timeShow = new JLabel();
     private JButton replayButton = new JButton();
@@ -34,7 +35,7 @@ public class YouWon extends javax.swing.JFrame {
     /**
      * Creates new form YouWon
      */
-    public YouWon() {
+    public Results() {
         this.setUndecorated(true);
         initComponents();
         setIconImage(new ImageIcon("recursos/logo.png").getImage());
@@ -50,11 +51,19 @@ public class YouWon extends javax.swing.JFrame {
         baseResults.setLayout(null);
         this.getContentPane().add(baseResults);
         
+        youLost.setImage("recursos/youLost.png");
+        youLost.setBounds(190, 0, 280, 74);
+        youLost.setOpaque(false);
+        youLost.setLayout(null);
+        baseResults.add(youLost);
+        youLost.setVisible(false);
+        
         youWon.setImage("recursos/youWon.png");
         youWon.setBounds(190, 0, 280, 74);
         youWon.setOpaque(false);
         youWon.setLayout(null);
         baseResults.add(youWon);
+        youWon.setVisible(false);
         
         try {
             InputStream is = new BufferedInputStream(new FileInputStream("fonts/DSDIGI.TTF"));;
@@ -109,7 +118,7 @@ public class YouWon extends javax.swing.JFrame {
         exitButton.setOpaque(false);
         exitButton.setLayout(null);
         baseResults.add(exitButton);
-        
+       
     }
 
     /**
@@ -153,20 +162,21 @@ public class YouWon extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(YouWon.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Results.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(YouWon.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Results.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(YouWon.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Results.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(YouWon.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Results.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new YouWon().setVisible(true);
+                new Results().setVisible(true);
             }
         });
     }
