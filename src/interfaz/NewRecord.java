@@ -4,17 +4,81 @@
  */
 package interfaz;
 
+import interfaz.paneles.PanelIMG;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
 /**
  *
  * @author nalis
  */
 public class NewRecord extends javax.swing.JFrame {
-
+    private PanelIMG newRecordP = new PanelIMG();
+    private JTextField nameField = new JTextField();
+    private JButton acceptButton = new JButton();
+    PanelIMG k = new PanelIMG();    
+    Font text;
     /**
      * Creates new form NewRecord
      */
     public NewRecord() {
+        this.setUndecorated(true);
         initComponents();
+        setIconImage(new ImageIcon("recursos/logo.png").getImage());
+        this.setTitle("Ocaso Arkanoid");
+        this.setResizable(false);
+        this.setLocationRelativeTo(null); 
+        newRecordP.setImage("recursos/newRecordPanel.png");
+        newRecordP.setBounds(0, 0,430,400);
+        newRecordP.setOpaque(true);
+        newRecordP.setLayout(null);
+        this.getContentPane().add(newRecordP);
+        
+        
+//        k.setImage("recursos/panelOscuro.png");
+//        k.setBounds(87, 213, 255, 71);
+//        k.setOpaque(false);
+//        k.setLayout(null);
+//        newRecordP.add(k);
+        
+        try {
+            InputStream is = new BufferedInputStream(new FileInputStream("fonts/OCRA.TTF"));;
+            text = Font.createFont(Font.TRUETYPE_FONT, is);
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
+        
+        nameField.setBounds(87, 213, 255, 71);
+        nameField.setFont(text.deriveFont(Font.PLAIN, 25));
+        nameField.setBorder(BorderFactory.createEmptyBorder());
+        nameField.setForeground(Color.white);
+        nameField.setBackground(new Color(102, 0,172));
+        nameField.setOpaque(false);
+        nameField.setLayout(null);
+        nameField.setHorizontalAlignment(SwingConstants.CENTER); 
+        newRecordP.add(nameField);
+        
+        
+        acceptButton.setIcon(new ImageIcon("recursos/acceptRecordButton.png"));
+        acceptButton.setRolloverIcon(new ImageIcon("recursos/acceptRecordButtonPressed.png"));
+        acceptButton.setBounds(105,295, 220, 94);
+        acceptButton.setBorderPainted(false);
+        acceptButton.setContentAreaFilled(false);
+        acceptButton.setOpaque(false);
+        acceptButton.setLayout(null);
+        newRecordP.add(acceptButton);        
+        
+        
     }
 
     /**
@@ -25,12 +89,13 @@ public class NewRecord extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(430, 400));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 293, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
