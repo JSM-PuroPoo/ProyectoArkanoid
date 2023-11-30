@@ -4,17 +4,112 @@
  */
 package interfaz;
 
+import interfaz.paneles.PanelIMG;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
 /**
  *
  * @author nalis
  */
 public class YouLost extends javax.swing.JFrame {
-
+    private PanelIMG baseResults = new PanelIMG();
+    private PanelIMG youLost = new PanelIMG();
+    private JLabel scoreShow = new JLabel();
+    private JLabel timeShow = new JLabel();
+    private JButton replayButton = new JButton();
+    private JButton  homeButton = new JButton();
+    private JButton exitButton = new JButton();
+    
+    Font text;
     /**
-     * Creates new form YouLost
+     * Creates new form YouWon
      */
     public YouLost() {
+        this.setUndecorated(true);
         initComponents();
+        setIconImage(new ImageIcon("recursos/logo.png").getImage());
+        this.setTitle("Ocaso Arkanoid");
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        
+        
+        baseResults.setImage("recursos/baseResult.png");
+        baseResults.scaleImage(650, 400);
+        baseResults.setBounds(0, 0,650, 400);
+        baseResults.setOpaque(false);
+        baseResults.setLayout(null);
+        this.getContentPane().add(baseResults);
+        
+        youLost.setImage("recursos/youLost.png");
+        youLost.setBounds(190, 0, 280, 74);
+        youLost.setOpaque(false);
+        youLost.setLayout(null);
+        baseResults.add(youLost);
+        
+        try {
+            InputStream is = new BufferedInputStream(new FileInputStream("fonts/DSDIGI.TTF"));;
+            text = Font.createFont(Font.TRUETYPE_FONT, is);
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
+        
+        //scoreShow.setIcon(new ImageIcon("recursos/paneloscuro.png"));
+        scoreShow.setBounds(40,152,283, 73);
+        scoreShow.setFont(text.deriveFont(Font.PLAIN, 55));
+        scoreShow.setForeground(Color.white);
+        scoreShow.setHorizontalAlignment(SwingConstants.CENTER);
+        scoreShow.setVerticalAlignment(SwingConstants.CENTER);
+        scoreShow.setOpaque(false);
+        scoreShow.setLayout(null);
+        baseResults.add(scoreShow);
+        
+        //timeShow.setIcon(new ImageIcon("recursos/paneloscuro.png"));
+        timeShow.setBounds(40,273,283, 73);
+        timeShow.setFont(text.deriveFont(Font.PLAIN, 55));
+        timeShow.setForeground(Color.white);
+        timeShow.setHorizontalAlignment(SwingConstants.CENTER);
+        timeShow.setVerticalAlignment(SwingConstants.CENTER);
+        timeShow.setOpaque(false);
+        timeShow.setLayout(null);
+        baseResults.add(timeShow);
+        
+        replayButton.setIcon(new ImageIcon("recursos/replayButton.png"));
+        replayButton.setRolloverIcon(new ImageIcon("recursos/replayButtonPressed.png"));
+        replayButton.setBounds(410,95, 190, 84);
+        replayButton.setBorderPainted(false);
+        replayButton.setContentAreaFilled(false);
+        replayButton.setOpaque(false);
+        replayButton.setLayout(null);
+        baseResults.add(replayButton);
+        
+        homeButton.setIcon(new ImageIcon("recursos/homeWonButton.png"));
+        homeButton.setRolloverIcon(new ImageIcon("recursos/homeWonButtonPressed.png"));
+        homeButton.setBounds(425,190, 153, 84);
+        homeButton.setBorderPainted(false);
+        homeButton.setContentAreaFilled(false);
+        homeButton.setOpaque(false);
+        homeButton.setLayout(null);
+        baseResults.add(homeButton);
+        
+        exitButton.setIcon(new ImageIcon("recursos/exitWonButton.png"));
+        exitButton.setRolloverIcon(new ImageIcon("recursos/exitWonButtonPressed.png"));
+        exitButton.setBounds(435,290, 134, 84);
+        exitButton.setBorderPainted(false);
+        exitButton.setContentAreaFilled(false);
+        exitButton.setOpaque(false);
+        exitButton.setLayout(null);
+        baseResults.add(exitButton);
+       
     }
 
     /**
@@ -25,6 +120,7 @@ public class YouLost extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(650, 400));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
