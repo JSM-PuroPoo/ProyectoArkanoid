@@ -4,6 +4,7 @@
  */
 package componentes;
 
+import Sonido.Sonido;
 import javax.swing.JPanel;
 
 public class Bloque extends PanelComponente {
@@ -16,30 +17,15 @@ public class Bloque extends PanelComponente {
         super(x, y, width, height, vX, vY, contenedor);
         this.vida = vida;
         this.especial = false;
-        switch(vida){
-            case 1:
-                puntuacion = 10;
-                break;
-            case 2:
-                puntuacion = 20;
-                break;
-            case 3:
-                puntuacion = 30;
-                break;
-            case 4:
-                puntuacion = 40;
-                break;
-            default:
-                puntuacion = 0;
-        }
+        puntuacion = 100;
         asignarImagen();
     }
 
     public Bloque(boolean especial, int x, int y, int width, int height, int vX, int vY, JPanel contenedor) {
         this(1, x, y, width, height, vX, vY, contenedor);
         this.especial = especial;
-        puntuacion = 50;
         setImage("recursos/bloqueRosado.png");
+        scaleImage(getWidth(), getHeight());
     }
 
     public int getVida() {
@@ -69,5 +55,11 @@ public class Bloque extends PanelComponente {
                 setImage("recursos/bloqueRojo.png");
             }
         }
+        scaleImage(getWidth(), getHeight());
     }
+
+    public int getPuntuacion() {
+        return puntuacion;
+    }
+
 }

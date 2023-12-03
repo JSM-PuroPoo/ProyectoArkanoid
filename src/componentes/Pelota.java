@@ -5,6 +5,7 @@
 package componentes;
 
 import Game.PanelJuego;
+import Sonido.Sonido;
 import java.awt.Rectangle;
 import javax.swing.JPanel;
 
@@ -40,7 +41,69 @@ public class Pelota extends PanelComponente implements Runnable {
         return false;
     }
 
+    /*public boolean colisionPelota(Pelota pelota) {
+        Rectangle pelotaBounds = this.getBounds();
+        Rectangle otraPelotaBounds = pelota.getBounds();
+
+        if (this != pelota) {
+            if (pelotaBounds.intersects(otraPelotaBounds)) {
+                double overlapX = Math.min(Math.abs(pelotaBounds.getMaxX() - otraPelotaBounds.getMinX()), Math.abs(pelotaBounds.getMinX() - otraPelotaBounds.getMaxX()));
+                double overlapY = Math.min(Math.abs(pelotaBounds.getMaxY() - otraPelotaBounds.getMinY()), Math.abs(pelotaBounds.getMinY() - otraPelotaBounds.getMaxY()));
+
+                if (overlapX < overlapY) {
+                    setvX(-getvX());
+                    pelota.setvX(-pelota.getvX());
+                } else {
+                    setvY(-getvY());
+                    pelota.setvY(-pelota.getvY());
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+     */
+    public boolean colisionPelota(Pelota pelota) {
+        Rectangle pelotaBounds = this.getBounds();
+        Rectangle otraPelotaBounds = pelota.getBounds();
+
+        if (this != pelota) {
+            if (pelotaBounds.intersects(otraPelotaBounds)) {
+                double overlapX = Math.min(Math.abs(pelotaBounds.getMaxX() - otraPelotaBounds.getMinX()), Math.abs(pelotaBounds.getMinX() - otraPelotaBounds.getMaxX()));
+                double overlapY = Math.min(Math.abs(pelotaBounds.getMaxY() - otraPelotaBounds.getMinY()), Math.abs(pelotaBounds.getMinY() - otraPelotaBounds.getMaxY()));
+                if (overlapX < overlapY) {
+                    if (pelotaBounds.getMaxX() < otraPelotaBounds.getMinX()) {
+                        setX((int) (getX() - overlapX));
+                        pelota.setX((int) (pelota.getX() + overlapX));
+                    } else {
+                        setX((int) (getX() + overlapX));
+                        pelota.setX((int) (pelota.getX() - overlapX));
+                    }
+                    setvX(-getvX());
+                    pelota.setvX(-pelota.getvX());
+                } else {
+                    if (pelotaBounds.getMaxY() < otraPelotaBounds.getMinY()) {
+                        setY((int) (getY() - overlapY));
+                        pelota.setY((int) (pelota.getY() + overlapY));
+                    } else {
+                        setY((int) (getY() + overlapY));
+                        pelota.setY((int) (pelota.getY() - overlapY));
+                    }
+                    setvY(-getvY());
+                    pelota.setvY(-pelota.getvY());
+                }
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public boolean colisionRaqueta(Raqueta raqueta) {
+        if (raqueta == null) {
+            return false;
+        }
         return this.getBounds().intersects(raqueta.getBounds());
     }
 
@@ -82,13 +145,35 @@ public class Pelota extends PanelComponente implements Runnable {
     }
 
     public synchronized void colisionJuego() {
+        Sonido sonido = new Sonido();
         if (getY() < 320) {
             for (Bloque obj : panelJuego.getBloques()) {
                 if (obj != null && colisionBloque(obj)) {
                     if (obj.getVida() == 0) {
                         panelJuego.eliminarBloque(obj);
                         obj.setVisible(false);
+                        if (panelJuego.getConfiguraciones().isSonido()) {
+                            sonido.cargarSonido("sonidos/ball breack.wav");
+                            sonido.setCondicion(true);
+                            sonido.reproducir(0);
+                        }
+                    } else {
+                        if (panelJuego.getConfiguraciones().isSonido()) {
+                            sonido.cargarSonido("sonidos/colisionblock.wav");
+                            sonido.setCondicion(true);
+                            sonido.reproducir(0);
+                        }
                     }
+                    break;
+                }
+            }
+        }
+    }
+
+    public void colisionPelotas() {
+        synchronized (panelJuego) {
+            for (int i = 0; i < panelJuego.contPelotas; i++) {
+                if (panelJuego.getPelotas()[i] != null && colisionPelota(panelJuego.getPelotas()[i])) {
                     break;
                 }
             }
@@ -119,7 +204,8 @@ public class Pelota extends PanelComponente implements Runnable {
                 this.mover();
                 this.repaint();
                 this.colisionJuego();
-                if (panelJuego.getCancion().getClip() != null) {
+                this.colisionPelotas();
+                if (panelJuego.getCancion().getClip() != null && panelJuego.validarMusica) {
                     if (!panelJuego.getCancion().getClip().isRunning()) {
                         panelJuego.reproducirCancion();
                     }
@@ -133,4 +219,5 @@ public class Pelota extends PanelComponente implements Runnable {
 
         }
     }
+
 }

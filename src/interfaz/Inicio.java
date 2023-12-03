@@ -11,6 +11,11 @@ import interfaz.paneles.PanelIMG;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -35,7 +40,7 @@ public class Inicio extends javax.swing.JFrame implements Observer {
     private PanelIMG slidehowtoplay = new PanelIMG();
 
     private Configuraciones configuraciones;
-    private Sonido musica;
+    private Sonido musica = new Sonido();
     private Sonido efecto;
     int indice = 1;
     public static final int MAX_INDICE = 3;
@@ -43,6 +48,13 @@ public class Inicio extends javax.swing.JFrame implements Observer {
     /**
      * Creates new form Inicio
      */
+    public Inicio(Configuraciones configuraciones) {
+        this();
+        this.configuraciones = configuraciones;
+        actualizar(configuraciones);
+
+    }
+
     public Inicio() {
         setUndecorated(true);
         initComponents();
@@ -117,6 +129,12 @@ public class Inicio extends javax.swing.JFrame implements Observer {
         settingsButton.setOpaque(false);
         settingsButton.setLayout(null);
         tableInicio.add(settingsButton);
+
+        settingsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingsButtonActionPerformed(evt);
+            }
+        });
 
         settingsButton.addMouseListener(mouse);
 
@@ -231,6 +249,20 @@ public class Inicio extends javax.swing.JFrame implements Observer {
         slidehowtoplay.setImage(ruta);
     }
 
+    private void settingsButtonActionPerformed(ActionEvent evt) {
+        this.dispose();
+        musica.detener();
+        Settings settings = new Settings(configuraciones);
+        settings.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                new Inicio(settings.getConfiguraciones()).setVisible(true);
+            }
+        });
+        settings.setJuego(false);
+        settings.setVisible(true);
+    }
+
     private void closeButtonActionPerformed(ActionEvent evt) {
         System.exit(0);
     }
@@ -240,9 +272,10 @@ public class Inicio extends javax.swing.JFrame implements Observer {
     }
 
     private void playButtonnActionPerformed(ActionEvent evt) {
-        this.setVisible(false);
-        Juego juego = new Juego();
+        Juego juego = new Juego(configuraciones);
         juego.setVisible(true);
+        musica.detener();
+        dispose();
     }
 
     /**
@@ -305,7 +338,16 @@ public class Inicio extends javax.swing.JFrame implements Observer {
 
     @Override
     public void actualizar(Configuraciones configuraciones) {
-
+        if (configuraciones.isMusica()) {
+            musica.setCondicion(true);
+            Random random = new Random();
+            int indiceRandom = random.nextInt(11) + 1;
+            musica.cargarSonido("sonidos/cancionJuego" + indiceRandom + ".wav");
+            musica.reproducir(0);
+            musica.cambiarVolumen(0.5f);
+        } else {
+            musica.setCondicion(false);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

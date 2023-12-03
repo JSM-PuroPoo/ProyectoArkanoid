@@ -13,6 +13,7 @@ import javax.sound.sampled.FloatControl;
 public class Sonido {
 
     private Clip clip;
+    private boolean condicion;
 
     public void cargarSonido(String ruta) {
         try {
@@ -26,9 +27,11 @@ public class Sonido {
     }
 
     public void reproducir(int segundos) {
-        if (clip != null) {
-            clip.setFramePosition(segundos);
-            clip.start();
+        if (isCondicion()) {
+            if (clip != null) {
+                clip.setFramePosition(segundos);
+                clip.start();
+            }
         }
     }
 
@@ -47,12 +50,13 @@ public class Sonido {
     }
 
     public void cambiarVolumen(float valor) {
-        if (clip != null) {
+        if (clip != null && condicion) {
             try {
                 FloatControl controlVolumen = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
                 controlVolumen.setValue(20.0f * (float) Math.log10(valor));
             } catch (Exception e) {
-                System.out.println("Error al cambiar el volumen: " + e.getMessage());
+                //System.out.println("Error al cambiar el volumen: " + e.getMessage());
+                e.printStackTrace();
             }
         }
     }
@@ -60,5 +64,21 @@ public class Sonido {
     public Clip getClip() {
         return clip;
     }
+
+    public void detener() {
+        if (clip != null) {
+            clip.stop();
+        }
+    }
+
+    public boolean isCondicion() {
+        return condicion;
+    }
+
+    public void setCondicion(boolean condicion) {
+        this.condicion = condicion;
+    }
+
+   
 
 }

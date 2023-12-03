@@ -24,22 +24,30 @@ public class Juego extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
     PanelJuego pj;
+    Configuraciones configuraciones;
+
+    public Juego(Configuraciones configuraciones) {
+        this();
+        this.configuraciones = configuraciones;
+        pj.actualizar(configuraciones);
+
+    }
 
     public Juego() {
         this.setUndecorated(true);
         initComponents();
-        int numRows = 10;
-        int numCols = 22;
-        int blockWidth = 30;
-        int blockHeight = 24;
+        int numRows = 5;
+        int numCols = 12; //22
+        int blockWidth = 62; //30
+        int blockHeight = 24; //24
         int spacing = 8;  //8
         Random random = new Random();
         Bloque bloques[] = new Bloque[numRows * numCols];
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numCols; col++) {
                 int index = row * numCols + col;
-                int posX = 8 + (blockWidth + spacing) * col;
-                int posY = 8 + (blockHeight + spacing) * row;
+                int posX = 12 + (blockWidth + spacing) * col;
+                int posY = 10 + (blockHeight + spacing) * row;
                 int numeroAleatorio = random.nextInt(5) + 1;
                 if (numeroAleatorio == 5 && col % (row + 1) == 0) {
                     bloques[index] = new Bloque(true, posX, posY, blockWidth, blockHeight, 0, 0, pj);
@@ -52,14 +60,9 @@ public class Juego extends javax.swing.JFrame {
             }
         }
 
-        pj = new PanelJuego(bloques, "recursos/fondo1.jpg", "recursos/fondopartidasolido.png", "recursos/marco0.png", this);
+        pj = new PanelJuego(bloques, "recursos/fondo3.jpg", "recursos/fondopartidasolido.png", "recursos/marco0.png", this);
         pj.setSize(this.getSize());
         pj.paintComponents(this.getGraphics());
-        pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
-        //pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
-        //pj.agregarPelota(new Pelota(365, 525, 25, 25, 2, 2, pj.getGame()));
-
-        pj.reproducirCancion();
     }
 
     @SuppressWarnings("unchecked")
@@ -85,7 +88,6 @@ public class Juego extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -121,6 +123,13 @@ public class Juego extends javax.swing.JFrame {
         });
     }
 
+    public Configuraciones getConfiguraciones() {
+        return configuraciones;
+    }
+
+    public void setConfiguraciones(Configuraciones configuraciones) {
+        this.configuraciones = configuraciones;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

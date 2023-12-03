@@ -41,12 +41,17 @@ public class CronometroP {
     }
 
     ActionListener accion = new ActionListener() {
+        private long startTime = System.nanoTime();
+
         @Override
         public void actionPerformed(ActionEvent e) {
-            miliseg++;
-            if (miliseg == 100) {
+            long currentTime = System.nanoTime();
+            long elapsedTimeMillis = (currentTime - startTime) / 1_000_000;
+            startTime = currentTime;
+            miliseg += elapsedTimeMillis;
+            if (miliseg >= 1000) {
                 seg++;
-                miliseg = 0;
+                miliseg %= 1000;
             }
             if (seg == 60) {
                 min++;
@@ -56,18 +61,13 @@ public class CronometroP {
                 hour++;
                 min = 0;
             }
+
             TimeTags();
         }
     };
 
     void TimeTags() {
-        String accurateTime = (hour <= 9 ? "0" : "") + hour + ":" + (min <= 9 ? "0" : "") + min + ":" + (seg <= 9 ? "0" : "") + seg + ":" + (miliseg <= 9 ? "0" : "") + miliseg;
+        String accurateTime = (hour <= 9 ? "0" : "") + hour + ":" + (min <= 9 ? "0" : "") + min + ":" + (seg <= 9 ? "0" : "") + seg + ":" + ((miliseg / 10) <= 9 ? "0" : "") + (miliseg / 10);
         this.label.setText(accurateTime);
     }
-
-    @Override
-    public String toString() {
-        return (hour <= 9 ? "0" : "") + hour + ":" + (min <= 9 ? "0" : "") + min + ":" + (seg <= 9 ? "0" : "") + seg + ":" + (miliseg <= 9 ? "0" : "") + miliseg;
-    }
-
 }

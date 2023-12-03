@@ -6,6 +6,11 @@ import componentes.Bloque;
 import componentes.PanelComponente;
 import componentes.Pelota;
 import componentes.Raqueta;
+import configuraciones.Configuraciones;
+import configuraciones.Observer;
+import interfaz.Inicio;
+import interfaz.Juego;
+import interfaz.Settings;
 import interfaz.paneles.PanelIMG;
 import java.awt.Color;
 import java.awt.Font;
@@ -13,12 +18,15 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Random;
 import javax.swing.*;
 
-public class PanelJuego extends PanelIMG {
+public class PanelJuego extends PanelIMG implements Observer {
 
     private JButton closeButton = new JButton();
     private JButton minimizeButton = new JButton();
@@ -27,12 +35,13 @@ public class PanelJuego extends PanelIMG {
     private Raqueta raqueta;
     private PanelIMG game;
     private PanelIMG marco;
-    public int contPelotas;
+    public int contPelotas = 0;
     public int contBloques;
     public String rutaFondo;
     public String rutaFJuego;
     public String rutaMarco;
-    public JFrame frame;
+    private int puntaje;
+    public Juego frame;
     private JLabel puntos = new JLabel();
 
     private PanelIMG fondoOpaco = new PanelIMG();
@@ -51,10 +60,13 @@ public class PanelJuego extends PanelIMG {
     public static final int FAST = 6;
 
     private Sonido cancion = new Sonido();
+    private Configuraciones configuraciones;
+    public boolean validarMusica = true;
+    public boolean iniciarJuego;
 
-    public PanelJuego(Bloque bloques[], String rutaFondo, String rutaFJuego, String rutaMarco, JFrame frame) {
+    public PanelJuego(Bloque bloques[], String rutaFondo, String rutaFJuego, String rutaMarco, Juego frame) {
         frame.setTitle("Ocaso Arkanoid");
-
+        iniciarJuego = false;
         frame.setIconImage(new ImageIcon("recursos/logo.png").getImage());
         this.bloques = bloques;
         this.frame = frame;
@@ -87,7 +99,6 @@ public class PanelJuego extends PanelIMG {
         pausado = false;
 
         this.add(cronometro);
-        cronometro.getCronometro().time.start();
         cronometro.setLocation(931, 100);
 
         this.frame.setResizable(false);
@@ -152,6 +163,11 @@ public class PanelJuego extends PanelIMG {
         homeButton.setContentAreaFilled(false);
         homeButton.setOpaque(false);
         homeButton.setLayout(null);
+        homeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                homeButtonActionPerformed(evt);
+            }
+        });
         panelPausa.add(homeButton);
 
         settingsButton.setIcon(new ImageIcon("recursos/SettingspausePanelButton.png"));
@@ -163,6 +179,12 @@ public class PanelJuego extends PanelIMG {
         settingsButton.setLayout(null);
         panelPausa.add(settingsButton);
 
+        settingsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingsButtonPerformed(evt);
+            }
+        });
+
         exitButton.setIcon(new ImageIcon("recursos/ExitpausePanelButton.png"));
         exitButton.setRolloverIcon(new ImageIcon("recursos/ExitpausePanelButtonPressed.png"));
         exitButton.setBounds(115, 300, 168, 105);
@@ -172,7 +194,13 @@ public class PanelJuego extends PanelIMG {
         exitButton.setLayout(null);
         panelPausa.add(exitButton);
 
-        puntos.setBounds(925, 430, 350, 126);
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
+            }
+        });
+
+        puntos.setBounds(930, 430, 350, 126);
         puntos.setText("00000");
         puntos.setFont(cronometro.getFont().deriveFont(Font.PLAIN, 80));
         puntos.setForeground(Color.white);
@@ -182,6 +210,31 @@ public class PanelJuego extends PanelIMG {
             @Override
             public void keyPressed(KeyEvent e) {
                 int keyCode = e.getKeyCode();
+                if (keyCode == KeyEvent.VK_ENTER && !iniciarJuego) {
+                    iniciarJuego = true;
+                    cronometro.getCronometro().time.start();
+                    for (int i = 0; i < contPelotas; i++) {
+                        pelotas[i].setvX(-2);
+                        pelotas[i].setvY(-2);
+                    }
+                }
+                if (contPelotas > 0) {
+                    if ((keyCode == 39 || keyCode == 68) && !iniciarJuego) {
+                        for (int i = 0; i < contPelotas; i++) {
+                            pelotas[i].setX((int) (pelotas[i].getX() + raqueta.getvX()));
+                            if (pelotas[i].getX() > 856 - 8 - raqueta.getWidth()) {
+                                pelotas[i].setX(raqueta.getX() + raqueta.getWidth() / 2 - pelotas[i].getWidth() / 2);
+                            }
+                        }
+                    } else if ((keyCode == 37 || keyCode == 65) && !iniciarJuego) {
+                        for (int i = 0; i < contPelotas; i++) {
+                            pelotas[i].setX((int) (pelotas[i].getX() - raqueta.getvX()));
+                            if (pelotas[i].getX() < raqueta.getWidth() / 2 + 8) {
+                                pelotas[i].setX(raqueta.getX() + raqueta.getWidth() / 2 - pelotas[i].getWidth() / 2);
+                            }
+                        }
+                    }
+                }
                 switch (keyCode) {
                     case 39:
                         raqueta.moverDerecha();
@@ -230,6 +283,29 @@ public class PanelJuego extends PanelIMG {
         });
     }
 
+    @Override
+    public void actualizar(Configuraciones configuraciones) {
+        this.configuraciones = configuraciones;
+        if (configuraciones.isMusica()) {
+            cancion.setCondicion(true);
+            reproducirCancion();
+            if (pausado) {
+                cancion.detener();
+            }
+            validarMusica = true;
+        } else {
+            cancion.setCondicion(false);
+            validarMusica = false;
+        }
+
+        if (!iniciarJuego) {
+            for (int i = 0; i < configuraciones.getCantidadPelotas(); i++) {
+                agregarPelota(new Pelota(432, 525 - 60 * i, 25, 25, 0, 0, getGame()));
+            }
+        }
+
+    }
+
     private void resumeButtonActionPerformed(ActionEvent evt) {
         if (pausado) {
             pausa.setIcon(new ImageIcon("recursos/PauseButtonPressed.png"));
@@ -242,8 +318,41 @@ public class PanelJuego extends PanelIMG {
                 pelotas[i].cambiarEstadoPausa();
             }
             pausa.setEnabled(true);
-            cancion.cambiarEstadoReproduccion();
+            if (cancion.getClip() != null && configuraciones.isMusica()) {
+                cancion.cambiarEstadoReproduccion();
+            }
+
         }
+    }
+
+    private void homeButtonActionPerformed(ActionEvent evt) {
+        frame.dispose();
+        Inicio inicio = new Inicio(configuraciones);
+        inicio.setVisible(true);
+    }
+
+    private void settingsButtonPerformed(ActionEvent evt) {
+        frame.setVisible(false);
+        Settings settings = new Settings(configuraciones);
+        settings.setJuego(true);
+        settings.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                actualizar(settings.getConfiguraciones());
+                if (settings.isAceptar()) {
+                    frame.dispose();
+                    frame = new Juego(settings.getConfiguraciones());
+                    frame.setVisible(true);
+                } else {
+                    frame.setVisible(true);
+                }
+            }
+        });
+        settings.setVisible(true);
+    }
+
+    private void exitButtonActionPerformed(ActionEvent evt) {
+        closeButtonActionPerformed(evt);
     }
 
     private void closeButtonActionPerformed(ActionEvent evt) {
@@ -265,7 +374,9 @@ public class PanelJuego extends PanelIMG {
                 pelotas[i].cambiarEstadoPausa();
             }
             pausa.setEnabled(false);
-            cancion.cambiarEstadoReproduccion();
+            if (cancion.getClip() != null && configuraciones.isMusica() && cancion.getClip().isRunning()) {
+                cancion.cambiarEstadoReproduccion();
+            }
         }
     }
 
@@ -301,6 +412,8 @@ public class PanelJuego extends PanelIMG {
     public void eliminarBloque(Bloque bloque) {
         for (int i = 0; i < contBloques; i++) {
             if (bloques[i] != null && bloques[i].equals(bloque)) {
+                this.setPuntaje(this.getPuntaje() + bloque.getPuntuacion());
+                puntos.setText(new DecimalFormat("00000").format(getPuntaje()));
                 bloques[i] = null;
                 ordenarArray(bloques);
                 contBloques--;
@@ -384,7 +497,23 @@ public class PanelJuego extends PanelIMG {
         int indiceRandom = random.nextInt(11) + 1;
         cancion.cargarSonido("sonidos/cancionJuego" + indiceRandom + ".wav");
         cancion.reproducir(0);
-        cancion.cambiarVolumen(0.1f);
+        //cancion.cambiarVolumen(0.5f);
+    }
+
+    public Configuraciones getConfiguraciones() {
+        return configuraciones;
+    }
+
+    public void setConfiguraciones(Configuraciones configuraciones) {
+        this.configuraciones = configuraciones;
+    }
+
+    public int getPuntaje() {
+        return puntaje;
+    }
+
+    public void setPuntaje(int puntaje) {
+        this.puntaje = puntaje;
     }
 
 }

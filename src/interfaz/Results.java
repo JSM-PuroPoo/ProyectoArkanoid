@@ -30,7 +30,7 @@ public class Results extends javax.swing.JFrame {
     private JButton replayButton = new JButton();
     private JButton  homeButton = new JButton();
     private JButton exitButton = new JButton();
-    
+
     Font text;
     /**
      * Creates new form YouWon
@@ -42,7 +42,7 @@ public class Results extends javax.swing.JFrame {
         this.setTitle("Ocaso Arkanoid");
         this.setResizable(false);
         this.setLocationRelativeTo(null);
-        
+
         
         baseResults.setImage("recursos/baseResult.png");
         baseResults.scaleImage(650, 400);
@@ -50,30 +50,30 @@ public class Results extends javax.swing.JFrame {
         baseResults.setOpaque(false);
         baseResults.setLayout(null);
         this.getContentPane().add(baseResults);
-        
+
         youLost.setImage("recursos/youLost.png");
         youLost.setBounds(190, 0, 280, 74);
         youLost.setOpaque(false);
         youLost.setLayout(null);
         baseResults.add(youLost);
         youLost.setVisible(false);
-        
+
         youWon.setImage("recursos/youWon.png");
         youWon.setBounds(190, 0, 280, 74);
         youWon.setOpaque(false);
         youWon.setLayout(null);
         baseResults.add(youWon);
         youWon.setVisible(false);
-        
+
         try {
             InputStream is = new BufferedInputStream(new FileInputStream("fonts/DSDIGI.TTF"));;
             text = Font.createFont(Font.TRUETYPE_FONT, is);
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
-        
+
         //scoreShow.setIcon(new ImageIcon("recursos/paneloscuro.png"));
-        scoreShow.setBounds(40,152,283, 73);
+        scoreShow.setBounds(40, 152, 283, 73);
         scoreShow.setFont(text.deriveFont(Font.PLAIN, 55));
         scoreShow.setForeground(Color.white);
         scoreShow.setHorizontalAlignment(SwingConstants.CENTER);
@@ -81,9 +81,9 @@ public class Results extends javax.swing.JFrame {
         scoreShow.setOpaque(false);
         scoreShow.setLayout(null);
         baseResults.add(scoreShow);
-        
+
         //timeShow.setIcon(new ImageIcon("recursos/paneloscuro.png"));
-        timeShow.setBounds(40,273,283, 73);
+        timeShow.setBounds(40, 273, 283, 73);
         timeShow.setFont(text.deriveFont(Font.PLAIN, 55));
         timeShow.setForeground(Color.white);
         timeShow.setHorizontalAlignment(SwingConstants.CENTER);
@@ -91,7 +91,7 @@ public class Results extends javax.swing.JFrame {
         timeShow.setOpaque(false);
         timeShow.setLayout(null);
         baseResults.add(timeShow);
-        
+
         replayButton.setIcon(new ImageIcon("recursos/replayButton.png"));
         replayButton.setRolloverIcon(new ImageIcon("recursos/replayButtonPressed.png"));
         replayButton.setBounds(410,95, 190, 84);
@@ -100,16 +100,16 @@ public class Results extends javax.swing.JFrame {
         replayButton.setOpaque(false);
         replayButton.setLayout(null);
         baseResults.add(replayButton);
-        
+
         homeButton.setIcon(new ImageIcon("recursos/homeWonButton.png"));
         homeButton.setRolloverIcon(new ImageIcon("recursos/homeWonButtonPressed.png"));
-        homeButton.setBounds(425,190, 153, 84);
+        homeButton.setBounds(425, 190, 153, 84);
         homeButton.setBorderPainted(false);
         homeButton.setContentAreaFilled(false);
         homeButton.setOpaque(false);
         homeButton.setLayout(null);
         baseResults.add(homeButton);
-        
+
         exitButton.setIcon(new ImageIcon("recursos/exitWonButton.png"));
         exitButton.setRolloverIcon(new ImageIcon("recursos/exitWonButtonPressed.png"));
         exitButton.setBounds(435,290, 134, 84);
@@ -118,7 +118,7 @@ public class Results extends javax.swing.JFrame {
         exitButton.setOpaque(false);
         exitButton.setLayout(null);
         baseResults.add(exitButton);
-       
+
     }
 
     /**
