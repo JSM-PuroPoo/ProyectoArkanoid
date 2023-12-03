@@ -43,6 +43,7 @@ public class PanelJuego extends PanelIMG implements Observer {
     private int puntaje;
     public Juego frame;
     private JLabel puntos = new JLabel();
+    private int vidas;
 
     private PanelIMG fondoOpaco = new PanelIMG();
     private PanelIMG panelPausa = new PanelIMG();
@@ -58,11 +59,13 @@ public class PanelJuego extends PanelIMG implements Observer {
     public static final int NORMAL = 8;
     public static final int SLOW = 10;
     public static final int FAST = 6;
+    private int velocidad;
 
     private Sonido cancion = new Sonido();
     private Configuraciones configuraciones;
     public boolean validarMusica = true;
     public boolean iniciarJuego;
+    boolean pelotasCargadas = false;
 
     public PanelJuego(Bloque bloques[], String rutaFondo, String rutaFJuego, String rutaMarco, Juego frame) {
         frame.setTitle("Ocaso Arkanoid");
@@ -235,6 +238,7 @@ public class PanelJuego extends PanelIMG implements Observer {
                         }
                     }
                 }
+
                 switch (keyCode) {
                     case 39:
                         raqueta.moverDerecha();
@@ -297,12 +301,22 @@ public class PanelJuego extends PanelIMG implements Observer {
             cancion.setCondicion(false);
             validarMusica = false;
         }
-
-        if (!iniciarJuego) {
-            for (int i = 0; i < configuraciones.getCantidadPelotas(); i++) {
-                agregarPelota(new Pelota(432, 525 - 60 * i, 25, 25, 0, 0, getGame()));
-            }
+        switch (configuraciones.getDificultad()) {
+            case 1:
+                velocidad = SLOW;
+                vidas = 5;
+                break;
+            case 2:
+                velocidad = NORMAL;
+                vidas = 3;
+                break;
+            case 3:
+                velocidad = FAST;
+                vidas = 1;
+                break;
         }
+
+        cargarPelotas();
 
     }
 
@@ -380,13 +394,22 @@ public class PanelJuego extends PanelIMG implements Observer {
         }
     }
 
+    public void cargarPelotas() {
+        if (!iniciarJuego && !pelotasCargadas) {
+            for (int i = 0; i < configuraciones.getCantidadPelotas(); i++) {
+                agregarPelota(new Pelota(432, 525 - 60 * i, 25, 25, 0, 0, getGame()));
+                pelotasCargadas = true;
+            }
+        }
+    }
+
     public void agregarPelota(Pelota pelota) {
         if (contPelotas < 50) {
+            pelota.setPanelJuego(this);
             pelota.setHilo(new Thread(pelota));
             pelota.getHilo().start();
             game.add(pelota);
-            pelota.setSpeed(SLOW);
-            pelota.setPanelJuego(this);
+            pelota.setSpeed(velocidad);
             pelotas[contPelotas++] = pelota;
         }
     }
@@ -399,6 +422,16 @@ public class PanelJuego extends PanelIMG implements Observer {
                 pelotas[i] = null;
                 ordenarArray(pelotas);
                 contPelotas--;
+                if (contPelotas == 0 && vidas > 0) {
+                    iniciarJuego = false;
+                    raqueta.setLocation(365, 555);
+                    cronometro.getCronometro().time.stop();
+                    pelotasCargadas = false;
+                    cargarPelotas();
+                    vidas--;
+                } else if (contPelotas == 0 && vidas == 0) {
+                    finDelJuego();
+                }
                 repaint();
                 break;
             }
@@ -495,9 +528,10 @@ public class PanelJuego extends PanelIMG implements Observer {
     public void reproducirCancion() {
         Random random = new Random();
         int indiceRandom = random.nextInt(11) + 1;
-        cancion.cargarSonido("sonidos/cancionJuego" + indiceRandom + ".wav");
-        cancion.reproducir(0);
-        //cancion.cambiarVolumen(0.5f);
+        if (cancion.getClip() == null) {
+            cancion.cargarSonido("sonidos/cancionJuego" + indiceRandom + ".wav");
+            cancion.reproducir(0);
+        }
     }
 
     public Configuraciones getConfiguraciones() {
@@ -514,6 +548,30 @@ public class PanelJuego extends PanelIMG implements Observer {
 
     public void setPuntaje(int puntaje) {
         this.puntaje = puntaje;
+    }
+
+    public int getVidas() {
+        return vidas;
+    }
+
+    public void setVidas(int vidas) {
+        this.vidas = vidas;
+    }
+
+    public void finDelJuego() {
+        cronometro.getCronometro().time.stop();
+        switch (configuraciones.getDificultad()) {
+            case 1:
+                puntaje += 500;
+                break;
+            case 2:
+                puntaje += 700;
+                break;
+            case 3:
+                puntaje += 1000;
+                break;
+        }
+        User user = new User(puntaje, cronometro.getCronometro());
     }
 
 }

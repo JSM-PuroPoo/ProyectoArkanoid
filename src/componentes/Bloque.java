@@ -17,13 +17,14 @@ public class Bloque extends PanelComponente {
         super(x, y, width, height, vX, vY, contenedor);
         this.vida = vida;
         this.especial = false;
-        puntuacion = 100;
+        puntuacion = 100 * vida;
         asignarImagen();
     }
 
     public Bloque(boolean especial, int x, int y, int width, int height, int vX, int vY, JPanel contenedor) {
         this(1, x, y, width, height, vX, vY, contenedor);
         this.especial = especial;
+        puntuacion = 500;
         setImage("recursos/bloqueRosado.png");
         scaleImage(getWidth(), getHeight());
     }

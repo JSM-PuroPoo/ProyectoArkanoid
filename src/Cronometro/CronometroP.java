@@ -70,4 +70,22 @@ public class CronometroP {
         String accurateTime = (hour <= 9 ? "0" : "") + hour + ":" + (min <= 9 ? "0" : "") + min + ":" + (seg <= 9 ? "0" : "") + seg + ":" + ((miliseg / 10) <= 9 ? "0" : "") + (miliseg / 10);
         this.label.setText(accurateTime);
     }
+
+    public int getMiliseg() {
+        return miliseg;
+    }
+
+    public int getSeg() {
+        return seg;
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public int getHour() {
+        return hour;
+    }
+    
+    
 }

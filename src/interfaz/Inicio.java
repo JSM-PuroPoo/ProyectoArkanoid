@@ -31,7 +31,6 @@ public class Inicio extends javax.swing.JFrame implements Observer {
     private JButton playButton = new JButton();
     private JButton chartsButton = new JButton();
     private JButton settingsButton = new JButton();
-    private JButton creditsButton = new JButton();
     private JButton exitButton = new JButton();
     private JButton leftarrowButton = new JButton();
     private JButton rightarrowButton = new JButton();
@@ -41,7 +40,7 @@ public class Inicio extends javax.swing.JFrame implements Observer {
 
     private Configuraciones configuraciones;
     private Sonido musica = new Sonido();
-    private Sonido efecto;
+    private Sonido efecto1 = new Sonido(), efecto2 = new Sonido();
     int indice = 1;
     public static final int MAX_INDICE = 3;
 
@@ -61,7 +60,7 @@ public class Inicio extends javax.swing.JFrame implements Observer {
         MouseAdapter mouse = new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-
+                efecto1.reproducir(0);
             }
         };
         this.setTitle("Ocaso Arkanoid");
@@ -95,7 +94,7 @@ public class Inicio extends javax.swing.JFrame implements Observer {
 
         playButton.setIcon(new ImageIcon("recursos/PlayButton.png"));
         playButton.setRolloverIcon(new ImageIcon("recursos/PlayButtonPressed.png"));
-        playButton.setBounds(111, 220, 165, 97);
+        playButton.setBounds(111, 220 + 25, 165, 97);
         playButton.setBorderPainted(false);
         playButton.setContentAreaFilled(false);
         playButton.setOpaque(false);
@@ -112,7 +111,7 @@ public class Inicio extends javax.swing.JFrame implements Observer {
 
         chartsButton.setIcon(new ImageIcon("recursos/ChartsButton.png"));
         chartsButton.setRolloverIcon(new ImageIcon("recursos/ChartsButtonPressed.png"));
-        chartsButton.setBounds(110, 300, 165, 68);
+        chartsButton.setBounds(110, 300 + 40, 165, 68);
         chartsButton.setBorderPainted(false);
         chartsButton.setContentAreaFilled(false);
         chartsButton.setOpaque(false);
@@ -123,7 +122,7 @@ public class Inicio extends javax.swing.JFrame implements Observer {
 
         settingsButton.setIcon(new ImageIcon("recursos/SettingsButton.png"));
         settingsButton.setRolloverIcon(new ImageIcon("recursos/SettingsButtonPressed.png"));
-        settingsButton.setBounds(105, 380, 177, 65);
+        settingsButton.setBounds(105, 380 + 40, 177, 65);
         settingsButton.setBorderPainted(false);
         settingsButton.setContentAreaFilled(false);
         settingsButton.setOpaque(false);
@@ -138,20 +137,9 @@ public class Inicio extends javax.swing.JFrame implements Observer {
 
         settingsButton.addMouseListener(mouse);
 
-        creditsButton.setIcon(new ImageIcon("recursos/CreditsButton.png"));
-        creditsButton.setRolloverIcon(new ImageIcon("recursos/CreditsButtonPressed.png"));
-        creditsButton.setBounds(112, 460, 165, 67);
-        creditsButton.setBorderPainted(false);
-        creditsButton.setContentAreaFilled(false);
-        creditsButton.setOpaque(false);
-        creditsButton.setLayout(null);
-        tableInicio.add(creditsButton);
-
-        creditsButton.addMouseListener(mouse);
-
         exitButton.setIcon(new ImageIcon("recursos/ExitButton.png"));
         exitButton.setRolloverIcon(new ImageIcon("recursos/ExitButtonPressed.png"));
-        exitButton.setBounds(135, 540, 110, 69);
+        exitButton.setBounds(135, 540 - 40, 110, 69);
         exitButton.setBorderPainted(false);
         exitButton.setContentAreaFilled(false);
         exitButton.setOpaque(false);
@@ -159,6 +147,12 @@ public class Inicio extends javax.swing.JFrame implements Observer {
         tableInicio.add(exitButton);
 
         exitButton.addMouseListener(mouse);
+
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeButtonActionPerformed(evt);
+            }
+        });
 
         leftarrowButton.setIcon(new ImageIcon("recursos/leftarrowButton.png"));
         leftarrowButton.setRolloverIcon(new ImageIcon("recursos/leftarrowButtonPressed.png"));
@@ -236,6 +230,7 @@ public class Inicio extends javax.swing.JFrame implements Observer {
         }
         ruta += indice + ".png";
         slidehowtoplay.setImage(ruta);
+        efecto2.reproducir(0);
     }
 
     private void leftarrowButtonActionPerformed(ActionEvent evt) {
@@ -247,6 +242,7 @@ public class Inicio extends javax.swing.JFrame implements Observer {
         }
         ruta += indice + ".png";
         slidehowtoplay.setImage(ruta);
+        efecto2.reproducir(0);
     }
 
     private void settingsButtonActionPerformed(ActionEvent evt) {
@@ -261,17 +257,21 @@ public class Inicio extends javax.swing.JFrame implements Observer {
         });
         settings.setJuego(false);
         settings.setVisible(true);
+        efecto2.reproducir(0);
     }
 
     private void closeButtonActionPerformed(ActionEvent evt) {
+        efecto2.reproducir(0);
         System.exit(0);
     }
 
     private void minimizeButtonActionPerformed(ActionEvent evt) {
+        efecto2.reproducir(0);
         this.setExtendedState(1);
     }
 
     private void playButtonnActionPerformed(ActionEvent evt) {
+        efecto2.reproducir(0);
         Juego juego = new Juego(configuraciones);
         juego.setVisible(true);
         musica.detener();
@@ -341,12 +341,22 @@ public class Inicio extends javax.swing.JFrame implements Observer {
         if (configuraciones.isMusica()) {
             musica.setCondicion(true);
             Random random = new Random();
-            int indiceRandom = random.nextInt(11) + 1;
-            musica.cargarSonido("sonidos/cancionJuego" + indiceRandom + ".wav");
+            int indiceRandom = random.nextInt(9) + 1;
+            musica.cargarSonido("sonidos/musicaInicio" + indiceRandom + ".wav");
             musica.reproducir(0);
             musica.cambiarVolumen(0.5f);
         } else {
             musica.setCondicion(false);
+        }
+
+        if (configuraciones.isSonido()) {
+            efecto1.setCondicion(true);
+            efecto1.cargarSonido("sonidos/roller.wav");
+            efecto2.setCondicion(true);
+            efecto2.cargarSonido("sonidos/click.wav");
+        } else {
+            efecto1.setCondicion(false);
+            efecto2.setCondicion(false);
         }
     }
 
