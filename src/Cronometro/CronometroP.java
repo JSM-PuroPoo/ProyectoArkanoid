@@ -7,10 +7,10 @@ package Cronometro;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-
 /**
- *
- * @author nalis
+ * @author Juan Felipe Eraso Navarro 0222220038
+ * @author Melissa Andrea Pizarro Duarte 0222220004
+ * @author Sofhia Alejandra Prasca Teheran 0222220014
  */
 public class CronometroP {
 
@@ -65,6 +65,8 @@ public class CronometroP {
             TimeTags();
         }
     };
+    
+    
 
     void TimeTags() {
         String accurateTime = (hour <= 9 ? "0" : "") + hour + ":" + (min <= 9 ? "0" : "") + min + ":" + (seg <= 9 ? "0" : "") + seg + ":" + ((miliseg / 10) <= 9 ? "0" : "") + (miliseg / 10);

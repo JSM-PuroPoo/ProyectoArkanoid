@@ -1,13 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package interfaz;
 
 import interfaz.paneles.PanelIMG;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
-
+/**
+ * @author Juan Felipe Eraso Navarro 0222220038
+ * @author Melissa Andrea Pizarro Duarte 0222220004
+ * @author Sofhia Alejandra Prasca Teheran 0222220014
+ */
 public class Warning extends javax.swing.JFrame {
 
     private PanelIMG WarningImage = new PanelIMG();

@@ -1,22 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package interfaz;
 
 import Game.PanelJuego;
-import Sonido.Sonido;
 import componentes.Bloque;
-import componentes.Pelota;
 import configuraciones.Configuraciones;
-import configuraciones.Observer;
-import java.awt.Image;
 import java.util.Random;
-import javax.swing.ImageIcon;
-
 /**
- *
- * @author Juan Felipe
+ * @author Juan Felipe Eraso Navarro 0222220038
+ * @author Melissa Andrea Pizarro Duarte 0222220004
+ * @author Sofhia Alejandra Prasca Teheran 0222220014
  */
 public class Juego extends javax.swing.JFrame {
 

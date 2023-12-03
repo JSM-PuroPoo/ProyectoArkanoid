@@ -1,8 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-package interfaz;
+/**
+ * @author Juan Felipe Eraso Navarro 0222220038
+ * @author Melissa Andrea Pizarro Duarte 0222220004
+ * @author Sofhia Alejandra Prasca Teheran 0222220014
+ */package interfaz;
 
 import interfaz.paneles.*;
 import configuraciones.*;
@@ -12,10 +12,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
 import javax.swing.*;
-
 /**
- *
- * @author nalis
+ * @author Juan Felipe Eraso Navarro 0222220038
+ * @author Melissa Andrea Pizarro Duarte 0222220004
+ * @author Sofhia Alejandra Prasca Teheran 0222220014
  */
 public class Settings extends javax.swing.JFrame implements Observer {
 

@@ -2,31 +2,28 @@ package Game;
 
 import Cronometro.PanelCronometro;
 import Sonido.Sonido;
-import componentes.Bloque;
-import componentes.PanelComponente;
-import componentes.Pelota;
-import componentes.Raqueta;
-import configuraciones.Configuraciones;
-import configuraciones.Observer;
+import archivos.ArchivoJuego;
+import componentes.*;
+import configuraciones.*;
 import interfaz.Inicio;
 import interfaz.Juego;
+import interfaz.NewRecord;
 import interfaz.Results;
 import interfaz.Settings;
 import interfaz.paneles.PanelIMG;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Random;
 import javax.swing.*;
 
+/**
+ * @author Juan Felipe Eraso Navarro 0222220038
+ * @author Melissa Andrea Pizarro Duarte 0222220004
+ * @author Sofhia Alejandra Prasca Teheran 0222220014
+ */
 public class PanelJuego extends PanelIMG implements Observer {
 
     private JButton closeButton = new JButton();
@@ -212,9 +209,6 @@ public class PanelJuego extends PanelIMG implements Observer {
         puntos.setForeground(Color.white);
         this.add(puntos);
 
-        
-        
-        
         this.frame.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -226,8 +220,7 @@ public class PanelJuego extends PanelIMG implements Observer {
                         if (i % 2 == 0) {
                             pelotas[i].setvX(2);
                             pelotas[i].setvY(-2);
-                        }
-                        else{
+                        } else {
                             pelotas[i].setvX(-2);
                             pelotas[i].setvY(2);
                         }
@@ -620,10 +613,28 @@ public class PanelJuego extends PanelIMG implements Observer {
         if (puntaje < 0) {
             puntaje = 0;
         }
-        User user = new User(puntaje, cronometro.getCronometro());
         fondoOpaco.setVisible(true);
         panelPausa.setVisible(false);
         pausado = true;
+        User user = new User(puntaje, cronometro.getCronometro().toString());
+
+        if (ArchivoJuego.isNewRecord(user) && puntaje > 0) {
+            NewRecord record = new NewRecord();
+            record.setVisible(true);
+            record.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    user.setName(record.nameField.getText());
+                    mostrarResultado(gano);
+                    ArchivoJuego.escribirUsuario(user);
+                }
+            });
+        } else {
+            mostrarResultado(gano);
+        }
+    }
+
+    public void mostrarResultado(boolean gano) {
         Results resultado = new Results();
         resultado.timeShow.setText(cronometro.getCronometro().toString());
         resultado.scoreShow.setText(puntaje + "");
@@ -653,5 +664,4 @@ public class PanelJuego extends PanelIMG implements Observer {
             }
         });
     }
-//hola que hace
 }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package interfaz;
 
 import Sonido.Sonido;
@@ -17,10 +13,10 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
-
 /**
- *
- * @author Juan Felipe
+ * @author Juan Felipe Eraso Navarro 0222220038
+ * @author Melissa Andrea Pizarro Duarte 0222220004
+ * @author Sofhia Alejandra Prasca Teheran 0222220014
  */
 public class Inicio extends javax.swing.JFrame implements Observer {
 
@@ -103,7 +99,7 @@ public class Inicio extends javax.swing.JFrame implements Observer {
 
         playButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                playButtonnActionPerformed(evt);
+                playButtonActionPerformed(evt);
             }
         });
 
@@ -270,7 +266,7 @@ public class Inicio extends javax.swing.JFrame implements Observer {
         this.setExtendedState(1);
     }
 
-    private void playButtonnActionPerformed(ActionEvent evt) {
+    private void playButtonActionPerformed(ActionEvent evt) {
         efecto2.reproducir(0);
         Juego juego = new Juego(configuraciones);
         juego.setVisible(true);

@@ -4,7 +4,11 @@ import interfaz.paneles.PanelIMG;
 import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.util.Objects;
-
+/**
+ * @author Juan Felipe Eraso Navarro 0222220038
+ * @author Melissa Andrea Pizarro Duarte 0222220004
+ * @author Sofhia Alejandra Prasca Teheran 0222220014
+ */
 public class PanelComponente extends PanelIMG {
 
     protected double vX;

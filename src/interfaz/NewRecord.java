@@ -1,33 +1,36 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package interfaz;
 
 import interfaz.paneles.PanelIMG;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.event.ActionEvent;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.regex.Pattern;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 /**
- *
- * @author nalis
+ * @author Juan Felipe Eraso Navarro 0222220038
+ * @author Melissa Andrea Pizarro Duarte 0222220004
+ * @author Sofhia Alejandra Prasca Teheran 0222220014
  */
 public class NewRecord extends javax.swing.JFrame {
+
     private PanelIMG newRecordP = new PanelIMG();
-    private JTextField nameField = new JTextField();
+    public JTextField nameField = new JTextField();
     private JButton acceptButton = new JButton();
+    private JLabel error = new JLabel();
     //PanelIMG k = new PanelIMG();    
     Font text;
+
     /**
      * Creates new form NewRecord
      */
@@ -37,47 +40,70 @@ public class NewRecord extends javax.swing.JFrame {
         setIconImage(new ImageIcon("recursos/logo.png").getImage());
         this.setTitle("Ocaso Arkanoid");
         this.setResizable(false);
-        this.setLocationRelativeTo(null); 
+        this.setLocationRelativeTo(null);
         newRecordP.setImage("recursos/newRecordPanel.png");
-        newRecordP.setBounds(0, 0,430,400);
+        newRecordP.setBounds(0, 0, 430, 400);
         newRecordP.setOpaque(true);
         newRecordP.setLayout(null);
         this.getContentPane().add(newRecordP);
-        
+
 //        k.setImage("recursos/panelOscuro.png");
 //        k.setBounds(87, 213, 255, 71);
 //        k.setOpaque(false);
 //        k.setLayout(null);
 //        newRecordP.add(k);
-        
         try {
-            InputStream is = new BufferedInputStream(new FileInputStream("fonts/OCRA.TTF"));;
+            InputStream is = new BufferedInputStream(new FileInputStream("fonts/OCRA.TTF"));
             text = Font.createFont(Font.TRUETYPE_FONT, is);
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
-        
+
         nameField.setBounds(87, 213, 255, 71);
         nameField.setFont(text.deriveFont(Font.PLAIN, 25));
         nameField.setBorder(BorderFactory.createEmptyBorder());
         nameField.setForeground(Color.white);
-        nameField.setBackground(new Color(102, 0,172));
+        nameField.setBackground(new Color(102, 0, 172));
         nameField.setOpaque(false);
         nameField.setLayout(null);
-        nameField.setHorizontalAlignment(SwingConstants.CENTER); 
+        nameField.setHorizontalAlignment(SwingConstants.CENTER);
         newRecordP.add(nameField);
-        
-        
+
         acceptButton.setIcon(new ImageIcon("recursos/acceptRecordButton.png"));
         acceptButton.setRolloverIcon(new ImageIcon("recursos/acceptRecordButtonPressed.png"));
-        acceptButton.setBounds(105,295, 220, 94);
+        acceptButton.setBounds(105, 310, 220, 94);
         acceptButton.setBorderPainted(false);
         acceptButton.setContentAreaFilled(false);
         acceptButton.setOpaque(false);
         acceptButton.setLayout(null);
-        newRecordP.add(acceptButton);        
-        
-        
+        newRecordP.add(acceptButton);
+
+        acceptButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                acceptButtonActionPerformed(evt);
+            }
+        });
+
+        error.setBounds(0, 200, 430, 220);
+        error.setFont(text.deriveFont(Font.PLAIN, 15));
+        error.setForeground(Color.red);
+        error.setHorizontalAlignment(SwingConstants.CENTER);
+        error.setVerticalAlignment(SwingConstants.CENTER);
+        error.setOpaque(false);
+        error.setLayout(null);
+        newRecordP.add(error);
+    }
+
+    private void acceptButtonActionPerformed(ActionEvent evt) {
+        String texto = nameField.getText();
+        if (texto.length() < 1 || texto.length() > 5) {
+            error.setText("<html>Valid names require at least one<br>letter and five letters maximum</html>");
+        } else if (!Pattern.matches("[a-zA-Z]+", texto)) {
+            error.setText("<html>Special characters or numbers are not allowed</html>");
+        } else {
+            error.setText("");
+            dispose();
+        }
     }
 
     /**

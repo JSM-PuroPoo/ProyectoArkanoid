@@ -1,30 +1,30 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Game;
 
 import Cronometro.CronometroP;
+import archivos.ArchivoJuego;
 
 /**
- *
- * @author nalis
+ * @author Juan Felipe Eraso Navarro 0222220038
+ * @author Melissa Andrea Pizarro Duarte 0222220004
+ * @author Sofhia Alejandra Prasca Teheran 0222220014
  */
 public class User {
 
     private String name;
     private int ranking;
     private long score;
-    CronometroP gmTime;
+    String gmTime;
 
-    public User(long score, CronometroP gmTime) {
+    public User(long score, String gmTime) {
         this.score = score;
         this.gmTime = gmTime;
     }
 
-    public User(String name, long score, CronometroP gmTime) {
-        this(score, gmTime);
+    public User(int ranking, String name, long score, String gmTime) {
         this.name = name;
+        this.ranking = ranking;
+        this.score = score;
+        this.gmTime = gmTime;
     }
 
     public String getName() {
@@ -35,7 +35,7 @@ public class User {
         return score;
     }
 
-    public CronometroP getGmTime() {
+    public String getGmTime() {
         return gmTime;
     }
 
@@ -53,5 +53,10 @@ public class User {
 
     public void calcularRanking() {
 
+    }
+
+    public boolean isNewRecord() {
+
+        return false;
     }
 }
