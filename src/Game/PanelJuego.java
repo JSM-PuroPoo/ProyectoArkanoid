@@ -653,5 +653,5 @@ public class PanelJuego extends PanelIMG implements Observer {
             }
         });
     }
-
+//hola que hace
 }
