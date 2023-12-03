@@ -26,7 +26,7 @@ public class NewRecord extends javax.swing.JFrame {
     private PanelIMG newRecordP = new PanelIMG();
     private JTextField nameField = new JTextField();
     private JButton acceptButton = new JButton();
-    PanelIMG k = new PanelIMG();    
+    //PanelIMG k = new PanelIMG();    
     Font text;
     /**
      * Creates new form NewRecord
