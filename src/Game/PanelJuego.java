@@ -10,6 +10,7 @@ import configuraciones.Configuraciones;
 import configuraciones.Observer;
 import interfaz.Inicio;
 import interfaz.Juego;
+import interfaz.Results;
 import interfaz.Settings;
 import interfaz.paneles.PanelIMG;
 import java.awt.Color;
@@ -44,6 +45,8 @@ public class PanelJuego extends PanelIMG implements Observer {
     public Juego frame;
     private JLabel puntos = new JLabel();
     private int vidas;
+    private PanelIMG panelVidas = new PanelIMG();
+    private JLabel labelVidas = new JLabel();
 
     private PanelIMG fondoOpaco = new PanelIMG();
     private PanelIMG panelPausa = new PanelIMG();
@@ -217,8 +220,14 @@ public class PanelJuego extends PanelIMG implements Observer {
                     iniciarJuego = true;
                     cronometro.getCronometro().time.start();
                     for (int i = 0; i < contPelotas; i++) {
-                        pelotas[i].setvX(-2);
-                        pelotas[i].setvY(-2);
+                        if (i % 2 == 0) {
+                            pelotas[i].setvX(2);
+                            pelotas[i].setvY(-2);
+                        }
+                        else{
+                            pelotas[i].setvX(-2);
+                            pelotas[i].setvY(2);
+                        }
                     }
                 }
                 if (contPelotas > 0) {
@@ -285,6 +294,19 @@ public class PanelJuego extends PanelIMG implements Observer {
                 minimizeButtonActionPerformed(evt, frame);
             }
         });
+
+        panelVidas.setImage("recursos/vidas.png");
+        panelVidas.setBounds(930, 430 + 100, 100, 100);
+        panelVidas.scaleImage(100, 100);
+        panelVidas.setOpaque(false);
+        panelVidas.setLayout(null);
+        this.add(panelVidas);
+
+        labelVidas.setBounds(930 + 100 + 20, 430 + 100, 100, 100);
+        labelVidas.setText("0");
+        labelVidas.setFont(cronometro.getFont().deriveFont(Font.PLAIN, 80));
+        labelVidas.setForeground(Color.white);
+        this.add(labelVidas);
     }
 
     @Override
@@ -315,6 +337,7 @@ public class PanelJuego extends PanelIMG implements Observer {
                 vidas = 1;
                 break;
         }
+        labelVidas.setText(vidas + "");
 
         cargarPelotas();
 
@@ -326,7 +349,9 @@ public class PanelJuego extends PanelIMG implements Observer {
             pausa.setRolloverIcon(new ImageIcon("recursos/PauseButtonRollover.png"));
             frame.requestFocus();
             pausado = false;
-            cronometro.getCronometro().time.start();
+            if (iniciarJuego) {
+                cronometro.getCronometro().time.start();
+            }
             fondoOpaco.setVisible(false);
             for (int i = 0; i < contPelotas; i++) {
                 pelotas[i].cambiarEstadoPausa();
@@ -429,8 +454,9 @@ public class PanelJuego extends PanelIMG implements Observer {
                     pelotasCargadas = false;
                     cargarPelotas();
                     vidas--;
+                    labelVidas.setText(vidas + "");
                 } else if (contPelotas == 0 && vidas == 0) {
-                    finDelJuego();
+                    finDelJuego(false);
                 }
                 repaint();
                 break;
@@ -450,6 +476,10 @@ public class PanelJuego extends PanelIMG implements Observer {
                 bloques[i] = null;
                 ordenarArray(bloques);
                 contBloques--;
+                if (contBloques == 0) {
+                    puntaje += 1000;
+                    finDelJuego(true);
+                }
                 break;
             }
         }
@@ -558,7 +588,7 @@ public class PanelJuego extends PanelIMG implements Observer {
         this.vidas = vidas;
     }
 
-    public void finDelJuego() {
+    public void finDelJuego(boolean gano) {
         cronometro.getCronometro().time.stop();
         switch (configuraciones.getDificultad()) {
             case 1:
@@ -571,7 +601,54 @@ public class PanelJuego extends PanelIMG implements Observer {
                 puntaje += 1000;
                 break;
         }
+
+        if (cronometro.getCronometro().getHour() != 0) {
+            puntaje -= (cronometro.getCronometro().getHour() + 1) * 5;
+        }
+        if (cronometro.getCronometro().getMin() != 0) {
+            puntaje -= (cronometro.getCronometro().getMin() + 1) * 4;
+        }
+        if (cronometro.getCronometro().getSeg() != 0) {
+            puntaje -= (cronometro.getCronometro().getSeg() + 1) * 3;
+        }
+        if (cronometro.getCronometro().getMiliseg() != 0) {
+            puntaje -= (cronometro.getCronometro().getMiliseg() + 1) * 2;
+        }
+        if (puntaje < 0) {
+            puntaje = 0;
+        }
         User user = new User(puntaje, cronometro.getCronometro());
+        fondoOpaco.setVisible(true);
+        panelPausa.setVisible(false);
+        pausado = true;
+        Results resultado = new Results();
+        resultado.timeShow.setText(cronometro.getCronometro().toString());
+        resultado.scoreShow.setText(puntaje + "");
+        resultado.setVisible(true);
+        if (gano) {
+            resultado.youWon.setVisible(true);
+        } else {
+            resultado.youLost.setVisible(true);
+        }
+
+        resultado.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                frame.dispose();
+                cancion.cambiarVolumen(0);
+                switch (resultado.decision) {
+                    case 0:
+                        new Juego(configuraciones).setVisible(true);
+                        break;
+                    case 1:
+                        new Inicio(configuraciones).setVisible(true);
+                        break;
+                    case 2:
+                        System.exit(0);
+                        break;
+                }
+            }
+        });
     }
 
 }

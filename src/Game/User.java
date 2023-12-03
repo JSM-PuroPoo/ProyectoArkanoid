@@ -20,18 +20,6 @@ public class User {
     public User(long score, CronometroP gmTime) {
         this.score = score;
         this.gmTime = gmTime;
-        if (gmTime.getHour() != 0) {
-            this.score -= (gmTime.getHour() + 1) * 5;
-        }
-        if (gmTime.getMin() != 0) {
-            this.score -= (gmTime.getMin() + 1) * 4;
-        }
-        if (gmTime.getSeg() != 0) {
-            this.score -= (gmTime.getSeg() + 1) * 3;
-        }
-        if (gmTime.getMiliseg() != 0) {
-            this.score -= (gmTime.getMiliseg() + 1) * 2;
-        }
     }
 
     public User(String name, long score, CronometroP gmTime) {

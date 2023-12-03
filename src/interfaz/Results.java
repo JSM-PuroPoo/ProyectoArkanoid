@@ -8,6 +8,7 @@ import interfaz.paneles.PanelIMG;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.event.ActionEvent;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -22,16 +23,19 @@ import javax.swing.SwingConstants;
  * @author nalis
  */
 public class Results extends javax.swing.JFrame {
+
     private PanelIMG baseResults = new PanelIMG();
-    private PanelIMG youWon = new PanelIMG();
-    private PanelIMG youLost = new PanelIMG();
-    private JLabel scoreShow = new JLabel();
-    private JLabel timeShow = new JLabel();
+    public PanelIMG youWon = new PanelIMG();
+    public PanelIMG youLost = new PanelIMG();
+    public JLabel scoreShow = new JLabel();
+    public JLabel timeShow = new JLabel();
     private JButton replayButton = new JButton();
-    private JButton  homeButton = new JButton();
+    private JButton homeButton = new JButton();
     private JButton exitButton = new JButton();
+    public int decision;
 
     Font text;
+
     /**
      * Creates new form YouWon
      */
@@ -43,10 +47,9 @@ public class Results extends javax.swing.JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
 
-        
         baseResults.setImage("recursos/baseResult.png");
         baseResults.scaleImage(650, 400);
-        baseResults.setBounds(0, 0,650, 400);
+        baseResults.setBounds(0, 0, 650, 400);
         baseResults.setOpaque(false);
         baseResults.setLayout(null);
         this.getContentPane().add(baseResults);
@@ -94,12 +97,18 @@ public class Results extends javax.swing.JFrame {
 
         replayButton.setIcon(new ImageIcon("recursos/replayButton.png"));
         replayButton.setRolloverIcon(new ImageIcon("recursos/replayButtonPressed.png"));
-        replayButton.setBounds(410,95, 190, 84);
+        replayButton.setBounds(410, 95, 190, 84);
         replayButton.setBorderPainted(false);
         replayButton.setContentAreaFilled(false);
         replayButton.setOpaque(false);
         replayButton.setLayout(null);
         baseResults.add(replayButton);
+
+        replayButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                replayButtonActionPerformed(evt);
+            }
+        });
 
         homeButton.setIcon(new ImageIcon("recursos/homeWonButton.png"));
         homeButton.setRolloverIcon(new ImageIcon("recursos/homeWonButtonPressed.png"));
@@ -110,15 +119,42 @@ public class Results extends javax.swing.JFrame {
         homeButton.setLayout(null);
         baseResults.add(homeButton);
 
+        homeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                homeButtonActionPerformed(evt);
+            }
+        });
+
         exitButton.setIcon(new ImageIcon("recursos/exitWonButton.png"));
         exitButton.setRolloverIcon(new ImageIcon("recursos/exitWonButtonPressed.png"));
-        exitButton.setBounds(435,290, 134, 84);
+        exitButton.setBounds(435, 290, 134, 84);
         exitButton.setBorderPainted(false);
         exitButton.setContentAreaFilled(false);
         exitButton.setOpaque(false);
         exitButton.setLayout(null);
         baseResults.add(exitButton);
 
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
+            }
+        });
+
+    }
+
+    private void replayButtonActionPerformed(ActionEvent evt) {
+        decision = 0;
+        this.dispose();
+    }
+
+    private void homeButtonActionPerformed(ActionEvent evt) {
+        decision = 1;
+        this.dispose();
+    }
+
+    private void exitButtonActionPerformed(ActionEvent evt) {
+        decision = 2;
+        this.dispose();
     }
 
     /**

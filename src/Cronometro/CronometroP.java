@@ -71,6 +71,11 @@ public class CronometroP {
         this.label.setText(accurateTime);
     }
 
+    @Override
+    public String toString() {
+        return (hour <= 9 ? "0" : "") + hour + ":" + (min <= 9 ? "0" : "") + min + ":" + (seg <= 9 ? "0" : "") + seg + ":" + ((miliseg / 10) <= 9 ? "0" : "") + (miliseg / 10);
+    }
+
     public int getMiliseg() {
         return miliseg;
     }
@@ -86,6 +91,5 @@ public class CronometroP {
     public int getHour() {
         return hour;
     }
-    
-    
+
 }
