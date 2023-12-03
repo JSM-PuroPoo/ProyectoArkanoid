@@ -212,6 +212,9 @@ public class PanelJuego extends PanelIMG implements Observer {
         puntos.setForeground(Color.white);
         this.add(puntos);
 
+        
+        
+        
         this.frame.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
