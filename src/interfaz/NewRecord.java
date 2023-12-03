@@ -44,7 +44,6 @@ public class NewRecord extends javax.swing.JFrame {
         newRecordP.setLayout(null);
         this.getContentPane().add(newRecordP);
         
-        
 //        k.setImage("recursos/panelOscuro.png");
 //        k.setBounds(87, 213, 255, 71);
 //        k.setOpaque(false);
