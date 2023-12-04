@@ -115,6 +115,12 @@ public class Inicio extends javax.swing.JFrame implements Observer {
         tableInicio.add(chartsButton);
 
         chartsButton.addMouseListener(mouse);
+        
+        chartsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chartsButtonActionPerformed(evt);
+            }
+        });
 
         settingsButton.setIcon(new ImageIcon("recursos/SettingsButton.png"));
         settingsButton.setRolloverIcon(new ImageIcon("recursos/SettingsButtonPressed.png"));
@@ -256,6 +262,10 @@ public class Inicio extends javax.swing.JFrame implements Observer {
         efecto2.reproducir(0);
     }
 
+    private void chartsButtonActionPerformed(ActionEvent evt) {
+        dispose();
+        new Charts(configuraciones).setVisible(true);
+    }
     private void closeButtonActionPerformed(ActionEvent evt) {
         efecto2.reproducir(0);
         System.exit(0);

@@ -4,14 +4,9 @@
  */
 package Cronometro;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import javax.swing.Timer;
+import java.awt.*;
+import java.io.*;
+import javax.swing.*;
 /**
  * @author Juan Felipe Eraso Navarro 0222220038
  * @author Melissa Andrea Pizarro Duarte 0222220004

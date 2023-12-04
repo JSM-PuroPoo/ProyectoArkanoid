@@ -4,6 +4,7 @@ import Game.PanelJuego;
 import Sonido.Sonido;
 import java.awt.Rectangle;
 import javax.swing.JPanel;
+
 /**
  * @author Juan Felipe Eraso Navarro 0222220038
  * @author Melissa Andrea Pizarro Duarte 0222220004
@@ -41,28 +42,6 @@ public class Pelota extends PanelComponente implements Runnable {
         return false;
     }
 
-    /*public boolean colisionPelota(Pelota pelota) {
-        Rectangle pelotaBounds = this.getBounds();
-        Rectangle otraPelotaBounds = pelota.getBounds();
-
-        if (this != pelota) {
-            if (pelotaBounds.intersects(otraPelotaBounds)) {
-                double overlapX = Math.min(Math.abs(pelotaBounds.getMaxX() - otraPelotaBounds.getMinX()), Math.abs(pelotaBounds.getMinX() - otraPelotaBounds.getMaxX()));
-                double overlapY = Math.min(Math.abs(pelotaBounds.getMaxY() - otraPelotaBounds.getMinY()), Math.abs(pelotaBounds.getMinY() - otraPelotaBounds.getMaxY()));
-
-                if (overlapX < overlapY) {
-                    setvX(-getvX());
-                    pelota.setvX(-pelota.getvX());
-                } else {
-                    setvY(-getvY());
-                    pelota.setvY(-pelota.getvY());
-                }
-                return true;
-            }
-        }
-        return false;
-    }
-     */
     public boolean colisionPelota(Pelota pelota) {
         Rectangle pelotaBounds = this.getBounds();
         Rectangle otraPelotaBounds = pelota.getBounds();

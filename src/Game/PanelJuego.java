@@ -5,12 +5,8 @@ import Sonido.Sonido;
 import archivos.ArchivoJuego;
 import componentes.*;
 import configuraciones.*;
-import interfaz.Inicio;
-import interfaz.Juego;
-import interfaz.NewRecord;
-import interfaz.Results;
-import interfaz.Settings;
-import interfaz.paneles.PanelIMG;
+import interfaz.*;
+import interfaz.paneles.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.DecimalFormat;
@@ -616,9 +612,12 @@ public class PanelJuego extends PanelIMG implements Observer {
         fondoOpaco.setVisible(true);
         panelPausa.setVisible(false);
         pausado = true;
+        if(contBloques == bloques.length){
+            puntaje = 0;
+        }
         User user = new User(puntaje, cronometro.getCronometro().toString());
 
-        if (ArchivoJuego.isNewRecord(user) && puntaje > 0) {
+        if (puntaje > 0 && ArchivoJuego.isNewRecord(user)) {
             NewRecord record = new NewRecord();
             record.setVisible(true);
             record.addWindowListener(new WindowAdapter() {

@@ -19,11 +19,7 @@ public class ArchivoJuego {
     public static void crearArchivo(String nombreArchivo) {
         try {
             File archivo = new File(nombreArchivo);
-            if (archivo.createNewFile()) {
-                System.out.println("El archivo se ha creado exitosamente.");
-            } else {
-                System.out.println("El archivo ya existe.");
-            }
+            archivo.createNewFile();
         } catch (IOException e) {
             System.err.println("Ocurrió un error al crear el archivo: " + e.getMessage());
         }
@@ -40,6 +36,7 @@ public class ArchivoJuego {
                 String datos[] = linea.split(";");
                 users[posicion] = new User(Integer.parseInt(datos[0]), datos[1], Long.parseLong(datos[2]), datos[3]);
                 posicion++;
+
             }
             bufferedReader.close();
             ordenarArray(users);
@@ -49,16 +46,23 @@ public class ArchivoJuego {
     }
 
     private static void ordenarArray(User users[]) {
-        Arrays.sort(users, Comparator
-                .<User, Long>comparing(user -> user != null ? user.getScore() : null, Comparator.nullsLast(Comparator.naturalOrder()))
-                .reversed());
+        int n = users.length;
 
-        // Actualizar los rankings
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                User current = users[j];
+                User next = users[j + 1];
+
+                if (current != null && next != null && current.getScore() < next.getScore() || current == null && next != null) {
+                    users[j] = next;
+                    users[j + 1] = current;
+                }
+            }
+        }
     }
 
     public static void arrayToArchivo() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ruta, false))) {
-            // Escribimos cada usuario en una línea del archivo
             int rank = 1;
             for (User user : users) {
                 if (user != null) {
@@ -67,7 +71,6 @@ public class ArchivoJuego {
                     writer.newLine();
                 }
             }
-            System.out.println("Array de usuarios escrito en el archivo exitosamente.");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -75,10 +78,10 @@ public class ArchivoJuego {
         users = new User[7];
     }
 
-    public static boolean isNewRecord(User user) {
+    /*public static boolean isNewRecord(User user) {
         boolean record;
         cargarUsuarios();
-        if (posicion > 7) {
+        if (posicion > 6) {
             User[] tempArray = Arrays.copyOf(users, users.length + 1);
             tempArray[tempArray.length - 1] = user;
             ordenarArray(tempArray);
@@ -94,15 +97,46 @@ public class ArchivoJuego {
             record = true;
         }
         return record;
+    }*/
+    public static boolean isNewRecord(User user) {
+        cargarUsuarios();
+
+        if (posicion > 6) {
+            User[] tempArray = Arrays.copyOf(users, users.length + 1);
+            tempArray[tempArray.length - 1] = user;
+            ordenarArray(tempArray);
+
+            // Verifica si el récord del nuevo usuario es mayor que el del usuario en la primera posición
+            if (user.getScore() > tempArray[0].getScore()) {
+                System.arraycopy(tempArray, 0, users, 0, users.length);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            // Verifica si el récord del nuevo usuario es mayor que el del usuario en la primera posición
+            if (user.getScore() > users[0].getScore()) {
+                users[posicion] = user;
+                ordenarArray(users);
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
     public static void escribirUsuario(User user) {
-        for(User u: users){
-            if(u != null && u == user){
+        for (User u : users) {
+            if (u != null && u == user) {
                 u.setName(user.getName());
                 break;
             }
         }
         arrayToArchivo();
     }
+
+    public static User[] getUsers() {
+        return users;
+    }
+
 }

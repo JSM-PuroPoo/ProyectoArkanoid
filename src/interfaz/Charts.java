@@ -1,5 +1,9 @@
 package interfaz;
 
+import Game.User;
+import archivos.ArchivoJuego;
+import configuraciones.Configuraciones;
+import configuraciones.Observer;
 import interfaz.paneles.PanelIMG;
 import java.awt.Color;
 import java.awt.Font;
@@ -13,12 +17,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
 /**
  * @author Juan Felipe Eraso Navarro 0222220038
  * @author Melissa Andrea Pizarro Duarte 0222220004
  * @author Sofhia Alejandra Prasca Teheran 0222220014
  */
-public class Charts extends javax.swing.JFrame {
+public class Charts extends javax.swing.JFrame implements Observer {
+
     private PanelIMG chartsFondo = new PanelIMG();
     private PanelIMG chartsMarco = new PanelIMG();
     private PanelIMG chartsPanel = new PanelIMG();
@@ -32,22 +38,28 @@ public class Charts extends javax.swing.JFrame {
     private JLabel score2 = new JLabel();
     private JLabel score3 = new JLabel();
     private JLabel score4 = new JLabel();
-    private JLabel score5 = new JLabel(); 
-    
+    private JLabel score5 = new JLabel();
+
     private JButton closeButton = new JButton();
     private JButton minimizeButton = new JButton();
+    private boolean validar;
+    private Configuraciones configuraciones;
     Font text;
-    
-    /**
-     * Creates new form Charts
-     */
+
+    public Charts(Configuraciones configuraciones) {
+        this();
+        actualizar(configuraciones);
+    }
+
     public Charts() {
         this.setUndecorated(true);
         initComponents();
-        
+        validar = true;
         this.setTitle("Ocaso Arkanoid");
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        ArchivoJuego.cargarUsuarios();
+        User users[] = ArchivoJuego.getUsers();
         setIconImage(new ImageIcon("recursos/logo.png").getImage());
         chartsFondo.setLayout(null);
         chartsFondo.setImage("recursos/inicioimg.jpg");
@@ -58,15 +70,14 @@ public class Charts extends javax.swing.JFrame {
         chartsMarco.setImage("recursos/marco0.png");
         chartsMarco.setLayout(null);
         chartsFondo.add(chartsMarco);
-        
+
         chartsPanel.setImage("recursos/chartsPanel.png");
         chartsPanel.scaleImage(900, 500);
-        chartsPanel.setBounds(150, 55, 900, 500 );
+        chartsPanel.setBounds(150, 55, 900, 500);
         chartsPanel.setOpaque(false);
         chartsPanel.setLayout(null);
         chartsFondo.add(chartsPanel);
-        
-        
+
         backButton.setIcon(new ImageIcon("recursos/backButton.png"));
         backButton.setRolloverIcon(new ImageIcon("recursos/backButtonPressed.png"));
         backButton.setBounds(510, 555, 180, 100);
@@ -75,7 +86,13 @@ public class Charts extends javax.swing.JFrame {
         backButton.setOpaque(false);
         backButton.setLayout(null);
         chartsFondo.add(backButton);
-        
+
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
+
         try {
             InputStream is = new BufferedInputStream(new FileInputStream("fonts/OCRA.TTF"));;
             text = Font.createFont(Font.TRUETYPE_FONT, is);
@@ -90,17 +107,26 @@ public class Charts extends javax.swing.JFrame {
         name1.setForeground(Color.white);
         name1.setLayout(null);
         name1.setOpaque(false);
-        chartsPanel.add(name1);   
-        
-        score1.setBounds(142, 397, 185, 50);
+        chartsPanel.add(name1);
+
+        score1.setBounds(142, 387, 185, 50);
         score1.setFont(text.deriveFont(Font.PLAIN, 20));
         score1.setHorizontalAlignment(SwingConstants.CENTER);
         score1.setVerticalAlignment(SwingConstants.CENTER);
         score1.setForeground(Color.white);
         score1.setLayout(null);
         score1.setOpaque(false);
+
+        if (users[0] != null && validar) {
+            name1.setText(users[0].getName());
+            score1.setText(users[0].getScore() + "");
+        } else {
+            validar = false;
+            name1.setVisible(false);
+            score1.setVisible(false);
+        }
         chartsPanel.add(score1);
-              
+
         name2.setBounds(559, 130, 120, 50);
         name2.setFont(text.deriveFont(Font.PLAIN, 15));
         name2.setHorizontalAlignment(SwingConstants.CENTER);
@@ -108,8 +134,8 @@ public class Charts extends javax.swing.JFrame {
         name2.setForeground(Color.white);
         name2.setLayout(null);
         name2.setOpaque(false);
-        chartsPanel.add(name2);  
-        
+        chartsPanel.add(name2);
+
         score2.setBounds(719, 130, 120, 50);
         score2.setFont(text.deriveFont(Font.PLAIN, 15));
         score2.setHorizontalAlignment(SwingConstants.CENTER);
@@ -118,7 +144,16 @@ public class Charts extends javax.swing.JFrame {
         score2.setLayout(null);
         score2.setOpaque(false);
         chartsPanel.add(score2);
-        
+
+        if (users[1] != null && validar) {
+            name2.setText(users[1].getName());
+            score2.setText(users[1].getScore() + "");
+        } else {
+            validar = false;
+            name2.setVisible(false);
+            score2.setVisible(false);
+        }
+
         name3.setBounds(559, 219, 120, 50);
         name3.setFont(text.deriveFont(Font.PLAIN, 15));
         name3.setHorizontalAlignment(SwingConstants.CENTER);
@@ -126,8 +161,8 @@ public class Charts extends javax.swing.JFrame {
         name3.setForeground(Color.white);
         name3.setLayout(null);
         name3.setOpaque(false);
-        chartsPanel.add(name3);   
-        
+        chartsPanel.add(name3);
+
         score3.setBounds(719, 219, 120, 50);
         score3.setFont(text.deriveFont(Font.PLAIN, 15));
         score3.setHorizontalAlignment(SwingConstants.CENTER);
@@ -136,8 +171,16 @@ public class Charts extends javax.swing.JFrame {
         score3.setLayout(null);
         score3.setOpaque(false);
         chartsPanel.add(score3);
-       
-        
+
+        if (users[2] != null && validar) {
+            name3.setText(users[2].getName());
+            score3.setText(users[2].getScore() + "");
+        } else {
+            validar = false;
+            name3.setVisible(false);
+            score3.setVisible(false);
+        }
+
         name4.setBounds(559, 307, 120, 50);
         name4.setFont(text.deriveFont(Font.PLAIN, 15));
         name4.setHorizontalAlignment(SwingConstants.CENTER);
@@ -145,7 +188,7 @@ public class Charts extends javax.swing.JFrame {
         name4.setForeground(Color.white);
         name4.setLayout(null);
         name4.setOpaque(false);
-        chartsPanel.add(name4);        
+        chartsPanel.add(name4);
 
         score4.setBounds(719, 307, 120, 50);
         score4.setFont(text.deriveFont(Font.PLAIN, 15));
@@ -156,6 +199,15 @@ public class Charts extends javax.swing.JFrame {
         score4.setOpaque(false);
         chartsPanel.add(score4);
 
+        if (users[3] != null && validar) {
+            name4.setText(users[3].getName());
+            score4.setText(users[3].getScore() + "");
+        } else {
+            validar = false;
+            name4.setVisible(false);
+            score4.setVisible(false);
+        }
+
         name5.setBounds(559, 399, 120, 50);
         name5.setFont(text.deriveFont(Font.PLAIN, 15));
         name5.setHorizontalAlignment(SwingConstants.CENTER);
@@ -164,7 +216,7 @@ public class Charts extends javax.swing.JFrame {
         name5.setLayout(null);
         name5.setOpaque(false);
         chartsPanel.add(name5);
-        
+
         score5.setBounds(719, 399, 120, 50);
         score5.setFont(text.deriveFont(Font.PLAIN, 15));
         score5.setHorizontalAlignment(SwingConstants.CENTER);
@@ -173,7 +225,16 @@ public class Charts extends javax.swing.JFrame {
         score5.setLayout(null);
         score5.setOpaque(false);
         chartsPanel.add(score5);
-        
+
+        if (users[4] != null && validar) {
+            name5.setText(users[4].getName());
+            score5.setText(users[4].getScore() + "");
+        } else {
+            validar = false;
+            name5.setVisible(false);
+            score5.setVisible(false);
+        }
+
         closeButton.setIcon(new ImageIcon("recursos/closeButton.png"));
         closeButton.setRolloverIcon(new ImageIcon("recursos/closeButtonRed.png"));
         closeButton.setBounds(1173, 3, 24, 24);
@@ -202,15 +263,22 @@ public class Charts extends javax.swing.JFrame {
                 minimizeButtonActionPerformed(evt);
             }
         });
+
     }
 
-        private void closeButtonActionPerformed(ActionEvent evt) {
+    private void backButtonActionPerformed(ActionEvent evt) {
+        dispose();
+        new Inicio(configuraciones).setVisible(true);
+    }
+
+    private void closeButtonActionPerformed(ActionEvent evt) {
         System.exit(0);
     }
 
     private void minimizeButtonActionPerformed(ActionEvent evt) {
         this.setExtendedState(1);
     }
+
     /**
      * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The content of this method is always regenerated by the Form Editor.
      */
@@ -268,6 +336,11 @@ public class Charts extends javax.swing.JFrame {
                 new Charts().setVisible(true);
             }
         });
+    }
+
+    @Override
+    public void actualizar(Configuraciones configuraciones) {
+        this.configuraciones = configuraciones;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

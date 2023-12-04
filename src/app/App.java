@@ -1,8 +1,7 @@
 package app;
 
 import configuraciones.Configuraciones;
-import interfaz.Inicio;
-import interfaz.Settings;
+import interfaz.*;
 
 /**
  * @author Juan Felipe Eraso Navarro 0222220038

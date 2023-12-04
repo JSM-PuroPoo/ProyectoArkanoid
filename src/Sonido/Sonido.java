@@ -1,10 +1,7 @@
 package Sonido;
 
 import java.io.File;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.*;
 
 /**
  * @author Juan Felipe Eraso Navarro 0222220038
@@ -56,7 +53,6 @@ public class Sonido {
                 FloatControl controlVolumen = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
                 controlVolumen.setValue(20.0f * (float) Math.log10(valor));
             } catch (Exception e) {
-                //System.out.println("Error al cambiar el volumen: " + e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -79,7 +75,4 @@ public class Sonido {
     public void setCondicion(boolean condicion) {
         this.condicion = condicion;
     }
-
-   
-
 }
