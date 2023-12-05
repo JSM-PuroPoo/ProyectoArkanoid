@@ -28,7 +28,7 @@ public class App {
             java.util.logging.Logger.getLogger(Settings.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-        Configuraciones configuraciones = new Configuraciones(true, true, 3, 1);
+        Configuraciones configuraciones = new Configuraciones(false, false, 1, 2);
         Inicio inicio = new Inicio(configuraciones);
         inicio.setVisible(true);
 

@@ -78,26 +78,6 @@ public class ArchivoJuego {
         users = new User[7];
     }
 
-    /*public static boolean isNewRecord(User user) {
-        boolean record;
-        cargarUsuarios();
-        if (posicion > 6) {
-            User[] tempArray = Arrays.copyOf(users, users.length + 1);
-            tempArray[tempArray.length - 1] = user;
-            ordenarArray(tempArray);
-            if (user != tempArray[tempArray.length - 1]) {
-                record = true;
-                System.arraycopy(tempArray, 0, users, 0, users.length);
-            } else {
-                record = false;
-            }
-        } else {
-            users[posicion] = user;
-            ordenarArray(users);
-            record = true;
-        }
-        return record;
-    }*/
     public static boolean isNewRecord(User user) {
         cargarUsuarios();
 
@@ -114,8 +94,11 @@ public class ArchivoJuego {
                 return false;
             }
         } else {
-            // Verifica si el récord del nuevo usuario es mayor que el del usuario en la primera posición
-            if (user.getScore() > users[0].getScore()) {
+            if (users[0] == null) {
+                users[posicion] = user;
+                ordenarArray(users);
+                return true;
+            } else if (user.getScore() > users[0].getScore()) {
                 users[posicion] = user;
                 ordenarArray(users);
                 return true;
