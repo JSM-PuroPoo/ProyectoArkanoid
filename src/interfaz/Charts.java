@@ -2,8 +2,7 @@ package interfaz;
 
 import Game.User;
 import archivos.ArchivoJuego;
-import configuraciones.Configuraciones;
-import configuraciones.Observer;
+import configuraciones.*;
 import interfaz.paneles.PanelIMG;
 import java.awt.Color;
 import java.awt.Font;
@@ -13,10 +12,7 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 
 /**
  * @author Juan Felipe Eraso Navarro 0222220038
