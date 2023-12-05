@@ -3,7 +3,6 @@ package archivos;
 import Game.User;
 import java.io.*;
 import java.util.Arrays;
-import java.util.Comparator;
 
 /**
  * @author Juan Felipe Eraso Navarro 0222220038

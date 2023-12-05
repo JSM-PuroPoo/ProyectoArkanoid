@@ -1,8 +1,4 @@
 package Game;
-
-import Cronometro.CronometroP;
-import archivos.ArchivoJuego;
-
 /**
  * @author Juan Felipe Eraso Navarro 0222220038
  * @author Melissa Andrea Pizarro Duarte 0222220004
