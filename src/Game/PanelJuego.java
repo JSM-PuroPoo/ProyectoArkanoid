@@ -62,6 +62,8 @@ public class PanelJuego extends PanelIMG implements Observer {
     public boolean validarMusica = true;
     public boolean iniciarJuego;
     boolean pelotasCargadas = false;
+    
+    private JLabel enterLabel = new JLabel();
 
     public PanelJuego(Bloque bloques[], String rutaFondo, String rutaFJuego, String rutaMarco, Juego frame) {
         frame.setTitle("Ocaso Arkanoid");
@@ -204,13 +206,24 @@ public class PanelJuego extends PanelIMG implements Observer {
         puntos.setFont(cronometro.getFont().deriveFont(Font.PLAIN, 80));
         puntos.setForeground(Color.white);
         this.add(puntos);
-
+        
+        enterLabel.setBounds(0, 200, 856, 220);
+        enterLabel.setFont(cronometro.getFont().deriveFont(Font.PLAIN, 30));
+        enterLabel.setForeground(Color.white);
+        enterLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        enterLabel.setVerticalAlignment(SwingConstants.CENTER);
+        enterLabel.setOpaque(false);
+        enterLabel.setLayout(null);
+        enterLabel.setText("press ENTER to start");
+        game.add(enterLabel);
+        
         this.frame.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 int keyCode = e.getKeyCode();
                 if (keyCode == KeyEvent.VK_ENTER && !iniciarJuego) {
                     iniciarJuego = true;
+                    enterLabel.setText("");
                     cronometro.getCronometro().time.start();
                     for (int i = 0; i < contPelotas; i++) {
                         if (i % 2 == 0) {

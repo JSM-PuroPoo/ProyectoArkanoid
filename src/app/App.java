@@ -31,5 +31,6 @@ public class App {
         Configuraciones configuraciones = new Configuraciones(true, true, 3, 1);
         Inicio inicio = new Inicio(configuraciones);
         inicio.setVisible(true);
+
     }
 }
